@@ -3,8 +3,8 @@ package com.wdd.studentmanager.domain;
 import lombok.Data;
 
 @Data
-public class S_dormit{
+public class S_clazz {
     private int id;
-    private String build;
-    private String room;
+    private String name;
+    private String info;
 }
