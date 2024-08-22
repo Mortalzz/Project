@@ -79,6 +79,8 @@ public class StudentController {
         S_student student = studentService.getOne(studentWrapper);
 
         if (student != null) {
+            HttpSession session = request.getSession(); // 假设在一个控制器方法中
+            session.setAttribute("currentUser",student);
             return ResultData.success(student);
         } else {
             return ResultData.fail("学生用户不存在");
