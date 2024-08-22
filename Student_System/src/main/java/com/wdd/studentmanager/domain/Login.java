@@ -8,5 +8,4 @@ public class Login {
     private String code;
     private String password;
     private String role;
-
 }
