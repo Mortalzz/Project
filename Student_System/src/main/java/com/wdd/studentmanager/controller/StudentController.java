@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -92,6 +94,16 @@ public class StudentController {
             return ResultData.fail("管理员用户不存在");
         }
     }
+
+    //获取验证码
+    @GetMapping("/code")
+    public void code(HttpServletResponse response) throws IOException {
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+        code = lineCaptcha.getCode();
+        lineCaptcha.write(response.getOutputStream());
+    }
+
+
 
 
 
