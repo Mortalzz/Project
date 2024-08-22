@@ -4,8 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wdd.studentmanager.common.BindingResultUtil;
 import com.wdd.studentmanager.common.ResultData;
 import com.wdd.studentmanager.domain.Login;
+import com.wdd.studentmanager.domain.S_admin;
 import com.wdd.studentmanager.domain.S_student;
-import com.wdd.studentmanager.mapper.StudentMapper;
+import com.wdd.studentmanager.service.AdminService;
 import com.wdd.studentmanager.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -26,7 +29,8 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
-
+    @Autowired
+    private AdminService adminService;
     public String code="";
     //注册申请
     @PostMapping("/register")
@@ -53,29 +57,42 @@ public class StudentController {
     //用户登录
     @PostMapping("/login")
     public ResultData login(@RequestBody Login login) {
-        if (!login.getCode().equals(code)) {
-            return ResultData.fail("验证码不正确，请检查后重新输入");
-        }
-        // 判断学生是否被激活
-        QueryWrapper<S_student> wrapper = new QueryWrapper<>();
-        wrapper.eq("sn", login.getSn());
-        wrapper.eq("password", login.getPassword());
-        S_student stu = studentService.getOne(wrapper);
-        // 验证登录用户是学生还是管理员
-        if (stu == null) {
-            return ResultData.fail("用户不存在，请检查后重新输入");
+        // 根据角色选择不同的登录处理逻辑
+        if ("student".equals(login.getRole())) {
+            return loginStudent(login);
+        } else if ("admin".equals(login.getRole())) {
+            return loginAdmin(login);
         } else {
-            if (stu.getStatus() == 0) {
-                return ResultData.fail("用户未激活，请联系管理员激活");
-            } else {
-                HashMap<String, String> map = new HashMap<>();
-                map.put("sn", login.getSn());
-                String token = JWTUtils.getToken(map);
-                stu.setToken(token);
-                return ResultData.success(stu);
-            }
+            return ResultData.fail("无效的角色");
         }
     }
+
+    private ResultData loginStudent(Login loginRequest) {
+        QueryWrapper<S_student> studentWrapper = new QueryWrapper<>();
+        studentWrapper.eq("sn", loginRequest.getSn());
+        studentWrapper.eq("password", loginRequest.getPassword());
+        S_student student = studentService.getOne(studentWrapper);
+
+        if (student != null) {
+            return ResultData.success(student);
+        } else {
+            return ResultData.fail("学生用户不存在");
+        }
+    }
+
+    private ResultData loginAdmin(Login loginRequest) {
+        QueryWrapper<S_admin> adminWrapper = new QueryWrapper<>();
+        adminWrapper.eq("sn", loginRequest.getSn());
+        adminWrapper.eq("password", loginRequest.getPassword());
+        S_admin admin = adminService.getOne(adminWrapper);
+
+        if (admin != null) {
+            return ResultData.success(admin);
+        } else {
+            return ResultData.fail("管理员用户不存在");
+        }
+    }
+
 
 
 
