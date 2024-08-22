@@ -113,8 +113,13 @@ public class StudentController {
         lineCaptcha.write(response.getOutputStream());
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    //下面为显示学生的信息
+    //下面为显示和修改学生的信息
+
+
+
     @GetMapping("/get_profile")
     public ResultData getProfile(HttpServletRequest request) {
         HttpSession session=request.getSession(false);
