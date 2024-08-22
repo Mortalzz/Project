@@ -115,8 +115,9 @@ public class StudentController {
 
     //------------------------------------------------------------------------------------------
     //下面为显示学生的信息
-    @GetMapping("/profile")
-    public ResultData getProfile(HttpSession session) {
+    @GetMapping("/get_profile")
+    public ResultData getProfile(HttpServletRequest request) {
+        HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
         if (currentStu != null) {
             // 获取用户详细信息
@@ -127,7 +128,19 @@ public class StudentController {
         }
     }
 
-
-
+    @RequestMapping("/set_profile")
+    public ResultData setProfile(@RequestBody S_student student,HttpServletRequest request){
+        HttpSession session=request.getSession(false);
+        S_student currentStu=(S_student) session.getAttribute("currentUser");
+        S_student temp=student;
+        if (currentStu != null) {
+            // 设置用户详细信息
+            temp.setId(currentStu.getId());
+            boolean result=studentService.updateById(temp);
+            return ResultData.success(temp);
+        } else {
+            return ResultData.fail("用户未登录");
+        }
+    }
 
 }
