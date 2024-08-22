@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -27,7 +30,7 @@ import java.io.IOException;
 public class StudentController {
 
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
     @Autowired
     private AdminService adminService;
     public String code="";
@@ -55,18 +58,21 @@ public class StudentController {
 
     //用户登录
     @PostMapping("/login")
-    public ResultData login(@RequestBody Login login) {
+    public ResultData login(@RequestBody Login login, HttpServletRequest request) {
         // 根据角色选择不同的登录处理逻辑
         if ("student".equals(login.getRole())) {
-            return loginStudent(login);
+            return loginStudent(login,request);
         } else if ("admin".equals(login.getRole())) {
-            return loginAdmin(login);
+            return loginAdmin(login,request);
         } else {
             return ResultData.fail("无效的角色");
         }
     }
 
-    private ResultData loginStudent(Login loginRequest) {
+    private ResultData loginStudent(Login loginRequest,HttpServletRequest request) {
+        if (!loginRequest.getCode().equals(code)) {
+            return ResultData.fail("验证码不正确，请检查后重新输入");
+        }
         QueryWrapper<S_student> studentWrapper = new QueryWrapper<>();
         studentWrapper.eq("sn", loginRequest.getSn());
         studentWrapper.eq("password", loginRequest.getPassword());
@@ -79,13 +85,18 @@ public class StudentController {
         }
     }
 
-    private ResultData loginAdmin(Login loginRequest) {
+    private ResultData loginAdmin(Login loginRequest,HttpServletRequest request) {
+        if (!loginRequest.getCode().equals(code)) {
+            return ResultData.fail("验证码不正确，请检查后重新输入");
+        }
         QueryWrapper<S_admin> adminWrapper = new QueryWrapper<>();
         adminWrapper.eq("sn", loginRequest.getSn());
         adminWrapper.eq("password", loginRequest.getPassword());
         S_admin admin = adminService.getOne(adminWrapper);
 
         if (admin != null) {
+            HttpSession session = request.getSession(); // 假设在一个控制器方法中
+            session.setAttribute("currentUser", admin);
             return ResultData.success(admin);
         } else {
             return ResultData.fail("管理员用户不存在");
@@ -100,14 +111,21 @@ public class StudentController {
         lineCaptcha.write(response.getOutputStream());
     }
 
+    //------------------------------------------------------------------------------------------
+    //下面为显示学生的信息
+    @GetMapping("/profile")
+    public ResultData getProfile(HttpSession session) {
+        S_student currentStu = (S_student) session.getAttribute("currentUser");
+        if (currentStu != null) {
+            // 获取用户详细信息
+            S_student student = studentService.getById(currentStu.getId());
+            return ResultData.success(student);
+        } else {
+            return ResultData.fail("用户未登录");
+        }
+    }
 
-
-
-
-
-
-
-
+    
 
 
 }
