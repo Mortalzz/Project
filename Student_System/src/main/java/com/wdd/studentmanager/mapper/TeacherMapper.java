@@ -5,5 +5,5 @@ import com.wdd.studentmanager.domain.S_teacher;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface TeacerMapper extends BaseMapper<S_teacher> {
+public interface TeacherMapper extends BaseMapper<S_teacher> {
 }
