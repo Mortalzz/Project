@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 
 @Controller
@@ -106,10 +107,13 @@ public class StudentController {
     }
 
     //获取验证码
-    @GetMapping("/code")
-    public void code(HttpServletResponse response) throws IOException {
-        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
-        code = lineCaptcha.getCode();
+    @GetMapping("/captcha")
+    public void getCaptcha(HttpServletResponse response,HttpSession session) throws IOException {
+        LineCaptcha lineCaptcha = new LineCaptcha(200, 100, 4, 150);
+        // 将验证码的文本存储到会话中
+        code=lineCaptcha.getCode();
+        // 输出图片到前端
+        response.setContentType("image/png");
         lineCaptcha.write(response.getOutputStream());
     }
 
