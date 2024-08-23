@@ -8,7 +8,7 @@ public class S_teacher {
     private String sn;
     private String username;
     private String password;
-    private int clazz_id;
+    private int clazzid;
     private String mobile;
     private String qq;
     private String sex;

@@ -13,6 +13,8 @@ public class ResultData {
 
     private Object data;
 
+
+    private boolean success;
     public static ResultData success(Object data) {
         return resultData(data);
     }
@@ -36,6 +38,7 @@ public class ResultData {
         resultData.setCode(200);
         resultData.setMsg("消息返回成功");
         resultData.setData(data);
+        resultData.setSuccess(true);
         return resultData;
     }
 
