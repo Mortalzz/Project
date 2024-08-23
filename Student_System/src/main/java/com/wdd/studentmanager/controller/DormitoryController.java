@@ -46,6 +46,9 @@ public class DormitoryController {
 
     @RequestMapping("/get_dormitInfo")
     public ResultData getDormit(HttpServletRequest request){
+
+
+
         HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
         Integer tmp_dormitId=currentStu.getDormit_id();//tmp_dormit为获取学生的宿舍id
@@ -66,6 +69,8 @@ public class DormitoryController {
         wrapper.eq("id", id);
         return dormitoryService.getOne(wrapper);
     }
+
+
 
 
 }
