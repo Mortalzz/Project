@@ -1,117 +1,119 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<link rel="shortcut icon" href="favicon.ico"/>
-<link rel="bookmark" href="favicon.ico"/>
-<link th:href="@{/h-ui/css/H-ui.min.css}" rel="stylesheet" type="text/css" />
-<link th:href="@{/h-ui/css/H-ui.login.css}" rel="stylesheet" type="text/css" />
-<link th:href="@{/h-ui/lib/icheck/icheck.css}" rel="stylesheet" type="text/css" />
-<link th:href="@{/h-ui/lib/Hui-iconfont/1.0.1/iconfont.css}" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>登录界面</title>
+    <link rel="stylesheet" href="/css/auth.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- 引入jQuery -->
+</head>
 
-<link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/default/easyui.css}">
-<link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/icon.css}">
+<body>
+<div class="lowin lowin-blue">
+    <div class="lowin-brand">
+        <img src="resources/static/image/lzy.jpg" alt="logo">
+    </div>
+    <div class="lowin-wrapper">
+        <div class="lowin-box lowin-login">
+            <div class="lowin-box-inner">
+                <form id="login-form">
+                    <p>登录账户</p>
+                    <div class="lowin-group">
+                        <label>身份</label>
+                        <select name="role" class="lowin-input">
+                            <option value="student">学生</option>
+                            <option value="admin">管理员</option>
+                        </select>
+                    </div>
+                    <div class="lowin-group">
+                        <label>用户名<a href="#" class="login-back-link">登录?</a></label>
+                        <input type="text" autocomplete="username" name="username" class="lowin-input" placeholder="请输入用户名">
+                    </div>
+                    <div class="lowin-group password-group">
+                        <label>密码</label>
+                        <input type="password" name="password" autocomplete="current-password" class="lowin-input" placeholder="请输入密码">
+                    </div>
+                    <div class="lowin-group">
+                        <label>验证码</label>
+                        <input type="text" name="captcha" autocomplete="off" class="lowin-input" placeholder="请输入验证码">
+                        <img id="vcodeImg" src="captcha-url" alt="验证码" class="captcha-img" onclick="this.src='captcha-url?' + Math.random();">
+                    </div>
+                    <button type="button" id="submitBtn" class="lowin-btn login-btn">
+                        登录
+                    </button>
+                    <div class="text-foot">
+                        没有帐户? <a href="" class="register-link">注册</a>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{/h-ui/js/H-ui.js}"></script>
-<script type="text/javascript" th:src="@{/h-ui/lib/icheck/jquery.icheck.min.js}"></script>
+        <div class="lowin-box lowin-register">
+            <div class="lowin-box-inner">
+                <form id="register-form">
+                    <p>创建账户</p>
+                    <div class="lowin-group">
+                        <label>身份</label>
+                        <input type="text" value="学生" class="lowin-input" readonly>
+                        <input type="hidden" name="role" value="student">
+                    </div>
+                    <div class="lowin-group">
+                        <label>用户名</label>
+                        <input type="text" name="name" autocomplete="name" class="lowin-input" placeholder="请输入用户名" required>
+                    </div>
+                    <div class="lowin-group">
+                        <label>密码</label>
+                        <input type="password" autocomplete="password" name="new-password" class="lowin-input" placeholder="请输入密码" required>
+                    </div>
+                    <div class="lowin-group">
+                        <label>确认密码</label>
+                        <input type="password" name="password" autocomplete="current-password" class="lowin-input" placeholder="请确认密码" required>
+                    </div>
+                    <button class="lowin-btn">
+                        注册
+                    </button>
+                    <div class="text-foot">
+                        已有帐户? <a href="" class="login-link">登录</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+    <footer class="lowin-footer">
+        Design By 重庆大学
+    </footer>
+</div>
 
-<script type="text/javascript" th:inline="javascript">
-
-    /*<![CDATA[*/
-
+<script src="/js/auth.js"></script>
+<script>
     $(function(){
-        //点击图片切换验证码
+        // 点击图片切换验证码
         $("#vcodeImg").click(function(){
-            //this.src="@{/student/checkcode}&t="+new Date().getTime();
-            var uri = /*[[@{/student/captcha}]]*/;
+            var uri = "/student/captcha"; // 替换为你的验证码地址
             this.src = uri + '?t=' + new Date().getTime();
             console.log(this.src);
         });
 
-        //登录
+        // 登录
         $("#submitBtn").click(function(){
-        	$.ajax({
-        		type: "post",
-        		url: /*[[@{/student/login}]]*/,
-        		data: $("#form").serialize(),
-        		dataType: "json", //返回数据类型
-        		success: function(data){
-        			if(data.success){
-                        window.location.href = /*[[@{/student/index}]]*/;
+            $.ajax({
+                type: "post",
+                url: "/student/login", // 替换为你的登录地址
+                data: $("#login-form").serialize(),
+                dataType: "json", // 返回数据类型
+                success: function(data){
+                    if(data.success){
+                        window.location.href = "your-index-url"; // 替换为需要跳转的页面
                     }else{
-                        $.messager.alert("消息提醒", data.message, "warning");
-                        $("#vcodeImg").click();//切换验证码
-                        $("input[name='code']").val("");//清空验证码输入框
+                        alert("消息提醒: " + data.message); // 替换为更友好的提示
+                        $("#vcodeImg").click(); // 切换验证码
+                        $("input[name='captcha']").val(""); // 清空验证码输入框
                     }
-        		}
-        	});
+                }
+            });
         });
-
-        //设置复选框
-        $(".skin-minimal input").iCheck({
-            radioClass: 'iradio-blue',
-            increaseArea: '25%'
-        });
-	})
-    /*]]>*/
+    });
 </script>
-<title>登录|学生管理系统</title>
-<meta name="keywords" content="学生管理系统">
-</head>
-<body>
-
-<div class="header" style="padding: 0;">
-	<h2 style="color: white; width: 400px; height: 60px; line-height: 60px; margin: 0 0 0 30px; padding: 0;">学生管理系统</h2>
-</div>
-<div class="loginWraper">
-  <div id="loginform" class="loginBox">
-    <form id="form" class="form form-horizontal" method="post">
-      <div class="row cl">
-        <label class="form-label col-3"><i class="Hui-iconfont">&#xe60d;</i></label>
-        <div class="formControls col-8">
-          <input id="username" name="username" type="text" placeholder="用户名" class="input-text size-L">
-        </div>
-      </div>
-      <div class="row cl">
-        <label class="form-label col-3"><i class="Hui-iconfont">&#xe60e;</i></label>
-        <div class="formControls col-8">
-          <input id="password" name="password" type="password" placeholder="密码" class="input-text size-L">
-        </div>
-      </div>
-      <div class="row cl">
-        <div class="formControls col-8 col-offset-3">
-          <input class="input-text size-L" name="code" type="text" placeholder="请输入验证码" style="width: 200px;">
-          <img title="点击图片切换验证码" id="vcodeImg" th:src="@{/student/captcha}"></div>
-      </div>
-
-      <div class="mt-20 skin-minimal" style="text-align: center;">
-		<div class="radio-box">
-			<input type="radio" id="radio-2" name="type" checked value="2" />
-			<label for="radio-1">学生</label>
-		</div>
-
-		<div class="radio-box">
-			<input type="radio" id="radio-1" name="type" value="1" />
-			<label for="radio-2">管理员</label>
-		</div>
-	</div>
-
-      <div class="row">
-        <div class="formControls col-8 col-offset-3">
-          <input id="submitBtn" type="button" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
-            <input id="registerBtn" type="button" class="btn btn-primary radius size-L" value="&nbsp;注&nbsp;&nbsp;&nbsp;&nbsp;册&nbsp;" style="margin-left: 150px;" onclick="window.location.href='/*[[@{/student/register}]]*/'">
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-<div class="footer"><a href="https://shop243665397.taobao.com/" target="_blank" style="color: red">@友情链接</a> </div>
 </body>
 </html>
