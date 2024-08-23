@@ -25,7 +25,7 @@ import java.io.IOException;
 
 
 @Controller
-//@ResponseBody
+@ResponseBody
 @RequestMapping("/student")
 public class StudentController {
 
@@ -36,7 +36,7 @@ public class StudentController {
     public String code="";
     //注册申请
     @PostMapping("/register")
-    public ResultData add(@Validated @RequestBody S_student student, BindingResult result) {
+    public ResultData add(@Validated S_student student, BindingResult result) {
         BindingResultUtil.validate(result);
         if (findBySn(student.getSn()) != null) {
             return ResultData.fail("学生已经存在，请勿重复添加");
@@ -49,6 +49,7 @@ public class StudentController {
             }
         }
     }
+    //已测试  来自：邹正强
 
     private S_student findBySn(String sn) {
         QueryWrapper<S_student> wrapper = new QueryWrapper<>();
@@ -58,7 +59,7 @@ public class StudentController {
 
     //用户登录
     @PostMapping("/login")
-    public ResultData login(@RequestBody Login login, HttpServletRequest request) {
+    public ResultData login(Login login, HttpServletRequest request) {
         // 根据角色选择不同的登录处理逻辑
         if ("student".equals(login.getRole())) {
             return loginStudent(login,request);

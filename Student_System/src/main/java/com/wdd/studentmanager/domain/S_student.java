@@ -13,6 +13,6 @@ public class S_student {
     private String mobile;
     private String qq;
     private String photo;
-    private String address;
+    private String address  ;
     private int dormit_id;
 }
