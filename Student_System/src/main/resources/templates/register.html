@@ -31,7 +31,7 @@
                         if(data.success){
                             $.messager.alert("注册成功", "注册成功，请登录。", "info");
                             // Redirect to the login page after successful registration
-                            window.location.href = /*[[@{/system/login}]]*/;
+                            window.location.href = /*[[@{/student/login}]]*/;
                         }else{
                             $.messager.alert("注册失败", data.message, "error");
                         }
@@ -74,7 +74,7 @@
             <div class="row cl">
                 <div class="formControls col-8 col-offset-3">
                     <input class="input-text size-L" name="code" type="text" placeholder="请输入验证码" style="width: 200px;" required>
-                    <img title="点击图片切换验证码" id="vcodeImg" th:src="@{/system/checkCode}">
+                    <img title="点击图片切换验证码" id="vcodeImg" th:src="@{/student/cpatcha}">
                 </div>
             </div>
             <div class="row">
