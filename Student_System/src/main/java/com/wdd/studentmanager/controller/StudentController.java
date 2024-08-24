@@ -37,9 +37,13 @@ public class StudentController {
     //注册申请
     @PostMapping("/register")
     @ResponseBody
-    public ResultData add(@Validated  S_student student, BindingResult result) {
-        BindingResultUtil.validate(result);
-        if (findBySn(student.getSn()) != null) {
+    public ResultData add(HttpServletRequest request) {
+        String sn=request.getParameter("sn");
+        String password=request.getParameter("password");
+        S_student student=new S_student();
+        student.setPassword(password);
+        student.setSn(sn);
+        if (findBySn(sn) != null) {
             return ResultData.fail("学生已经存在，请勿重复添加");
         } else {
             boolean save = studentService.save(student);
@@ -61,7 +65,7 @@ public class StudentController {
     //需要更改
     @RequestMapping("/index")
     public String index(){
-        return "index";
+        return "login";
     }
 
     @RequestMapping("/index/login")
