@@ -1,4 +1,4 @@
-package com.wdd.studentmanager.controller;
+package com.wdd.studentmanager;
 
 import com.wdd.studentmanager.domain.S_student;
 import org.springframework.stereotype.Controller;
@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@ResponseBody
+@RequestMapping("/consult")
 public class ConsultController {
-    @RequestMapping("/consult")
-    @ResponseBody
-    public String consult(HttpServletRequest request,String Infomation) {
+
+    String Infomation="SB";
+    @RequestMapping("/help")
+    public String consult(HttpServletRequest request/*,String Infomation*/) {
         HttpSession session = request.getSession();
         S_student stu = (S_student) session.getAttribute("currentUser");
 
