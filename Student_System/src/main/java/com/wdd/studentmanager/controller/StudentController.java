@@ -57,6 +57,16 @@ public class StudentController {
         return studentService.getOne(wrapper);
     }
 
+    @RequestMapping("/index")
+    public String index(){
+        return "/student/index";
+    }
+    @RequestMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "/login";
+    }
+    
 
     //用户登录
     @PostMapping("/login")
