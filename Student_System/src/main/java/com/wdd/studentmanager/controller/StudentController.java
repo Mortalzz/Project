@@ -75,14 +75,7 @@ public class StudentController {
     public String index_login(){
         return  "login&regist";
     }
-    /**
-     * 跳转登录界面
-     * @return
-     */
-    @GetMapping("/login")
-    public String login(){
-        return "/login";
-    }
+
 //------------------------------------------------
     //用户登录
     @PostMapping("/login")
