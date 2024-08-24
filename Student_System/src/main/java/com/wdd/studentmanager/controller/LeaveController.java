@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,12 +23,11 @@ import java.util.Map;
 public class LeaveController {
     @Autowired
     LeaveService leaveService;
-
     @RequestMapping("/request")
-    public ResultData Requestleave(HttpServletRequest request,String Info){
-        HttpSession session=request.getSession();
+    public ResultData Requestleave(HttpServletRequest request){
+        String Info=request.getParameter("Info");
+        HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
-
         int stu_id=currentStu.getId();
         S_leave user = new S_leave();
         user.setStudentid(stu_id);
@@ -40,7 +40,7 @@ public class LeaveController {
         else{
             return ResultData.fail("申请请假失败");
         }
-    }
+    }//测试通过 测试人：邹正强
 
     //查看请假状态
     @RequestMapping("/get")
@@ -50,7 +50,7 @@ public class LeaveController {
 
         int stu_id=stu.getId();
         QueryWrapper<S_leave> queryWrapper = new QueryWrapper<>();
-        queryWrapper.gt("studentid", stu_id);
+        queryWrapper.eq("studentid", stu_id);
         List<S_leave> users = leaveService.list(queryWrapper);
         if(users==null){
             return ResultData.fail("没有请假信息");
@@ -59,11 +59,14 @@ public class LeaveController {
             return ResultData.success(users);
         }
 
-    }
+    }//测试通过 测试人：邹正强
 
     //管理员回复
     @RequestMapping("/confirm")
-    public ResultData confirmLeave(@RequestParam Map<String, String> remarks) {
+    public ResultData confirmLeave(/*@RequestParam Map<String, String> remarks*/) {
+        Map<String,String> remarks=new HashMap<>();
+        remarks.put("1","准了");
+        remarks.put("2","别跑太远");
         // 查询出所有 status 为 false 的记录
         QueryWrapper<S_leave> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("status", false);

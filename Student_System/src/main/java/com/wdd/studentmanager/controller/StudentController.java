@@ -74,11 +74,11 @@ public class StudentController {
 //------------------------------------------------
     //用户登录
     @PostMapping("/login")
-    public ResultData login(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+    public ResultData login(HttpServletRequest request){
         // 根据角色选择不同的登录处理逻辑
         String temp=request.getParameter("role");
         if ("student".equals( request.getParameter("role"))) {
-            return loginStudent(request,response);
+            return loginStudent(request);
         } else if ("admin".equals(request.getParameter("role"))) {
             return loginAdmin(request);
         } else {
@@ -86,7 +86,7 @@ public class StudentController {
         }
     }//登录测试通过 测试人：邹正强
 
-    private ResultData loginStudent(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+    private ResultData loginStudent(HttpServletRequest request){
         if (!request.getParameter("captcha").equals(code)) {
             return ResultData.fail("验证码不正确，请检查后重新输入");
         }
@@ -115,7 +115,6 @@ public class StudentController {
         if (admin != null) {
             HttpSession session = request.getSession(); // 假设在一个控制器方法中
             session.setAttribute("currentUser", admin);
-
             return ResultData.success(admin);
         } else {
             return ResultData.fail("管理员用户不存在");
