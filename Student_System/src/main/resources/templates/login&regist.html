@@ -56,7 +56,7 @@
                     <div class="lowin-group">
                         <label>验证码</label>
                         <input type="text" name="captcha" autocomplete="off" class="lowin-input" placeholder="请输入验证码">
-                        <img id="vcodeImg" src="captcha-url" alt="验证码" class="captcha-img" onclick="this.src='/student/captcha?t=' + new Date().getTime();">
+                        <img id="vcodeImg" src="captcha-url" alt="验证码" class="captcha-img" onclick="window.location.href='/student/captcha'">
                     </div>
                     <button type="button" id="submitBtn" class="lowin-btn login-btn">
                         登录
