@@ -66,7 +66,11 @@ public class StudentController {
         session.invalidate();
         return "/login";
     }
-    
+
+    @GetMapping("/register")
+    public String register(){
+        return "/register";
+    }
 
     //用户登录
     @PostMapping("/login")
