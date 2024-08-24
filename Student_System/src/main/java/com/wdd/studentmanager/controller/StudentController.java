@@ -57,7 +57,7 @@ public class StudentController {
         return studentService.getOne(wrapper);
     }
 //----------------------------------------------------
-
+//测试用的
     //需要更改
     @RequestMapping("/index")
     public String index(){
