@@ -40,9 +40,11 @@ public class StudentController {
     public ResultData add(HttpServletRequest request) {
         String sn=request.getParameter("sn");
         String password=request.getParameter("password");
+        String username=request.getParameter("username");
         S_student student=new S_student();
         student.setPassword(password);
         student.setSn(sn);
+        student.setUsername(username);
         if (findBySn(sn) != null) {
             return ResultData.fail("学生已经存在，请勿重复添加");
         } else {

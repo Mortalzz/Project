@@ -46,8 +46,8 @@
                         </select>
                     </div>
                     <div class="lowin-group">
-                        <label>用户名<a href="#" class="login-back-link">登录?</a></label>
-                        <input type="text" id="sn" autocomplete="sn" name="username" class="lowin-input" placeholder="请输入用户名"required>
+                        <label>账号<a href="#" class="login-back-link">登录?</a></label>
+                        <input type="text" id="sn" autocomplete="sn" name="username" class="lowin-input" placeholder="请输入账号"required>
                     </div>
                     <div class="lowin-group password-group">
                         <label>密码<a href="#" class="forgot-link"></a></label>
@@ -79,8 +79,12 @@
                         <input type="hidden" name="role" value="student">
                     </div>
                     <div class="lowin-group">
-                        <label>用户名</label>
-                        <input type="text" id="sn1" name="name" autocomplete="name" class="lowin-input" placeholder="请输入用户名" required>
+                        <label>姓名</label>
+                        <input type="text" id="name" name="yourname" autocomplete="yourname" class="lowin-input" placeholder="请输入姓名" required>
+                    </div>
+                    <div class="lowin-group">
+                        <label>账号</label>
+                        <input type="text" id="sn1" name="name" autocomplete="name" class="lowin-input" placeholder="请输入账号" required>
                     </div>
                     <div class="lowin-group">
                         <label>密码</label>
@@ -122,7 +126,7 @@
             captcha: $("#captcha").val()
         };
         if (dataToSend.sn == '' || dataToSend.password == ''||dataToSend.captcha=='') {
-            alert('用户名或密码不能为空，请重新输入');
+            alert('账号或密码不能为空，请重新输入');
             return;
         }
         console.log(dataToSend);
@@ -150,10 +154,11 @@
         var dataToSend = {
             sn: $("#sn1").val(),
             password: $("#new-password").val(),
-            role:"student"
+            role:"student",
+            username: $("#name").val()
         };
-        if (dataToSend.sn == '' || dataToSend.password == '') {
-            alert('用户名或密码不能为空，请重新输入');
+        if (dataToSend.sn == '' || dataToSend.password == ''||dataToSend.username=='') {
+            alert('账号或密码或姓名不能为空，请重新输入');
             return;
         }
         console.log(dataToSend);
