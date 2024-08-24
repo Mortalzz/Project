@@ -63,10 +63,7 @@ public class LeaveController {
 
     //管理员回复
     @RequestMapping("/confirm")
-    public ResultData confirmLeave(/*@RequestParam Map<String, String> remarks*/) {
-        Map<String,String> remarks=new HashMap<>();
-        remarks.put("1","准了");
-        remarks.put("2","别跑太远");
+    public ResultData confirmLeave(@RequestParam Map<String, String> remarks) {
         // 查询出所有 status 为 false 的记录
         QueryWrapper<S_leave> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("status", false);
@@ -76,7 +73,7 @@ public class LeaveController {
         for (S_leave leave : leaves) {
             leave.setStatus(true);  // 将 status 设置为 true
             // 根据不同的记录设置不同的 remark 值
-            String customRemark = remarks.getOrDefault(String.valueOf(leave.getId()), "Info");
+            String customRemark = remarks.getOrDefault(String.valueOf(leave.getStudentid()),"????");
             leave.setRemark(customRemark);
         }
 
@@ -89,6 +86,6 @@ public class LeaveController {
         } else {
             return ResultData.success("批量更新失败");
         }
-    }
+    }//测试通过 测试人：邹正强
 
 }
