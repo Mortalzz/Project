@@ -67,7 +67,7 @@ public class StudentController {
     //需要更改
     @RequestMapping("/index")
     public String index(){
-        return "login";
+        return "system/index";
     }
 
     @RequestMapping("/index/login")
