@@ -174,8 +174,6 @@
             success: function(data) {
                 if(data.code == 200) {
                     alert("注册成功，请登录！");
-                    $('.lowin-register').hide();
-                    $('.lowin-login').show();
                 } else {
                     alert("消息提醒： " + data.msg);
                 }

@@ -2,7 +2,6 @@ body {
     margin: 0;
     background-color: #fbfbfb;
     text-align: center;
-
 }
 
 .lowin {
@@ -141,7 +140,7 @@ body {
 
 .lowin .lowin-box label {
     margin-bottom: 5px;
-    display: inline-block;
+    display: block;
     width: 100%;
     color: var(--color-semidark);
     font-weight: 700;
@@ -162,7 +161,7 @@ body {
 }
 
 .lowin .lowin-box .lowin-btn {
-    display: inline-block;
+    display: block;
     width: 100%;
     border: none;
     color: #fff;
