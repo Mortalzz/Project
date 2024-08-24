@@ -169,9 +169,9 @@ public class StudentController {
 
     @RequestMapping("/get_all")
     @ResponseBody
-    public List getall_Profile(HttpServletRequest request){
+    public ResultData getall_Profile(HttpServletRequest request){
         List<S_student> s_students=studentService.list();
-        return s_students;
+        return ResultData.success(s_students);
     }
     @RequestMapping("/set_profile")
     @ResponseBody
