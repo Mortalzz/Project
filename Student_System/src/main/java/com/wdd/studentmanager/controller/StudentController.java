@@ -26,7 +26,6 @@ import java.io.IOException;
 
 
 @Controller
-@ResponseBody
 @RequestMapping("/student")
 public class StudentController {
 
@@ -37,6 +36,7 @@ public class StudentController {
     public String code="";
     //注册申请
     @PostMapping("/register")
+    @ResponseBody
     public ResultData add(@Validated  S_student student, BindingResult result) {
         BindingResultUtil.validate(result);
         if (findBySn(student.getSn()) != null) {
@@ -57,16 +57,21 @@ public class StudentController {
         return studentService.getOne(wrapper);
     }
 //----------------------------------------------------
+
+    //需要更改
     @RequestMapping("/index")
     public String index(){
-        return "/student/index";
+        return "login";
     }
+
+    //需要更改
     @RequestMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
         return "/login";
     }
 
+    //需要更改
     @GetMapping("/register")
     public String register(){
         return "/register";
@@ -74,6 +79,7 @@ public class StudentController {
 //------------------------------------------------
     //用户登录
     @PostMapping("/login")
+    @ResponseBody
     public ResultData login(HttpServletRequest request){
         // 根据角色选择不同的登录处理逻辑
         String temp=request.getParameter("role");
@@ -123,6 +129,7 @@ public class StudentController {
 
     //获取验证码
     @GetMapping("/captcha")
+    @ResponseBody
         public void getCaptcha(HttpServletResponse response) throws IOException {
         LineCaptcha lineCaptcha = new LineCaptcha(200, 100, 4, 150);
         // 将验证码的文本存储到会话中

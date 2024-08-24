@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@ResponseBody
 @RequestMapping("/course")
 public class CourseController {
     @Autowired
@@ -28,6 +27,7 @@ public class CourseController {
     @Autowired
     CourseService courseService;
     @RequestMapping("/get_courseInfo")
+    @ResponseBody
     public ResultData GetcourseInfo(HttpServletRequest request){
         HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
@@ -55,6 +55,7 @@ public class CourseController {
     }
 
     @RequestMapping("/select_course")
+    @ResponseBody
     public ResultData SelectCourse(@RequestParam("Teacher_name") Integer Teacher_name,//name
                                    @RequestParam("Course_name") Integer Course_name,//name
                                    HttpServletRequest request) {

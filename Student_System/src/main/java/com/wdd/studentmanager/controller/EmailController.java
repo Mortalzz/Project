@@ -22,7 +22,6 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@ResponseBody
 @RequestMapping("/email")
 public class EmailController {
 
@@ -36,6 +35,7 @@ public class EmailController {
     private JavaMailSender mailSender;
 
     @RequestMapping("/send")
+    @ResponseBody
     public ResultData Email(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
