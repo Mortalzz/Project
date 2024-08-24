@@ -104,7 +104,7 @@
                 dataType: "json", // 返回数据类型
                 success: function(data){
                     if(data.success){
-                        window.location.href = "your-index-url"; // 替换为需要跳转的页面
+                        window.location.href = "/student/index"; // 替换为需要跳转的页面
                     }else{
                         alert("消息提醒: " + data.message); // 替换为更友好的提示
                         $("#vcodeImg").click(); // 切换验证码
