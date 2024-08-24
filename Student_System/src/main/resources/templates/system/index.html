@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title> 学生管理系统</title>
+    <title>学生管理系统</title>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -15,7 +15,7 @@
 	<link href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/main-style.css" rel="stylesheet">
-	
+
 	<style>
 	    .main-content {  
 	        margin-left: 240px; 
@@ -30,7 +30,24 @@
 		.aa{
 			margin: 5px auto 5px 40px;
 		}
-	</style>  
+	</style>
+	<script>
+		// 从 sessionStorage 中获取 user 对象
+		var user = JSON.parse(sessionStorage.getItem('user'));
+		// 根据 user.role 设定 indexrole 的值
+		var indexrole;
+		var indexname=user.name;
+		if (user && user.role === "student") {
+			indexrole = "学生";
+		} else {
+			indexrole = "管理员";
+		}
+		// 将 indexrole 的值插入到 HTML 元素中
+		document.getElementById('roleHeading').textContent = indexrole;
+		document.getElementById('roleSpan').textContent = indexrole;
+		document.getElementById('nameHeading').textContent = indexname;
+		document.getElementById('nameSpan').textContent = indexname;
+	</script>
 </head>
 
 
@@ -41,17 +58,17 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="#" class="navbar-brand mx-4 mb-3">
-                    <h3 >学生管理</h3>
+                    <h3 >学生管理系统</h3>
                 </a>
 
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">马冬梅</h6>
-                        <span>学生</span>
+                        <h6 class="mb-0"></h6>
+                        <span id="roleSpan"></span>
                     </div>
                 </div>
 				
@@ -164,8 +181,8 @@
 					<!-- 个人中心 -->
 		            <div class="nav-item dropdown">
 		                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-		                    <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-		                    <span class="d-none d-lg-inline-flex">您好，马冬梅</span>
+		                    <img class="rounded-circle me-lg-2" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+		                    <span class="d-none d-lg-inline-flex">您好，<span id="nameSpan"></span></span>
 		                </a>
 		                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
 		                    <a href="#" class="dropdown-item">我的信息</a> 
