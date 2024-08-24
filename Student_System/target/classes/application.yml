@@ -8,7 +8,7 @@ spring:
 
   thymeleaf:
     mode: HTML
-    cache: true
+    cache: false
     prefix: classpath:/templates/
     encoding: UTF-8
     suffix: .html

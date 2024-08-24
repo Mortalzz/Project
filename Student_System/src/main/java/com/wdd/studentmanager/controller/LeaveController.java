@@ -18,12 +18,12 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@ResponseBody
 @RequestMapping("/leave")
 public class LeaveController {
     @Autowired
     LeaveService leaveService;
     @RequestMapping("/request")
+    @ResponseBody
     public ResultData Requestleave(HttpServletRequest request){
         String Info=request.getParameter("Info");
         HttpSession session=request.getSession(false);
@@ -44,6 +44,7 @@ public class LeaveController {
 
     //查看请假状态
     @RequestMapping("/get")
+    @ResponseBody
     private ResultData Getleave(HttpServletRequest request){
         HttpSession session=request.getSession();
         S_student stu=(S_student) session.getAttribute("currentUser");
@@ -63,6 +64,7 @@ public class LeaveController {
 
     //管理员回复
     @RequestMapping("/confirm")
+    @ResponseBody
     public ResultData confirmLeave(@RequestParam Map<String, String> remarks) {
         // 查询出所有 status 为 false 的记录
         QueryWrapper<S_leave> queryWrapper = new QueryWrapper<>();
@@ -73,7 +75,7 @@ public class LeaveController {
         for (S_leave leave : leaves) {
             leave.setStatus(true);  // 将 status 设置为 true
             // 根据不同的记录设置不同的 remark 值
-            String customRemark = remarks.getOrDefault(String.valueOf(leave.getStudentid()),"????");
+            String customRemark = remarks.getOrDefault(String.valueOf(leave.getId()),"无备注");
             leave.setRemark(customRemark);
         }
 

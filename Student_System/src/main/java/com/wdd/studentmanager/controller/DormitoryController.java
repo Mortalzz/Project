@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 @Controller
-@ResponseBody
 @RequestMapping("/dormitory")
 public class DormitoryController {
 
@@ -27,6 +26,7 @@ public class DormitoryController {
 
     //申请宿舍
     @RequestMapping("/req_dormit")
+    @ResponseBody
     public ResultData reqDormit(HttpServletRequest request,@RequestParam("dormitoryId") Integer dormitoryId ) {
         HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
@@ -52,6 +52,7 @@ public class DormitoryController {
     }//修改测试通过 测试者：邹正强
 
     @RequestMapping("/get_dormitInfo")
+    @ResponseBody
     public ResultData getDormit(HttpServletRequest request){
         HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");

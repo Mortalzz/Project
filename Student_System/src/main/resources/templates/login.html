@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Test with Captcha</title>
+</head>
+<body>
+    <h2>Login Form</h2>
+    <form action="http://localhost:8080/student/login" method="POST">
+        <label for="role">Role:</label>
+        <select id="role" name="role">
+            <option value="student">Student</option>
+            <option value="admin">Admin</option>
+        </select>
+        <br><br>
+        
+        <label for="sn">Student Number (SN):</label>
+        <input type="text" id="sn" name="sn" required>
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+
+        <label for="captcha">Verification Code:</label>
+        <input type="text" id="captcha" name="captcha" required>
+        <br><br>
+
+        <!-- 验证码图片 -->
+        <img id="captchaImage" src="http://localhost:8080/student/captcha" alt="Captcha" onclick="reloadCaptcha()" style="cursor: pointer;">
+        <br>
+        <small>Click the image to reload captcha</small>
+        <br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        // 重新加载验证码图片
+        function reloadCaptcha() {
+            var oldSrc = document.getElementById('captchaImage').src;
+            var timestamp = new Date().getTime();
+            var delimiter = oldSrc.indexOf('?') !== -1 ? '&' : '?';
+            document.getElementById('captchaImage').src = oldSrc + delimiter + "t=" + timestamp;
+        }
+    </script>
+</body>
+</html>

@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@ResponseBody
 @RequestMapping("/course")
 public class CourseController {
     @Autowired
@@ -28,6 +27,7 @@ public class CourseController {
     @Autowired
     CourseService courseService;
     @RequestMapping("/get_courseInfo")
+    @ResponseBody
     public ResultData GetcourseInfo(HttpServletRequest request){
         HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
@@ -55,17 +55,19 @@ public class CourseController {
     }
 
     @RequestMapping("/select_course")
-    public ResultData SelectCourse(@RequestParam("Teacher_name") Integer Teacher_id,//name
-                                   @RequestParam("Course_name") Integer Course_id,//name
+    @ResponseBody
+    public ResultData SelectCourse(@RequestParam("Teacher_name") Integer Teacher_name,//name
+                                   @RequestParam("Course_name") Integer Course_name,//name
                                    HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
 
+
         //查看课程是否存在
         QueryWrapper<S_course> courseQuery = new QueryWrapper<>();
-        courseQuery.eq("id", Course_id);
-        courseQuery.eq("teacherid", Teacher_id);
+        courseQuery.eq("name", Course_name);
+        courseQuery.eq("teachername", Teacher_name);
         S_course course = courseService.getOne(courseQuery);
 
         if (course == null) {

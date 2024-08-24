@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
+<<<<<<< HEAD
     <file url="file://$PROJECT_DIR$" libraries="{jquery-3.5.1}" />
+=======
+>>>>>>> 7d9cbb8d4cd87c6b54d978e568b885ff28b5d602
     <file url="file://$PROJECT_DIR$/Student_System" libraries="{jquery-3.5.1}" />
   </component>
 </project>
