@@ -172,6 +172,7 @@
             url: "http://localhost:8080/student/register", // 替换为注册地址
             data: dataToSend,
             success: function(data) {
+
                 if(data.code == 200) {
                     alert("注册成功，请登录！");
                 } else {

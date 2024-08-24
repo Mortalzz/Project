@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -165,7 +166,15 @@ public class StudentController {
         }
     }
 
+
+    @RequestMapping("/get_all")
+    @ResponseBody
+    public List getall_Profile(HttpServletRequest request){
+        List<S_student> s_students=studentService.list();
+        return s_students;
+    }
     @RequestMapping("/set_profile")
+    @ResponseBody
     public ResultData setProfile(@RequestBody S_student student,HttpServletRequest request){
         HttpSession session=request.getSession(false);
         S_student currentStu=(S_student) session.getAttribute("currentUser");
