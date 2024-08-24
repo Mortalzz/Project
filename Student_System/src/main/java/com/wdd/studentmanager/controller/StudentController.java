@@ -61,20 +61,12 @@ public class StudentController {
     //需要更改
     @RequestMapping("/index")
     public String index(){
-        return "login";
+        return "index";
     }
 
-    //需要更改
-    @RequestMapping("/logout")
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "/login";
-    }
-
-    //需要更改
-    @GetMapping("/register")
-    public String register(){
-        return "/register";
+    @RequestMapping("/index/login")
+    public String index_login(){
+        return  "login&regist";
     }
 //------------------------------------------------
     //用户登录

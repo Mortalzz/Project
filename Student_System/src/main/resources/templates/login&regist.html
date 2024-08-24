@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html  lang="zh">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>登录界面</title>
-    <link rel="stylesheet" href="/static/css/auth.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/css/auth.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <style>
         html, body {
             height: 100%;
@@ -14,7 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-image: url(img/paperwall_2.jpg);
+            background-image: url(../static/img/beauty.png);
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -47,16 +47,16 @@
                     </div>
                     <div class="lowin-group">
                         <label>用户名<a href="#" class="login-back-link">登录?</a></label>
-                        <input type="text" autocomplete="username" name="username" class="lowin-input" placeholder="请输入用户名">
+                        <input type="text" id="username" autocomplete="username" name="username" class="lowin-input" placeholder="请输入用户名"required>
                     </div>
                     <div class="lowin-group password-group">
                         <label>密码<a href="#" class="forgot-link"></a></label>
-                        <input type="password" name="password" autocomplete="current-password" class="lowin-input" placeholder="请输入密码">
+                        <input type="password" id="password" name="password" autocomplete="current-password" class="lowin-input" placeholder="请输入密码"required>
                     </div>
                     <div class="lowin-group">
                         <label>验证码</label>
-                        <input type="text" name="captcha" autocomplete="off" class="lowin-input" placeholder="请输入验证码">
-                        <img id="vcodeImg" src="captcha-url" alt="验证码" class="captcha-img" onclick="this.src='/student/captcha?t=' + new Date().getTime();">
+                        <input type="text" name="captcha" autocomplete="off" class="lowin-input" placeholder="请输入验证码"required>
+                        <img id="captchaImage" src="http://localhost:8080/student/captcha" alt="验证码" class="captcha-img" onclick="reloadCaptcha()" style="cursor: pointer;">
                     </div>
                     <button type="button" id="submitBtn" class="lowin-btn login-btn">
                         登录
@@ -106,7 +106,7 @@
     </footer>
 </div>
 
-<script src="/static/js/auth.js"></script>
+<script src="../static/js/auth.js"></script>
 <script>
     Auth.init({
         login_url: '#login',
@@ -115,17 +115,25 @@
 
     // 登录功能
     $(document).on('click', '#submitBtn', function() {
+        var dataToSend = {
+            d_tel: $("#username").val(),
+            d_pwd: $("#password").val()
+        };
+        if (dataToSend.d_tel == '' || dataToSend.d_pwd == '') {
+            alert('用户名或密码不能为空，请重新输入');
+            return;
+        }
+        console.log(dataToSend);
         $.ajax({
             type: "post",
-            url: "/student/login", // 替换为你的登录地址
-            data: $("#login-form").serialize(),
-            dataType: "json", // 返回数据类型
+            url: "http://localhost:8080/student/login", // 替换为你的登录地址
+            data: dataToSend,
             success: function(data){
-                if(data.success){
-                    window.location.href = "/student/index"; // 替换为需要跳转的页面
+                if(data.code == 200){
+                    window.location.href = "http://localhost:8080/student/index"; // 替换为需要跳转的页面
                 } else {
-                    alert("消息提醒: " + data.message);
-                    $("#vcodeImg").click(); // 切换验证码
+                    alert("消息提醒: " + data.msg);
+                    $("#captchaImage").click(); // 切换验证码
                     $("input[name='captcha']").val(""); // 清空验证码输入框
                 }
             }
@@ -137,7 +145,15 @@
         const registerForm = $('#register-form');
         const password = registerForm.find('input[name="new-password"]').val();
         const confirmPassword = $('#confirm-password').val();
-
+        var dataToSend = {
+            d_tel: $("#username").val(),
+            d_pwd: $("#password").val()
+        };
+        if (dataToSend.d_tel == '' || dataToSend.d_pwd == '') {
+            alert('用户名或密码不能为空，请重新输入');
+            return;
+        }
+        console.log(dataToSend);
         if (password !== confirmPassword) {
             alert('密码和确认密码不一致，请重新输入。');
             return; // 结束注册
@@ -145,16 +161,15 @@
 
         $.ajax({
             type: "post",
-            url: "/student/register", // 替换为你的注册地址
-            data: registerForm.serialize(),
-            dataType: "json",
+            url: "http://localhost:8080/student/register", // 替换为注册地址
+            data: ResultData,
             success: function(data) {
-                if(data.success) {
+                if(data.code == 200) {
                     alert("注册成功，请登录！");
                     $('.lowin-register').hide();
                     $('.lowin-login').show();
                 } else {
-                    alert("注册失败: " + data.message);
+                    alert("消息提醒： " + data.msg);
                 }
             }
         });
@@ -171,6 +186,15 @@
         $('.lowin-register').hide();
         $('.lowin-login').show();
     });
+</script>
+<script>
+    // 重新加载验证码图片
+    function reloadCaptcha() {
+        var oldSrc = document.getElementById('captchaImage').src;
+        var timestamp = new Date().getTime();
+        var delimiter = oldSrc.indexOf('?') !== -1 ? '&' : '?';
+        document.getElementById('captchaImage').src = oldSrc + delimiter + "t=" + timestamp;
+    }
 </script>
 </body>
 </html>
