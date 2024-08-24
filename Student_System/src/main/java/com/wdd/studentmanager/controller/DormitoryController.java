@@ -1,6 +1,6 @@
 package com.wdd.studentmanager.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.wdd.studentmanager.common.ResultData;
 import com.wdd.studentmanager.domain.S_dormit;
