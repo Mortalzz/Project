@@ -73,7 +73,7 @@ public class LeaveController {
         for (S_leave leave : leaves) {
             leave.setStatus(true);  // 将 status 设置为 true
             // 根据不同的记录设置不同的 remark 值
-            String customRemark = remarks.getOrDefault(String.valueOf(leave.getStudentid()),"????");
+            String customRemark = remarks.getOrDefault(String.valueOf(leave.getId()),"无备注");
             leave.setRemark(customRemark);
         }
 
