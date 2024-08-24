@@ -56,7 +56,7 @@ public class StudentController {
         wrapper.eq("sn", sn);
         return studentService.getOne(wrapper);
     }
-
+//----------------------------------------------------
     @RequestMapping("/index")
     public String index(){
         return "/student/index";
@@ -71,7 +71,7 @@ public class StudentController {
     public String register(){
         return "/register";
     }
-
+//------------------------------------------------
     //用户登录
     @PostMapping("/login")
     public ResultData login(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
