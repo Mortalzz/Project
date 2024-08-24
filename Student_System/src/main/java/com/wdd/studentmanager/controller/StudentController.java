@@ -63,7 +63,7 @@ public class StudentController {
         return studentService.getOne(wrapper);
     }
 //----------------------------------------------------
-
+//测试用的
     //需要更改
     @RequestMapping("/index")
     public String index(){
@@ -73,6 +73,14 @@ public class StudentController {
     @RequestMapping("/index/login")
     public String index_login(){
         return  "login&regist";
+    }
+    /**
+     * 跳转登录界面
+     * @return
+     */
+    @GetMapping("/login")
+    public String login(){
+        return "/login";
     }
 //------------------------------------------------
     //用户登录
