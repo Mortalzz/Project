@@ -51,4 +51,9 @@ public class IndexController {
     public String change_password(){
         return "/system/personnalView";
     }
+
+    @RequestMapping("dormit_list")
+    public String dormit_list(){
+        return "/dormit/dormitList";
+    }
 }
