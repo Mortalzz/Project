@@ -44,17 +44,17 @@ public class StudentController {
     @PostMapping("/register")
     @ResponseBody
     public ResultData add(HttpServletRequest request) {
-        String sn=request.getParameter("sn");
         String password=request.getParameter("password");
-        String username=request.getParameter("username");
-        String clazzid=request.getParameter("clazzid");
-        String sex=request.getParameter("sex");
         String qq=request.getParameter("qq");
+        String sex=request.getParameter("sex");
+        String sn=request.getParameter("sn");
+        String username=request.getParameter("username");
+        String clazz=request.getParameter("clazz");
         S_student student=new S_student();
         student.setPassword(password);
         student.setSn(sn);
         student.setUsername(username);
-        student.setClazzid(Integer.parseInt(clazzid));
+        student.setClazzid(Integer.valueOf(clazz));
         student.setQq(qq);
         student.setSex(sex);
         if (findBySn(sn) != null) {
