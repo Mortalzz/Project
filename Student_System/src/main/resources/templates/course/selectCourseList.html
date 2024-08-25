@@ -79,12 +79,14 @@
                     Cname: selectedCourseName,
                     Tname: selectedTeacherName
                 }
+                console.log(selectedCourse);
                 // AJAX 提交选课请求
                 $.ajax({
-                    url: 'http://localhost:8080/course/select', // 替换为实际的选课 API 地址
+                    url: 'http://localhost:8080/course/select_course', // 替换为实际的选课 API 地址
                     method: 'POST',
                     data:selectedCourse,
                     success: function (response) {
+                        console.log(response);
                         if (response.code == 200) {
                             alert('选课成功！');
                             // 可以在此处刷新课程列表或其他逻辑

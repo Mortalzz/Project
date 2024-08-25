@@ -53,7 +53,7 @@
                     table.clear();
                     data.list_course.forEach(function (item) {
                         table.row.add([
-                            '<input type="radio" class="course-radio" name="course" value="' + item.id + '">', // 课程选择框
+                            '<input type="radio" class="course-radio" name="course" value="' + item.id + '" data-name="' + item.name + '" data-teacher="' + item.teachername + '">', // 课程选择框，增加 data-* 属性
                             item.name,
                             item.teachername,
                             item.coursedate,
@@ -67,20 +67,26 @@
             }
         });
 
-        // 提交选课时处理逻辑
+// 提交选课时处理逻辑
         $('#submitButton').click(function () {
-            var selectedCourse = {
-                Cname:$('input[name="course"]:checked').val(), // 获取选中的课程ID
-                Tname:$()
+            var selectedCourseRadio = $('input[name="course"]:checked'); // 获取选中的课程元素
 
-        }
             // 检查是否有选中的课程
-            if (selectedCourse) {
+            if (selectedCourseRadio.length > 0) {
+                var selectedCourseName = selectedCourseRadio.data('name'); // 获取课程名称
+                var selectedTeacherName = selectedCourseRadio.data('teacher'); // 获取教师姓名
+                var selectedCourse={
+                    Cname: selectedCourseName,
+                    Tname: selectedTeacherName
+                }
+                console.log(selectedCourse);
                 // AJAX 提交选课请求
                 $.ajax({
                     url: 'http://localhost:8080/course/select_course', // 替换为实际的选课 API 地址
                     method: 'POST',
+                    data:selectedCourse,
                     success: function (response) {
+                        console.log(response);
                         if (response.code == 200) {
                             alert('选课成功！');
                             // 可以在此处刷新课程列表或其他逻辑

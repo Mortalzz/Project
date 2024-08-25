@@ -145,7 +145,6 @@
             alert('账号或密码不能为空，请重新输入');
             return;
         }
-        console.log(dataToSend);
         $.ajax({
             type: "post",
             url: "http://localhost:8080/student/login", // 替换为你的登录地址
