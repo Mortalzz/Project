@@ -13,6 +13,11 @@
             text-align: center;
             vertical-align: middle;
         }
+        /* 禁用按钮样式 */
+        .disabled-button {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -27,6 +32,7 @@
         <th>寝室编号</th>
         <th>楼栋已住人数</th>
         <th>状态</th>
+        <th>操作</th> <!-- 新增操作列 -->
     </tr>
     </thead>
     <tbody>
@@ -57,16 +63,43 @@
             url: 'http://localhost:8080/dormitory/get_list_dormitInfo', // 替换为实际的 API 地址
             method: 'GET',
             success: function (data) {
-                console.log(data);
                 if (data.code == 200) {
                     // 假设 data.data 是一个数组，包含多个寝室信息
                     data.list_dormit.forEach(function(dormitory) {
+                        // 创建操作按钮，判断状态
+                        var buttonHtml = dormitory.status == 0
+                            ? '<button class="apply-button" data-room="' + dormitory.room + '">申请</button>'
+                            : '<button class="disabled-button" disabled>不可申请</button>';
+
                         table.row.add([
                             dormitory.build, // 楼栋编号
                             dormitory.room,      // 寝室编号
                             dormitory.takeincounts, // 楼栋已住人数
-                            dormitory.status        // 状态
+                            dormitory.status == 0 ? '可申请' : '已满', // 状态
+                            buttonHtml // 操作按钮
                         ]).draw();
+                    });
+
+                    // 为申请按钮添加事件
+                    $('.apply-button').click(function () {
+                        var roomNumber = $(this).data('room');
+                        // AJAX 请求以提交申请
+                        $.ajax({
+                            url: 'http://localhost:8080/dormitory/req_dormit', // 替换为实际的申请 API 地址
+                            method: 'POST',
+                            success: function (response) {
+                                if (response.code == 200) {
+                                    alert('申请成功！');
+                                    location.reload(); // 刷新页面
+                                } else {
+                                    alert('申请失败: ' + response.message);
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('AJAX Error:', status, error);
+                                alert('请求失败，请稍后再试。');
+                            }
+                        });
                     });
                 }
             },
