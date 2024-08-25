@@ -32,7 +32,8 @@ public class DormitoryController {
     public ResultData reqDormit(HttpServletRequest request) {
         HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
-        Integer dormitoryId=Integer.valueOf(request.getParameter("dormitoryId"));
+        String temp=request.getParameter("dormitoryId");
+        Integer dormitoryId=Integer.valueOf(temp);
         // 校验参数是否有效
         if ( currentStu.getId()== null || dormitoryId == null) {
             return ResultData.fail( "Student ID and Dormitory ID must be provided.");

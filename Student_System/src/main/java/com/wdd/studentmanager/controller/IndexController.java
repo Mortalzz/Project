@@ -52,7 +52,7 @@ public class IndexController {
         return "/system/personnalView";
     }
 
-    @RequestMapping("dormit_list")
+    @RequestMapping("/dormit_list")
     public String dormit_list(){
         return "/dormit/dormitList";
     }

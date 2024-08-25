@@ -73,8 +73,8 @@
                         $('#currentPassword').val('');
                         $('#newPassword').val('');
                         $('#confirmPassword').val('');
-                        window.parent.close();
-                        window.location.href="http://localhost:8080/index/login";
+                        window.parent.close(); // 关闭父窗口
+                        window.location.href = 'http://localhost:8080/index/login'; // 跳转到登录页面
                     } else {
                         $('#message').text("错误: " + response.message).css("color", "red");
                     }
