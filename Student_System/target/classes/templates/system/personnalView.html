@@ -57,22 +57,23 @@
             }
 
             var data = {
-                currentPassword: currentPassword,
-                newPassword: newPassword
+                currentPassword: $('#currentPassword').val(),
+                newPassword: $('#newPassword').val()
             };
 
             // 发送 AJAX 请求来修改密码
             $.ajax({
                 url: 'http://localhost:8080/student/change_password', // 替换为实际的 API 地址
                 method: 'POST',
-                contentType: 'application/json', // 指定发送的数据格式
-                data: JSON.stringify(data),
+                data: data,
+                dataType: "json",
                 success: function (response) {
                     if (response.code === 200) {
                         $('#message').text("密码修改成功！").css("color", "green");
                         $('#currentPassword').val('');
                         $('#newPassword').val('');
                         $('#confirmPassword').val('');
+                        window.location.href="http://localhost:8080/index/login";
                     } else {
                         $('#message').text("错误: " + response.message).css("color", "red");
                     }

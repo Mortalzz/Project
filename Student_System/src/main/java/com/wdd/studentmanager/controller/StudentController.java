@@ -166,7 +166,9 @@ public class StudentController {
     public ResultData ch_password(HttpServletRequest request){
         HttpSession session=request.getSession(false);
         S_student currentUser=(S_student) session.getAttribute("currentUser");
-        currentUser.setPassword(request.getParameter("password"));
+        System.out.println(currentUser);
+        currentUser.setPassword(request.getParameter("newPassword"));
+        System.out.println(currentUser);
         if (currentUser != null) {
             // 设置用户详细信息
             session.setAttribute("currentUser",currentUser);
