@@ -9,6 +9,8 @@ import com.wdd.studentmanager.domain.S_admin;
 import com.wdd.studentmanager.domain.S_student;
 import com.wdd.studentmanager.service.AdminService;
 import com.wdd.studentmanager.service.StudentService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,7 +24,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 
 @Controller
@@ -74,14 +80,7 @@ public class StudentController {
     public String index_login(){
         return  "login&regist";
     }
-    /**
-     * 跳转登录界面
-     * @return
-     */
-    @GetMapping("/login")
-    public String login(){
-        return "/login";
-    }
+
 //------------------------------------------------
     //用户登录
     @PostMapping("/login")
@@ -165,7 +164,15 @@ public class StudentController {
         }
     }
 
+
+    @RequestMapping("/get_all")
+    @ResponseBody
+    public ResultData getall_Profile(HttpServletRequest request){
+        List<S_student> s_students=studentService.list();
+        return ResultData.success(s_students);
+    }
     @RequestMapping("/set_profile")
+    @ResponseBody
     public ResultData setProfile(@RequestBody S_student student,HttpServletRequest request){
         HttpSession session=request.getSession(false);
         S_student currentStu=(S_student) session.getAttribute("currentUser");

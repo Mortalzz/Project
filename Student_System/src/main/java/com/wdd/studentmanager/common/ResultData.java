@@ -1,6 +1,9 @@
 package com.wdd.studentmanager.common;
 
+import com.wdd.studentmanager.domain.S_student;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ResultData {
@@ -13,12 +16,21 @@ public class ResultData {
 
     private Object data;
 
+    private List<S_student> list;
 
     private boolean success;
     public static ResultData success(Object data) {
         return resultData(data);
     }
 
+    public static ResultData success(List<S_student> list){
+        ResultData resultData =new ResultData();
+        resultData.setList(list);
+        resultData.setCode(200);
+        resultData.setMsg("获取成功");
+        resultData.setSuccess(true);
+        return resultData;
+    }
     public static ResultData success(long count, Object data) {
         return resultData(200, "消息返回成功", count, data);
     }
