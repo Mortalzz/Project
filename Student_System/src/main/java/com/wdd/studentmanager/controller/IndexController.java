@@ -16,4 +16,9 @@ public class IndexController {
     public String index_welcome(){
         return "/system/welcome";
     }
+
+    @RequestMapping("/show")
+    public String show(){
+        return "index";
+    }
 }
