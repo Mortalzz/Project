@@ -47,10 +47,16 @@ public class StudentController {
         String sn=request.getParameter("sn");
         String password=request.getParameter("password");
         String username=request.getParameter("username");
+        String clazzid=request.getParameter("clazzid");
+        String sex=request.getParameter("sex");
+        String qq=request.getParameter("qq");
         S_student student=new S_student();
         student.setPassword(password);
         student.setSn(sn);
         student.setUsername(username);
+        student.setClazzid(Integer.parseInt(clazzid));
+        student.setQq(qq);
+        student.setSex(sex);
         if (findBySn(sn) != null) {
             return ResultData.fail("学生已经存在，请勿重复添加");
         } else {

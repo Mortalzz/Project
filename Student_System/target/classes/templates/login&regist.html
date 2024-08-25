@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+
 <html  lang="zh" >
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <title>登录界面</title>
     <link rel="stylesheet" href="/css/auth.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -61,7 +63,6 @@
                     <button type="button" id="submitBtn" class="lowin-btn login-btn">
                         登录
                     </button>
-
                     <div class="text-foot">
                         没有帐户? <a href="#" class="register-link">注册</a>
                     </div>
@@ -81,6 +82,21 @@
                     <div class="lowin-group">
                         <label>姓名</label>
                         <input type="text" id="name" name="yourname" autocomplete="yourname" class="lowin-input" placeholder="请输入姓名" required>
+                    </div>
+                    <div class="lowin-group">
+                        <label>性别</label>
+                        <select name="yoursex" class="lowin-input" id="sex">
+                            <option value="man">男</option>
+                            <option value="woman">女</option>
+                        </select>
+                    </div>
+                    <div class="lowin-group">
+                        <label>qq</label>
+                        <input type="text" id="qq" name="yourqq" autocomplete="qq" class="lowin-input" placeholder="请输入qq" required>
+                    </div>
+                    <div class="lowin-group">
+                        <label>专业id</label>
+                        <input type="text" id="clazzid" name="classzzid" class="lowin-input" placeholder="请输入专业id" required>
                     </div>
                     <div class="lowin-group">
                         <label>账号</label>
@@ -137,6 +153,8 @@
             dataType: "json",
             success: function(data){
                 if(data.code == 200){
+                    // 将user对象保存到localStorage
+                    localStorage.setItem('user', JSON.stringify(data.data));
                     window.location.href = "https://cqu.edu.cn"; // 替换为需要跳转的页面
                 } else {
                     alert("消息提醒: " + data.msg);
@@ -155,6 +173,9 @@
         var dataToSend = {
             sn: $("#sn1").val(),
             password: $("#new-password").val(),
+            sex: $("#sex").val,
+            qq: $("#qq").val,
+            clazzid: $("#clazzid").val,
             role:"student",
             username: $("#name").val()
         };
@@ -171,7 +192,9 @@
         $.ajax({
             type: "post",
             url: "http://localhost:8080/student/register", // 替换为注册地址
-            data: dataToSend,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataToSend),//转化为json字符串
+            dataType: "json",
             success: function(data) {
 
                 if(data.code == 200) {
