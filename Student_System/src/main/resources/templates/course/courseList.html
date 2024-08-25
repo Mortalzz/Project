@@ -40,17 +40,17 @@
         });
         // 使用 AJAX 从后端获取数据
         $.ajax({
-            url: 'http://localhost:8080/', // 替换为实际的 API 地址
+            url: 'http://localhost:8080/course/get_all', // 替换为实际的 API 地址
             method: 'GET',
             success: function (data) {
                 if(data.code==200){
                     table.clear();
-                    data.data.forEach(function (item){
+                    data.list_course.forEach(function (item){
                         table.row.add([
-                            item.data.name,
-                            item.data.teachername,
-                            item.data.coursedate,
-                            item.data.courseplace
+                            item.name,
+                            item.teachername,
+                            item.coursedate,
+                            item.courseplace
                         ]).draw();
                     });
                 }
