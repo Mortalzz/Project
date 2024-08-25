@@ -129,12 +129,8 @@ public class StudentController {
         lineCaptcha.write(response.getOutputStream());
     }//验证码测试通过 测试人：邹正强
 
-
-
     //------------------------------------------------------------------------------------------
     //下面为显示和修改学生的信息
-
-
 
     @GetMapping("/get_profile")
     public ResultData getProfile(HttpServletRequest request) {
