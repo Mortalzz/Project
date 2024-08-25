@@ -1,6 +1,7 @@
 package com.wdd.studentmanager.common;
 
 import com.wdd.studentmanager.domain.S_course;
+import com.wdd.studentmanager.domain.S_dormit;
 import com.wdd.studentmanager.domain.S_student;
 import lombok.Data;
 
@@ -21,6 +22,8 @@ public class ResultData {
 
     private List<S_course> list_course;
 
+    private List<S_dormit> list_dormit;
+
     private boolean success;
     public static ResultData success(Object data) {
         return resultData(data);
@@ -29,6 +32,15 @@ public class ResultData {
     public static ResultData success(List<S_student> list){
         ResultData resultData =new ResultData();
         resultData.setList(list);
+        resultData.setCode(200);
+        resultData.setMsg("获取成功");
+        resultData.setSuccess(true);
+        return resultData;
+    }
+
+    public static ResultData success_dormit(List<S_dormit> list){
+        ResultData resultData =new ResultData();
+        resultData.setList_dormit(list);
         resultData.setCode(200);
         resultData.setMsg("获取成功");
         resultData.setSuccess(true);

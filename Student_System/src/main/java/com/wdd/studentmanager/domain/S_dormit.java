@@ -9,6 +9,6 @@ public class S_dormit{
     private String room;
     private String dormitmanager;
     private String managerphone;
-    private int takeinpeople;
+    private int takeincounts;
     private int status;
 }

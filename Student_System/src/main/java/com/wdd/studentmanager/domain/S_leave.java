@@ -9,4 +9,7 @@ public class S_leave {
     private String info;
     private boolean status;
     private String remark;
+    private String timestart;
+    private String timeend;
+    private String phone;
 }
