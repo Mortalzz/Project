@@ -161,6 +161,21 @@ public class StudentController {
             return ResultData.fail("用户未登录");
         }
     }
+    @RequestMapping("/change_password")
+    @ResponseBody
+    public ResultData ch_password(HttpServletRequest request){
+        HttpSession session=request.getSession(false);
+        S_student currentUser=(S_student) session.getAttribute("currentUser");
+        currentUser.setPassword(request.getParameter("password"));
+        if (currentUser != null) {
+            // 设置用户详细信息
+            session.setAttribute("currentUser",currentUser);
+            boolean result=studentService.updateById(currentUser);
+            return ResultData.success(currentUser);
+        } else {
+            return ResultData.fail("用户未登录");
+        }
+    }
 
 
     @RequestMapping("/get_all")
@@ -171,15 +186,20 @@ public class StudentController {
     }
     @RequestMapping("/set_profile")
     @ResponseBody
-    public ResultData setProfile(@RequestBody S_student student,HttpServletRequest request){
+    public ResultData setProfile(HttpServletRequest request){
         HttpSession session=request.getSession(false);
         S_student currentStu=(S_student) session.getAttribute("currentUser");
-        S_student temp=student;
+        currentStu.setSex(request.getParameter("sex"));
+        currentStu.setUsername(request.getParameter("username"));
+        currentStu.setMobile(request.getParameter("mobile"));
+        currentStu.setQq(request.getParameter("qq"));
+        currentStu.setAddress(request.getParameter("address"));
+        currentStu.setPhoto(request.getParameter("photo"));
+        session.setAttribute("currentUser",currentStu);
         if (currentStu != null) {
             // 设置用户详细信息
-            temp.setId(currentStu.getId());
-            boolean result=studentService.updateById(temp);
-            return ResultData.success(temp);
+            boolean result=studentService.updateById(currentStu);
+            return ResultData.success(currentStu);
         } else {
             return ResultData.fail("用户未登录");
         }

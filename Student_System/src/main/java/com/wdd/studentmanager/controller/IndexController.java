@@ -41,4 +41,9 @@ public class IndexController {
     public String list_course(){
         return "/course/courseList";
     }
+
+    @RequestMapping("set_stu_profile")
+    public String set_profile(){
+        return "/student/studentEdit";
+    }
 }
