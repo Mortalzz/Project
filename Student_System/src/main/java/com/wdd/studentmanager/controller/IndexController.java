@@ -56,4 +56,9 @@ public class IndexController {
     public String dormit_list(){
         return "/dormit/dormitList";
     }
+
+    @RequestMapping("/select_course")
+    public String select_course(){
+        return "/course/selectCourseList";
+    }
 }
