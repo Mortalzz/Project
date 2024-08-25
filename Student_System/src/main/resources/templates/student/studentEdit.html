@@ -50,7 +50,8 @@
 
 <script>
     $(document).ready(function () {
-        var table = $('#dataGrid').DataTable({
+        var table;
+        table = $('#dataGrid').DataTable({
             language: {
                 "lengthMenu": "显示 _MENU_ 条记录",
                 "zeroRecords": "没有找到记录",
@@ -126,6 +127,7 @@
                             updatedData.address,
                             row.data()[5] // 保留编辑按钮
                         ]).draw();
+                        window.location.href = "http://localhost:8080/index/set_stu_list";
                         $('#editForm').hide(); // 隐藏编辑表单
                     } else {
                         alert("更新失败: " + response.message);
