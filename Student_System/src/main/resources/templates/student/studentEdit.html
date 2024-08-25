@@ -13,6 +13,11 @@
             display: none; /* 初始隐藏 */
         }
     </style>
+    <script>
+        function refreshPage(){
+            location.reload();
+        }
+    </script>
 </head>
 <body>
 
@@ -24,7 +29,7 @@
     <label>联系方式: <input type="text" id="editMobile"></label><br>
     <label>QQ: <input type="text" id="editQQ"></label><br>
     <label>家庭住址: <input type="text" id="editAddress"></label><br>
-    <button id="saveChanges">保存更改</button>
+    <button id="saveChanges" onlick="refreshPage()">保存更改</button>
 </div>
 
 <table id="dataGrid" class="display" style="width:100%">
@@ -121,7 +126,6 @@
                             updatedData.address,
                             row.data()[5] // 保留编辑按钮
                         ]).draw();
-
                         $('#editForm').hide(); // 隐藏编辑表单
                     } else {
                         alert("更新失败: " + response.message);
