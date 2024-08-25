@@ -1,10 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+<html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寝室列表</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <style>
+        /* 使表格内容居中 */
+        table.dataTable td, table.dataTable th {
+            text-align: center;
+            vertical-align: middle;
+        }
+        /* 禁用按钮样式 */
+        .disabled-button {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
+
+<!-- 刷新页面的按钮 -->
+<button id="refreshButton">刷新页面</button>
+
+<table id="dataGrid" class="display" style="width:100%">
+    <thead>
+    <tr>
+        <th>楼栋编号</th>
+        <th>寝室编号</th>
+        <th>楼栋已住人数</th>
+        <th>状态</th>
+        <th>操作</th> <!-- 新增操作列 -->
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Rows will be added here by JavaScript -->
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        // 初始化 DataTable 实例
+        var table = $('#dataGrid').DataTable({
+            language: {
+                "lengthMenu": "显示 _MENU_ 条记录",
+                "zeroRecords": "没有找到记录",
+                "info": "显示第 _START_ 到 _END_ 条记录，总共 _TOTAL_ 条记录",
+                "infoEmpty": "没有记录",
+                "infoFiltered": "(从 _MAX_ 条记录中筛选)",
+                "search": "搜索:",
+                "paginate": {
+                    "next": "下一页",
+                    "previous": "上一页"
+                }
+            }
+        });
+
+        // 使用 AJAX 从后端获取寝室数据
+        $.ajax({
+            url: 'http://localhost:8080/dormitory/get_list_dormitInfo', // 替换为实际的 API 地址
+            method: 'GET',
+            success: function (data) {
+                if (data.code == 200) {
+                    // 假设 data.data 是一个数组，包含多个寝室信息
+                    data.list_dormit.forEach(function(dormitory) {
+                        // 创建操作按钮，判断状态
+                        var buttonHtml = dormitory.status == 0
+                            ? '<button class="apply-button" data-room="' + dormitory.room + '">申请</button>'
+                            : '<button class="disabled-button" disabled>不可申请</button>';
+
+                        table.row.add([
+                            dormitory.build, // 楼栋编号
+                            dormitory.room,      // 寝室编号
+                            dormitory.takeincounts, // 楼栋已住人数
+                            dormitory.status == 0 ? '可申请' : '已满', // 状态
+                            buttonHtml // 操作按钮
+                        ]).draw();
+                    });
+
+                    // 为申请按钮添加事件
+                    $('.apply-button').click(function () {
+                        var roomNumber = $(this).data('room');
+                        // AJAX 请求以提交申请
+                        $.ajax({
+                            url: 'http://localhost:8080/dormitory/req_dormit', // 替换为实际的申请 API 地址
+                            method: 'POST',
+                            success: function (response) {
+                                if (response.code == 200) {
+                                    alert('申请成功！');
+                                    location.reload(); // 刷新页面
+                                } else {
+                                    alert('申请失败: ' + response.message);
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('AJAX Error:', status, error);
+                                alert('请求失败，请稍后再试。');
+                            }
+                        });
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+            }
+        });
+
+        // 为按钮添加点击事件
+        $('#refreshButton').click(function () {
+            location.reload(); // 刷新页面
+        });
+    });
+</script>
 
 </body>
 </html>
