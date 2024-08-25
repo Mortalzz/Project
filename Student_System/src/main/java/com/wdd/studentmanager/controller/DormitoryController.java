@@ -1,6 +1,7 @@
 package com.wdd.studentmanager.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.wdd.studentmanager.common.ResultData;
 import com.wdd.studentmanager.domain.S_dormit;
@@ -32,23 +33,24 @@ public class DormitoryController {
     public ResultData reqDormit(HttpServletRequest request) {
         HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
-        String temp=request.getParameter("dormitoryId");
-        Integer dormitoryId=Integer.valueOf(temp);
+        String temp=request.getParameter("build");
         // 校验参数是否有效
-        if ( currentStu.getId()== null || dormitoryId == null) {
-            return ResultData.fail( "Student ID and Dormitory ID must be provided.");
+        if ( currentStu.getId()== null || temp == null) {
+            return ResultData.fail( "Student ID and build ID must be provided.");
         }
 
         if(currentStu.getDormitid()!=null){
             return ResultData.fail("已经注册宿舍");
         }
         // 更新学生的宿舍信息
-        currentStu.setDormitid(dormitoryId);
+        QueryWrapper<S_dormit> s_dormitQueryWrapper=new QueryWrapper<>();
+        s_dormitQueryWrapper.eq("build",temp);
+        S_dormit s_dormit=dormitoryService.getOne(s_dormitQueryWrapper);
+        currentStu.setDormitid(s_dormit.getId());
         UpdateWrapper<S_student> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", currentStu.getId()).set("dormitid", currentStu.getDormitid());
         boolean result = studentService.update(updateWrapper); // 调用 update 方法
         if (result) {
-
             return ResultData.success("Dormitory assigned successfully.");
         } else {
             return ResultData.fail("Error!");
