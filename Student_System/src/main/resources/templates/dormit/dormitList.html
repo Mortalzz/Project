@@ -64,7 +64,7 @@
             method: 'GET',
             success: function (data) {
                 if (data.code == 200) {
-                    // 假设 data.data 是一个数组，包含多个寝室信息
+                    // data.data 是一个数组，包含多个寝室信息
                     data.list_dormit.forEach(function(dormitory) {
                         // 创建操作按钮，判断状态
                         var buttonHtml = dormitory.status == 0
