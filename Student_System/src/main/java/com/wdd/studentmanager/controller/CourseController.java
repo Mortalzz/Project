@@ -7,8 +7,10 @@ import com.wdd.studentmanager.domain.S_selected_course;
 import com.wdd.studentmanager.domain.S_student;
 import com.wdd.studentmanager.service.CourseService;
 import com.wdd.studentmanager.service.SelectedCourseService;
+import com.wdd.studentmanager.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +28,9 @@ public class CourseController {
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    StudentService studentService;
     @RequestMapping("/get_courseInfo")
     @ResponseBody
     public ResultData GetcourseInfo(HttpServletRequest request){
@@ -56,19 +61,21 @@ public class CourseController {
 
     @RequestMapping("/select_course")
     @ResponseBody
-    public ResultData SelectCourse(@RequestParam("Teacher_name") Integer Teacher_name,//name
-                                   @RequestParam("Course_name") Integer Course_name,//name
-                                   HttpServletRequest request) {
+    public ResultData SelectCourse(@RequestBody S_course sCourse) {
 
-        HttpSession session = request.getSession(false);
-        S_student currentStu = (S_student) session.getAttribute("currentUser");
+        //HttpSession session = request.getSession(false);
+        //S_student currentStu = (S_student) session.getAttribute("currentUser");
+        /*System.out.println(Teacher_name);
+        System.out.println(Course_name);
+        System.out.println(Stu_id);*/
+        System.out.println(sCourse.toString());
 
-
+        S_student student=studentService.getById(sCourse.getStuId());
         //查看课程是否存在
         QueryWrapper<S_course> courseQuery = new QueryWrapper<>();
-        courseQuery.eq("name", Course_name);
-        courseQuery.eq("teachername", Teacher_name);
-        S_course course = courseService.getOne(courseQuery);
+        courseQuery.eq("name", sCourse.getName());
+        courseQuery.eq("teachername", sCourse.getTeachername());
+        S_course course = courseService.getOne(courseQuery);//匹配课程
 
         if (course == null) {
             return ResultData.fail("Course not found");
@@ -77,7 +84,7 @@ public class CourseController {
         // 判断是否选过该课
         QueryWrapper<S_selected_course> selectedCourseQuery = new QueryWrapper<>();
         selectedCourseQuery.eq("courseid", course.getId());
-        selectedCourseQuery.eq("studentid", currentStu.getId());
+        selectedCourseQuery.eq("studentid", sCourse.getStuId());
 
         int count = (int) selectedCourseService.count(selectedCourseQuery);
 
@@ -88,7 +95,7 @@ public class CourseController {
         //选择该课程
         S_selected_course userSelection = new S_selected_course();
         userSelection.setCourseid(course.getId());
-        userSelection.setStudentid(currentStu.getId());
+        userSelection.setStudentid(sCourse.getStuId());
 
         boolean saveResult = selectedCourseService.save(userSelection);
         if (saveResult) {

@@ -93,6 +93,7 @@ public class StudentController {
         wrapper.eq("sn", sn);
         return studentService.getOne(wrapper);
     }
+
 //----------------------------------------------------
 //测试用的
 /*    //需要更改
@@ -199,26 +200,25 @@ public ResultData login(HttpServletRequest request) throws JSONException {
 
 
 
-    @GetMapping("/get_profile")
+    @PostMapping("/get_profile")
     @ResponseBody
-    public ResultData getProfile(HttpServletRequest request){
-    //JSONObject currentStu=UserContext.getUser();
-        System.out.println(request);
-        HttpSession session = request.getSession(false);
-        /*if (session == null) {
-            System.out.println("会话不存在");
-            return ResultData.fail("会话不存在");
-        }*/
-        S_student currentStu = (S_student) session.getAttribute("currentUser");
-        System.out.println(currentStu);
-        if (currentStu != null) {
+    public ResultData getProfile(@RequestBody S_student student) {
+        int stu_id = student.getId(); // 从请求体中获取学生ID
+        System.out.println(student);
+
+        QueryWrapper<S_student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", stu_id); // 匹配ID
+        S_student currstudent = studentService.getOne(queryWrapper);
+
+        if (currstudent != null) {
             // 获取用户详细信息
-            S_student student = studentService.getById(currentStu.getId());
-            return ResultData.success(student);
+            return ResultData.success(currstudent);
         } else {
             return ResultData.fail("用户未登录");
         }
     }
+
+
 
 
     @RequestMapping("/get_all")
@@ -236,6 +236,10 @@ public ResultData login(HttpServletRequest request) throws JSONException {
 
         S_student tmp=studentService.getById(student.getId());//得到原来未修改的信息
         System.out.println(tmp);
+        if(student.getPhoto()!="")
+        {
+            tmp.setPhoto(student.getPhoto());
+        }
         if(student.getUsername()!=""){
             tmp.setUsername(student.getUsername());
         }

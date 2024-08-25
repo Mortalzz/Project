@@ -1,5 +1,7 @@
 package com.wdd.studentmanager.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 @Data
@@ -10,4 +12,6 @@ public class S_course {
     private String coursedate;
     private String courseplace;
     private String info;
+    @TableField(exist = false)
+    private int stuId;
 }
