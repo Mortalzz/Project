@@ -36,4 +36,9 @@ public class IndexController {
     public String list(){
         return "/student/studentList";
     }
+
+    @RequestMapping("/course_list")
+    public String list_course(){
+        return "/course/courseList";
+    }
 }
