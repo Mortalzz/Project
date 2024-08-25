@@ -82,7 +82,12 @@
 
                     // 为申请按钮添加事件
                     $('.apply-button').click(function () {
-                        var roomNumber = $(this).data('room');
+                        var data1 = {
+                            build: data.build,
+                            room: data.room,
+                            takeincounts: data.takeincounts,
+                            status: data.status
+                        }
                         // AJAX 请求以提交申请
                         $.ajax({
                             url: 'http://localhost:8080/dormitory/req_dormit', // 替换为实际的申请 API 地址
