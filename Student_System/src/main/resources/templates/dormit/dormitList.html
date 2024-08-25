@@ -92,6 +92,7 @@
                         $.ajax({
                             url: 'http://localhost:8080/dormitory/req_dormit', // 替换为实际的申请 API 地址
                             method: 'POST',
+                            data:data1,
                             success: function (response) {
                                 if (response.code == 200) {
                                     alert('申请成功！');
