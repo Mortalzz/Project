@@ -82,11 +82,12 @@
 
                     // 为申请按钮添加事件
                     $('.apply-button').click(function () {
+                        // 从按钮元素中获取宿舍信息
                         var data1 = {
-                            build: data.build,
-                            room: data.room,
-                            takeincounts: data.takeincounts,
-                            status: data.status
+                            build: $(this).data('build'), // 获取楼栋信息
+                            room: $(this).data('room'),   // 获取寝室信息  
+                            takeincounts: $(this).data('takeincounts'), // 获取已住人数
+                            status: $(this).data('status') // 获取状态
                         }
                         // AJAX 请求以提交申请
                         $.ajax({
