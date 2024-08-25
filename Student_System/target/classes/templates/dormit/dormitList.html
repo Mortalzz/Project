@@ -58,61 +58,61 @@
             }
         });
 
-        // 使用 AJAX 从后端获取寝室数据
+        // 使用 AJAX 从后端获取课程数据
         $.ajax({
-            url: 'http://localhost:8080/dormitory/get_list_dormitInfo', // 替换为实际的 API 地址
+            url: 'http://localhost:8080/course/get_all', // 替换为实际的 API 地址
             method: 'GET',
             success: function (data) {
                 if (data.code == 200) {
-                    // data.data 是一个数组，包含多个寝室信息
-                    data.list_dormit.forEach(function(dormitory) {
-                        // 创建操作按钮，判断状态
-                        var buttonHtml = dormitory.status == 0
-                            ? '<button class="apply-button" data-build="' + dormitory.build + '" data-room="' + dormitory.room + '" data-takeincounts="' + dormitory.takeincounts + '" data-status="' + dormitory.status + '">申请</button>'
-                            : '<button class="disabled-button" disabled>不可申请</button>';
-
+                    table.clear();
+                    data.list_course.forEach(function (item) {
                         table.row.add([
-                            dormitory.build, // 楼栋编号
-                            dormitory.room,      // 寝室编号
-                            dormitory.takeincounts, // 楼栋已住人数
-                            dormitory.status == 0 ? '可申请' : '已满', // 状态
-                            buttonHtml // 操作按钮
+                            '<input type="radio" class="course-radio" name="course" value="' + item.id + '" data-name="' + item.name + '" data-teacher="' + item.teachername + '">', // 课程选择框，增加 data-* 属性
+                            item.name,
+                            item.teachername,
+                            item.coursedate,
+                            item.courseplace
                         ]).draw();
-                    });
-
-                    // 为申请按钮添加事件
-                    $('.apply-button').click(function () {
-                        // 从按钮元素中获取宿舍信息
-                        var data1 = {
-                            build: $(this).data('build'), // 获取楼栋信息
-                            room: $(this).data('room'),   // 获取寝室信息
-                            takeincounts: $(this).data('takeincounts'), // 获取已住人数
-                            status: $(this).data('status') // 获取状态
-                        }
-
-                        // AJAX 请求以提交申请
-                        $.ajax({
-                            url: 'http://localhost:8080/dormitory/req_dormit', // 替换为实际的申请 API 地址
-                            method: 'POST',
-                            data: data1,
-                            success: function (response) {
-                                if (response.code == 200) {
-                                    alert('申请成功！');
-                                    location.reload(); // 刷新页面
-                                } else {
-                                    alert('申请失败: ' + response.message);
-                                }
-                            },
-                            error: function (xhr, status, error) {
-                                console.error('AJAX Error:', status, error);
-                                alert('请求失败，请稍后再试。');
-                            }
-                        });
                     });
                 }
             },
             error: function (xhr, status, error) {
                 console.error('AJAX Error:', status, error);
+            }
+        });
+
+// 提交选课时处理逻辑
+        $('#submitButton').click(function () {
+            var selectedCourseRadio = $('input[name="course"]:checked'); // 获取选中的课程元素
+
+            // 检查是否有选中的课程
+            if (selectedCourseRadio.length > 0) {
+                var selectedCourseName = selectedCourseRadio.data('name'); // 获取课程名称
+                var selectedTeacherName = selectedCourseRadio.data('teacher'); // 获取教师姓名
+                var selectedCourse={
+                    Cname: selectedCourseName,
+                    Tname: selectedTeacherName
+                }
+                // AJAX 提交选课请求
+                $.ajax({
+                    url: 'http://localhost:8080/course/select', // 替换为实际的选课 API 地址
+                    method: 'POST',
+                    data:selectedCourse,
+                    success: function (response) {
+                        if (response.code == 200) {
+                            alert('选课成功！');
+                            // 可以在此处刷新课程列表或其他逻辑
+                        } else {
+                            alert('选课失败: ' + response.msg);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                        alert('请求失败，请稍后再试。');
+                    }
+                });
+            } else {
+                alert('请至少选择一门课程。');
             }
         });
 

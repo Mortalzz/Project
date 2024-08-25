@@ -1,0 +1,102 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <meta charset="utf-8">  
+    <title>请假管理</title>  
+    <!-- Bootstrap引入一个外部样式文件 -->  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">  
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>  
+  
+    <style type="text/css">  
+        .scrollable-table-container {  
+            overflow-y: auto;  
+            border: 1px solid #ddd;  
+            margin: 50px 120px 10px 120px;  
+        }  
+        table {  
+            width: 100%;  
+            border-collapse: collapse;  
+        }  
+        th, td {  
+            border: 1px solid #ddd;  
+            padding: 8px;  
+            text-align: left;  
+        } 
+		 h3 {
+		 	text-align: center;
+		 	color: #007BFF;
+		 }  
+		 #tishi {  
+		     text-align: center;  
+		 }   
+		 .image-center {    
+		     text-align: center;    
+		     margin-bottom: 40px;   
+		 }      
+
+    </style>  
+</head>  
+  
+<body>  
+    <h3>请假结果查询</h3>  
+    <div id="content"></div>  
+  
+    <script> 
+        let leaveRecords = [  
+            { id: 111, reason: '世界这么大，想去看看', startDate: '5.4', endDate: '5.8', status: '0',remark:'0'},  
+            { id: 222, reason: '需要休息', startDate: '5.10', endDate: '5.12', status: '1',remark:'1'}, 
+			 { id: 233, reason: '需要休息', startDate: '5.10', endDate: '5.12', status: '1',remark:'0'},  
+        ];  
+  
+        if (leaveRecords.length === 3) {  
+            let contentHTML = `  
+                <div class="image-center">  
+                    <img src="img/3.jpg" style="width: 300px; height: 350px;">  
+                </div>  
+                <p id="tishi">您暂时没有任何请假申请哦~~</p>  
+            `;  
+            document.getElementById('content').innerHTML = contentHTML;  
+        } else {
+			
+			
+            let contentHTML = `  
+                <div class="scrollable-table-container">  
+                    <table class="table table-bordered">  
+                        <tr>  
+                            <th>学号</th>  
+                            <th>请假原因</th>  
+                            <th>请假开始时间</th>  
+                            <th>请假结束时间</th>  
+                            <th>请假结果</th>   
+                        </tr>  
+                `;  
+				let statuss;
+				leaveRecords.forEach(record => {
+					if (record.status == 0) {  
+					    statuss = '审批中';  
+					} else if (record.status == 1 && record.remark == 0) {  
+					    statuss = '审批不通过';  
+					} else {  
+					    statuss = '审批通过';  
+					}  
+                contentHTML += `  
+                    <tr>  
+                        <td>${record.id}</td>  
+                        <td>${record.reason}</td>  
+                        <td>${record.startDate}</td>  
+                        <td>${record.endDate}</td>  
+                        <td>${statuss}</td>  
+                    </tr>  
+                `;  
+            });  
+  
+            contentHTML += `  
+                    </table>  
+                </div>  
+            `;  
+            document.getElementById('content').innerHTML = contentHTML;  
+        }  
+    </script>  
+</body>  
+</html>

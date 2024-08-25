@@ -56,14 +56,11 @@ public class CourseController {
 
     @RequestMapping("/select_course")
     @ResponseBody
-    public ResultData SelectCourse(@RequestParam("Teacher_name") Integer Teacher_name,//name
-                                   @RequestParam("Course_name") Integer Course_name,//name
-                                   HttpServletRequest request) {
-
+    public ResultData SelectCourse(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
-
-
+        String Course_name=request.getParameter("Cname");
+        String Teacher_name=request.getParameter("Tname");
         //查看课程是否存在
         QueryWrapper<S_course> courseQuery = new QueryWrapper<>();
         courseQuery.eq("name", Course_name);
