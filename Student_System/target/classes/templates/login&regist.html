@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+
 <html  lang="zh" >
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <title>登录界面</title>
     <link rel="stylesheet" href="/css/auth.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -171,7 +173,9 @@
         $.ajax({
             type: "post",
             url: "http://localhost:8080/student/register", // 替换为注册地址
-            data: dataToSend,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataToSend),//转化为json字符串
+            dataType: "json",
             success: function(data) {
 
                 if(data.code == 200) {

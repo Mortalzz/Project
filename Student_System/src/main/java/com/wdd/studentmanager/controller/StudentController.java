@@ -7,6 +7,7 @@ import com.wdd.studentmanager.common.ResultData;
 import com.wdd.studentmanager.domain.Login;
 import com.wdd.studentmanager.domain.S_admin;
 import com.wdd.studentmanager.domain.S_student;
+import com.wdd.studentmanager.domain.UserContext;
 import com.wdd.studentmanager.service.AdminService;
 import com.wdd.studentmanager.service.StudentService;
 import org.json.JSONException;
@@ -32,6 +33,7 @@ import java.util.List;
 
 
 @Controller
+@CrossOrigin
 @RequestMapping("/student")
 public class StudentController {
 
@@ -43,19 +45,42 @@ public class StudentController {
     //注册申请
     @PostMapping("/register")
     @ResponseBody
-    public ResultData add(HttpServletRequest request) {
-        String sn=request.getParameter("sn");
-        String password=request.getParameter("password");
-        String username=request.getParameter("username");
+    public ResultData add(HttpServletRequest request) throws JSONException {
+        StringBuilder jsonStringBuilder = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonStringBuilder.append(line);
+            }
+        } catch (IOException e) {
+            return ResultData.fail("读取请求数据失败");
+        }
+
+        // 解析 JSON 数据
+        String jsonString = jsonStringBuilder.toString();
+        JSONObject jsonObject = new JSONObject(jsonString);
+
+        String username = jsonObject.getString("username");
+        String sn = jsonObject.getString("sn");
+        String password = jsonObject.getString("password");
+        String sex = jsonObject.getString("sex");
+        int clazzid = jsonObject.getInt("clazzid");
+        String qq = jsonObject.getString("qq");
+
         S_student student=new S_student();
         student.setPassword(password);
         student.setSn(sn);
         student.setUsername(username);
+        student.setQq(qq);
+        student.setClazzid(clazzid);
+        student.setSex(sex);
+        System.out.println(student);
         if (findBySn(sn) != null) {
             return ResultData.fail("学生已经存在，请勿重复添加");
         } else {
             boolean save = studentService.save(student);
             if (save) {
+                System.out.println("保存成功");
                 return ResultData.success(save);
             } else {
                 return ResultData.fail("保存失败，请联系网站管理员");
@@ -70,7 +95,7 @@ public class StudentController {
     }
 //----------------------------------------------------
 //测试用的
-    //需要更改
+/*    //需要更改
     @RequestMapping("/index")
     public String index(){
         return "system/index";
@@ -80,52 +105,74 @@ public class StudentController {
     public String index_login(){
         return  "login&regist";
     }
-
+*/
 //------------------------------------------------
     //用户登录
-    @PostMapping("/login")
-    @ResponseBody
-    public ResultData login(HttpServletRequest request){
-        // 根据角色选择不同的登录处理逻辑
-        String temp=request.getParameter("role");
-        if ("student".equals( request.getParameter("role"))) {
-            return loginStudent(request);
-        } else if ("admin".equals(request.getParameter("role"))) {
-            return loginAdmin(request);
-        } else {
-            return ResultData.fail("无效的角色");
+@PostMapping("/login")
+@ResponseBody
+public ResultData login(HttpServletRequest request) throws JSONException {
+    StringBuilder jsonStringBuilder = new StringBuilder();
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonStringBuilder.append(line);
         }
-    }//登录测试通过 测试人：邹正强
+    } catch (IOException e) {
+        e.printStackTrace();
+        return ResultData.fail("读取请求数据失败: " + e.getMessage());
+    }
 
-    private ResultData loginStudent(HttpServletRequest request){
-        if (!request.getParameter("captcha").equals(code)) {
-            return ResultData.fail("验证码不正确，请检查后重新输入");
-        }
+    String jsonString = jsonStringBuilder.toString();
+    System.out.println("接收到的 JSON 数据: " + jsonString); // 日志输出接收到的数据
+
+    JSONObject jsonObject;
+    try {
+        jsonObject = new JSONObject(jsonString);
+    } catch (JSONException e) {
+        e.printStackTrace();
+        return ResultData.fail("JSON 解析失败: " + e.getMessage());
+    }
+
+    String role = jsonObject.getString("role");
+    if ("student".equals(role)) {
+        return loginStudent(jsonObject,request);
+    } else if ("admin".equals(role)) {
+        return loginAdmin(jsonObject);
+    } else {
+        return ResultData.fail("无效的角色");
+    }
+}
+
+
+    private ResultData loginStudent(JSONObject jsonObject,HttpServletRequest request) throws JSONException {
+
+
         QueryWrapper<S_student> studentWrapper = new QueryWrapper<>();
-        studentWrapper.eq("sn", request.getParameter("sn"));
-        studentWrapper.eq("password", request.getParameter("password"));
+        studentWrapper.eq("sn", jsonObject.getString("sn"));
+        studentWrapper.eq("password", jsonObject.getString("password"));
         S_student student = studentService.getOne(studentWrapper);
         if (student != null) {
-            HttpSession session = request.getSession(); // 假设在一个控制器方法中
+            System.out.println(request);
+            HttpSession session = request.getSession();
             session.setAttribute("currentUser",student);
+            System.out.println(session);
+            //UserContext.setUser(jsonObject);//使用UserContext 类存储用户信息
             return ResultData.success(student);
         } else {
             return ResultData.fail("学生用户不存在");
         }
     }
 
-    private ResultData loginAdmin(HttpServletRequest request) {
-        if (!request.getParameter("captcha").equals(code)) {
-            return ResultData.fail("验证码不正确，请检查后重新输入");
-        }
+    private ResultData loginAdmin(JSONObject jsonObject) throws JSONException {
         QueryWrapper<S_admin> adminWrapper = new QueryWrapper<>();
-        adminWrapper.eq("sn", request.getParameter("sn"));
-        adminWrapper.eq("password", request.getParameter("password"));
+        adminWrapper.eq("sn", jsonObject.getString("sn"));
+        adminWrapper.eq("password", jsonObject.getString("password"));
         S_admin admin = adminService.getOne(adminWrapper);
 
         if (admin != null) {
-            HttpSession session = request.getSession(); // 假设在一个控制器方法中
-            session.setAttribute("currentUser", admin);
+            //HttpSession session = request.getSession();
+            //session.setAttribute("currentUser", admin);
+            UserContext.setUser(jsonObject);
             return ResultData.success(admin);
         } else {
             return ResultData.fail("管理员用户不存在");
@@ -135,7 +182,7 @@ public class StudentController {
     //获取验证码
     @GetMapping("/captcha")
     @ResponseBody
-        public void getCaptcha(HttpServletResponse response) throws IOException {
+    public void getCaptcha(HttpServletResponse response) throws IOException {
         LineCaptcha lineCaptcha = new LineCaptcha(200, 100, 4, 150);
         // 将验证码的文本存储到会话中
         code=lineCaptcha.getCode();
@@ -146,15 +193,24 @@ public class StudentController {
 
 
 
+
     //------------------------------------------------------------------------------------------
     //下面为显示和修改学生的信息
 
 
 
     @GetMapping("/get_profile")
-    public ResultData getProfile(HttpServletRequest request) {
-        HttpSession session=request.getSession(false);
+    @ResponseBody
+    public ResultData getProfile(HttpServletRequest request){
+    //JSONObject currentStu=UserContext.getUser();
+        System.out.println(request);
+        HttpSession session = request.getSession(false);
+        /*if (session == null) {
+            System.out.println("会话不存在");
+            return ResultData.fail("会话不存在");
+        }*/
         S_student currentStu = (S_student) session.getAttribute("currentUser");
+        System.out.println(currentStu);
         if (currentStu != null) {
             // 获取用户详细信息
             S_student student = studentService.getById(currentStu.getId());
@@ -173,15 +229,18 @@ public class StudentController {
     }
     @RequestMapping("/set_profile")
     @ResponseBody
-    public ResultData setProfile(@RequestBody S_student student,HttpServletRequest request){
-        HttpSession session=request.getSession(false);
-        S_student currentStu=(S_student) session.getAttribute("currentUser");
-        S_student temp=student;
-        if (currentStu != null) {
+    public ResultData setProfile(@RequestBody S_student student /*,HttpServletRequest request*/){
+        //HttpSession session=request.getSession(false);
+        //S_student currentStu=(S_student) session.getAttribute("currentUser");
+
+        //S_student temp=student;
+
+        if (student != null) {
             // 设置用户详细信息
-            temp.setId(currentStu.getId());
-            boolean result=studentService.updateById(temp);
-            return ResultData.success(temp);
+
+            //temp.setId(student.getId());
+            boolean result=studentService.updateById(student);
+            return ResultData.success(student);
         } else {
             return ResultData.fail("用户未登录");
         }
