@@ -96,7 +96,7 @@
                     </div>
                     <div class="lowin-group">
                         <label>专业id</label>
-                        <input type="text" id="clazzid" name="classzzid" class="lowin-input" placeholder="请输入专业id" required>
+                        <input type="text" id="clazz" name="classzzid" class="lowin-input" placeholder="请输入专业id" required>
                     </div>
                     <div class="lowin-group">
                         <label>账号</label>
@@ -173,14 +173,14 @@
         var dataToSend = {
             sn: $("#sn1").val(),
             password: $("#new-password").val(),
-            sex: $("#sex").val,
-            qq: $("#qq").val,
-            clazzid: $("#clazzid").val,
+            sex: $("#sex").val(),
+            qq: $("#qq").val(),
+            clazz: $("#clazz").val(),
             role:"student",
             username: $("#name").val()
         };
-        if (dataToSend.sn == '' || dataToSend.password == ''||dataToSend.username==''||dataToSend.qq == ''||dataToSend.clazzid == ''||dataToSend.sex=='') {
-            alert('必要项目不能为空，请重新输入');
+        if (dataToSend.sn == '' || dataToSend.password == ''||dataToSend.username==''||dataToSend.sex==''||dataToSend.qq==''||dataToSend.clazz=='') {
+            alert('必填项目不能为空，请重新输入');
             return;
         }
         console.log(dataToSend);
@@ -192,11 +192,8 @@
         $.ajax({
             type: "post",
             url: "http://localhost:8080/student/register", // 替换为注册地址
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(dataToSend),//转化为json字符串
-            dataType: "json",
+            data: dataToSend,
             success: function(data) {
-
                 if(data.code == 200) {
                     alert("注册成功，请登录！");
                 } else {

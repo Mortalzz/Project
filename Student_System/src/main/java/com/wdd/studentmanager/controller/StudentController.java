@@ -1,33 +1,22 @@
 package com.wdd.studentmanager.controller;
-import cn.hutool.captcha.CaptchaUtil;
+
 import cn.hutool.captcha.LineCaptcha;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.wdd.studentmanager.common.BindingResultUtil;
 import com.wdd.studentmanager.common.ResultData;
-import com.wdd.studentmanager.domain.Login;
 import com.wdd.studentmanager.domain.S_admin;
 import com.wdd.studentmanager.domain.S_student;
 import com.wdd.studentmanager.service.AdminService;
 import com.wdd.studentmanager.service.StudentService;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 
@@ -44,17 +33,17 @@ public class StudentController {
     @PostMapping("/register")
     @ResponseBody
     public ResultData add(HttpServletRequest request) {
-        String sn=request.getParameter("sn");
         String password=request.getParameter("password");
-        String username=request.getParameter("username");
-        String clazzid=request.getParameter("clazzid");
-        String sex=request.getParameter("sex");
         String qq=request.getParameter("qq");
+        String sex=request.getParameter("sex");
+        String sn=request.getParameter("sn");
+        String username=request.getParameter("username");
+        String clazz=request.getParameter("clazz");
         S_student student=new S_student();
         student.setPassword(password);
         student.setSn(sn);
         student.setUsername(username);
-        student.setClazzid(Integer.parseInt(clazzid));
+        student.setClazzid(Integer.valueOf(clazz));
         student.setQq(qq);
         student.setSex(sex);
         if (findBySn(sn) != null) {
@@ -74,7 +63,7 @@ public class StudentController {
         wrapper.eq("sn", sn);
         return studentService.getOne(wrapper);
     }
-//----------------------------------------------------
+    //----------------------------------------------------
 //测试用的
     //需要更改
     @RequestMapping("/index")
@@ -87,7 +76,7 @@ public class StudentController {
         return  "login&regist";
     }
 
-//------------------------------------------------
+    //------------------------------------------------
     //用户登录
     @PostMapping("/login")
     @ResponseBody
@@ -141,7 +130,7 @@ public class StudentController {
     //获取验证码
     @GetMapping("/captcha")
     @ResponseBody
-        public void getCaptcha(HttpServletResponse response) throws IOException {
+    public void getCaptcha(HttpServletResponse response) throws IOException {
         LineCaptcha lineCaptcha = new LineCaptcha(200, 100, 4, 150);
         // 将验证码的文本存储到会话中
         code=lineCaptcha.getCode();
