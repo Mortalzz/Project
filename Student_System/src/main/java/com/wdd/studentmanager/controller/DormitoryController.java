@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+
 @Controller
 @RequestMapping("/dormitory")
 public class DormitoryController {
@@ -71,5 +73,10 @@ public class DormitoryController {
         }
     }//获取测试通过，测试人：邹正强
 
-
+    @RequestMapping("/get_list_dormitInfo")
+    @ResponseBody
+    public ResultData get_all_Dormit(HttpServletRequest request){
+        List<S_dormit> s_dormits=dormitoryService.list();
+        return ResultData.success_dormit(s_dormits);
+    }
 }
