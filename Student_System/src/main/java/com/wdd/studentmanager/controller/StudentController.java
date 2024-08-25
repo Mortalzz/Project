@@ -232,15 +232,34 @@ public ResultData login(HttpServletRequest request) throws JSONException {
     public ResultData setProfile(@RequestBody S_student student /*,HttpServletRequest request*/){
         //HttpSession session=request.getSession(false);
         //S_student currentStu=(S_student) session.getAttribute("currentUser");
+        System.out.println(student);
+
+        S_student tmp=studentService.getById(student.getId());//得到原来未修改的信息
+        System.out.println(tmp);
+        if(student.getUsername()!=""){
+            tmp.setUsername(student.getUsername());
+        }
+        if(student.getSn()!=""){
+            tmp.setSn(student.getSn());
+        }
+        if(student.getSex()!=""){
+            tmp.setSex(student.getSex());
+        }
+        if(student.getAddress()!=""){
+            tmp.setAddress(student.getAddress());
+        }
+        if(student.getQq()!=""){
+            tmp.setQq(student.getQq());
+        }
+
 
         //S_student temp=student;
 
-        if (student != null) {
+        if (tmp != null) {
             // 设置用户详细信息
-
             //temp.setId(student.getId());
-            boolean result=studentService.updateById(student);
-            return ResultData.success(student);
+            boolean result=studentService.updateById(tmp);
+            return ResultData.success(tmp);
         } else {
             return ResultData.fail("用户未登录");
         }
