@@ -173,14 +173,14 @@
         var dataToSend = {
             sn: $("#sn1").val(),
             password: $("#new-password").val(),
-            sex: $("#sex").val,
-            qq: $("#qq").val,
-            clazzid: $("#clazzid").val,
+            sex: $("#sex").val(),
+            qq: $("#qq").val(),
+            clazzid: $("#clazzid").val(),
             role:"student",
             username: $("#name").val()
         };
-        if (dataToSend.sn == '' || dataToSend.password == ''||dataToSend.username=='') {
-            alert('账号或密码或姓名不能为空，请重新输入');
+        if (dataToSend.sn == '' || dataToSend.password == ''||dataToSend.username==''||dataToSend.qq == ''||dataToSend.clazzid == ''||dataToSend.sex=='') {
+            alert('必要项目不能为空，请重新输入');
             return;
         }
         console.log(dataToSend);

@@ -1,11 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <title>欢迎登录</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>欢迎界面</title>
+    <link rel="stylesheet" href="/css/auth.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url(/img/beauty.png);
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            overflow: hidden; /* 隐藏溢出部分 */
+        }
+        .welcome-box {
+            width: 400px; /* 欢迎框的宽度 */
+            border-radius: 10px; /* 圆角 */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+            background: rgba(255, 255, 255, 0.9); /* 背景色 */
+            padding: 20px; /* 内边距 */
+            text-align: center; /* 文本居中 */
+        }
+        .welcome-box h1 {
+            margin-bottom: 20px; /* 标题和下面元素间距 */
+        }
+        .welcome-box img {
+            width: 100px; /* logo宽度 */
+            margin-bottom: 20px; /* logo和欢迎信息间距 */
+        }
+    </style>
 </head>
-<body>
 
+<body>
+<div class="welcome-box">
+    <div class="welcome-brand">
+        <img src="/img/kodinger.jpg" alt="logo">
+    </div>
+    <h1>欢迎使用我们的系统!</h1>
+    <p>感谢您的登录，祝您使用愉快！</p>
+    <button id="loginBtn" class="lowin-btn">
+        回到登录
+    </button>
+    <div class="text-foot">
+        <a href="https://www.cqu.edu.cn">了解更多</a>
+    </div>
+</div>
+
+<script>
+    // 返回登录界面功能
+    $(document).on('click', '#loginBtn', function() {
+        window.location.href = "http://localhost:8080/student/login"; // 替换为登录页面的地址
+    });
+</script>
 </body>
 </html>
