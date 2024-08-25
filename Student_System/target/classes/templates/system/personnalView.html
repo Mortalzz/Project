@@ -73,6 +73,7 @@
                         $('#currentPassword').val('');
                         $('#newPassword').val('');
                         $('#confirmPassword').val('');
+                        window.parent.close();
                         window.location.href="http://localhost:8080/index/login";
                     } else {
                         $('#message').text("错误: " + response.message).css("color", "red");
