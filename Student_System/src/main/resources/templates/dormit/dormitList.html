@@ -25,7 +25,6 @@
     <tr>
         <th>楼栋编号</th>
         <th>寝室编号</th>
-        <th>床位数</th>
         <th>楼栋已住人数</th>
         <th>状态</th>
     </tr>
@@ -55,17 +54,17 @@
 
         // 使用 AJAX 从后端获取寝室数据
         $.ajax({
-            url: 'http://localhost:8080/dormitory/req_dormit', // 替换为实际的 API 地址
+            url: 'http://localhost:8080/dormitory/get_list_dormitInfo', // 替换为实际的 API 地址
             method: 'GET',
             success: function (data) {
                 console.log(data);
                 if (data.code == 200) {
                     // 假设 data.data 是一个数组，包含多个寝室信息
-                    data.data.forEach(function(dormitory) {
+                    data.list_dormit.forEach(function(dormitory) {
                         table.row.add([
                             dormitory.build, // 楼栋编号
                             dormitory.room,      // 寝室编号
-                            dormitory.occupied_beds, // 楼栋已住人数
+                            dormitory.takeincounts, // 楼栋已住人数
                             dormitory.status        // 状态
                         ]).draw();
                     });
