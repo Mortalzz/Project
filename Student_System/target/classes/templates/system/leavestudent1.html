@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>请假申请</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 40px;
+			}
+
+			h2 {
+				text-align: center;
+				color: #007BFF;
+			}
+
+			.form-container {
+				max-width: 600px;
+				margin: 0 auto;
+				padding: 20px;
+				border: 1px solid #ccc;
+				border-radius: 8px;
+			}
+
+			.form-group {
+				margin-bottom: 30px;
+			}
+
+			.form-group label {
+				display: block;
+				margin-bottom: 10px;
+			}
+
+			.form-group input,
+			.form-group textarea {
+				width: 100%;
+				padding: 8px;
+				box-sizing: border-box;
+			}
+
+			.form-group input[type="text"],
+			.form-group textarea {
+				width: 100%;
+				padding: 8px;
+				box-sizing: border-box;
+			}
+
+			.form-group textarea {
+				height: 100px;
+			}
+
+			.submit-btn {
+				display: block;
+				width: 100%;
+				padding: 10px;
+				background-color: #007BFF;
+				color: white;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+
+			.submit-btn:hover {
+				background-color: #0056b3;
+			}
+
+			.form-group.phone-input input[type="tel"] {
+				border: none;
+				border-bottom: 2px solid #ccc;
+				padding: 0 5px;
+				margin-top: 8px;
+				background-color: transparent;
+				width: calc(100% - 10px);
+			}
+
+			.form-group.phone-input input[type="tel"]:focus {
+				border-bottom-color: black;
+				outline: none;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<h2>请假申请</h2>
+		<div class="form-container">
+			<form action="/submit-leave-request" method="post">
+
+				<div class="form-group">
+				    <label for="startDate">请假开始日期：</label>  
+				    <input type="date" id="startDate" name="startDate" required>  
+				</div>
+
+				<div class="form-group">
+				    <label for="startDate">请假结束日期：</label>  
+				    <input type="date" id="endDate" name="endDate" required>  
+				</div>
+
+				<div class="form-group">
+					<label>请假原因：</label>
+					<textarea id="reason" name="reason" required></textarea>
+					<script>
+						var reasonTextarea = document.getElementById('reason');
+						var placeholderText = '（病假、事假）请详细填写';
+						reasonTextarea.addEventListener('focus', function() {
+							if (this.value === placeholderText) {
+								this.value = '';
+								this.style.color = '';
+							}
+						});
+						reasonTextarea.addEventListener('blur', function() {
+							if (this.value === '') {
+								this.value = placeholderText;
+								this.style.color = '#888';
+							}
+						});
+						window.onload = function() {
+							if (reasonTextarea.value === '') {
+								reasonTextarea.value = placeholderText;
+								reasonTextarea.style.color = '#888';
+							}
+						};
+						
+						function getinf() {   
+						        var userInput = document.getElementById('reason').value;  
+						        alert('您输入的请假原因是：' + userInput);  
+						    }  
+							
+					</script>
+				</div>
+
+				<div class="form-group phone-input">
+					<label for="phone">个人电话：</label>
+					<input type="tel" id="phone1" name="phone1" >
+				</div>
+
+				<script>
+					function getinfo() {
+						var phoneInput1 = document.getElementById('phone1').value;
+						alert('您输入的电话号码1是：' + phoneInput1);
+						
+					}
+				</script>
+		
+				<button  type="submit" class="submit-btn" onclick="getinf();  getinfo();">提交申请</button>
+				<script>
+				var submitBtn = document.querySelector('.submit-btn');  
+				submitBtn.addEventListener('click', function() {  
+				    var startDate = document.getElementById('startDate').value;  
+					alert('您选择的日期1是: ' + startDate);
+				});  
+				</script> 
+				
+				<script>
+				var submitBtn = document.querySelector('.submit-btn');  
+				submitBtn.addEventListener('click', function() {  
+				    var endDate = document.getElementById('endDate').value;  
+					alert('您选择的日期2是: ' + endDate);
+				});  
+				</script> 
+				
+				<script>
+				var submitBtn = document.querySelector('.submit-btn');  
+				submitBtn.addEventListener('click', function() {  
+					alert('请假信息提交成功');
+				});  
+				</script> 
+				
+			</form>
+		</div>
+	</body>
+</html>
