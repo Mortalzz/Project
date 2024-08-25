@@ -64,17 +64,7 @@ public class StudentController {
         return studentService.getOne(wrapper);
     }
     //----------------------------------------------------
-//测试用的
-    //需要更改
-    @RequestMapping("/index")
-    public String index(){
-        return "system/index";
-    }
 
-    @RequestMapping("/index/login")
-    public String index_login(){
-        return  "login&regist";
-    }
 
     //------------------------------------------------
     //用户登录
