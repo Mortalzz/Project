@@ -1,0 +1,376 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title> 学生管理系统</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main-style.css" rel="stylesheet">
+
+    <style>
+        .main-content {
+        / padding: 20px;
+            display: inline-block;
+            width: calc(100% - 0px);
+            vertical-align: top;
+        }
+
+        .page-content {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .aa {
+            margin: 5px auto 5px 40px;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+
+<body>
+<div class="container-fluid position-relative bg-white d-flex p-0">
+
+    <!--Sidebar Start-->
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a href="#" class="navbar-brand mx-4 mb-3">
+                <h3>学生管理系统</h3>
+            </a>
+
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                    <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                    </div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0">马冬梅</h6>
+                    <span>学生</span>
+                </div>
+            </div>
+
+            <!-- 菜单栏 -->
+            <div class="navbar-nav w-100">
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-address-card" aria-hidden="true"></i>用户信息</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('person1')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 个人信息修改</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('person2')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 个人信息查询</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-graduation-cap" aria-hidden="true"></i>课程管理</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('classes1')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 选课管理</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('classes2')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 课程查询</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-graduation-cap" aria-hidden="true"></i>课程管理</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('classesm1')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 课程增减</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('classesm2')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 课程查询</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-university" aria-hidden="true"></i>宿舍安排</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('dormitory1')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 申请寝室</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('dormitory2')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 寝室更换</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-university" aria-hidden="true"></i>宿舍安排</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('dormitorym1')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 宿舍信息查询</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('dormitorym2')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 宿舍信息管理</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-plane" aria-hidden="true"></i>请假管理</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('leave1')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 请假申请</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('leave2')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 请假结果查询</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-plane" aria-hidden="true"></i>请假管理</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('leavem1')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 请假申请处理</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-envelope" aria-hidden="true"></i>邮件发送</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('send')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 邮件通知</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-server" aria-hidden="true"></i>信息查询</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('info1')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 校历</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('info2')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 校训</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('info3')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 师资力量</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('info4')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 教学设施</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-users" aria-hidden="true"></i>在线咨询</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('ask')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i>在线咨询</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-windows" aria-hidden="true"></i>系统管理</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <div class="aa">
+                            <a href="#" class="dropdown-item" onclick="showPage('system1')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 密码修改</a>
+                            <a href="#" class="dropdown-item" onclick="showPage('system2')"><i
+                                    class="fa fa-genderless" aria-hidden="true"></i> 系统改进建议</a>
+                        </div>
+                    </div>
+                </div>
+
+        </nav>
+    </div>
+    <!-- Sidebar End -->
+
+    <script>
+        var userType = 'admin';
+        function toggleMenu() {
+            const menus = document.querySelectorAll('.navbar-nav .nav-item');
+            if (userType == 'student') {
+                menus[1].style.display = 'block';
+                menus[2].style.display = 'none';
+                menus[3].style.display = 'block';
+                menus[4].style.display = 'none';
+                menus[5].style.display = 'block';
+                menus[6].style.display = 'none';
+                menus[7].style.display = 'none';
+                menus[8].style.display = 'block';
+                menus[9].style.display = 'block';
+                menus[10].style.display = 'block';
+                menus[11].style.display = 'block';
+            }
+            if (userType =='admin') {
+                menus[1].style.display = 'none';
+                menus[2].style.display = 'block';
+                menus[3].style.display = 'none';
+                menus[4].style.display = 'block';
+                menus[5].style.display = 'none';
+                menus[6].style.display = 'block';
+                menus[7].style.display = 'block';
+                menus[8].style.display = 'block';
+                menus[9].style.display = 'block';
+                menus[10].style.display = 'block';
+                menus[11].style.display = 'block';
+            }
+        }
+        window.onload = toggleMenu;
+    </script>
+
+    <script>
+        function showPage(pageId) {
+            var pages = document.querySelectorAll('.page-content');
+            pages.forEach(function(page) {
+                page.classList.remove('active');
+            });
+            var pageToShow = document.getElementById(pageId);
+            if (pageToShow) {
+                pageToShow.classList.add('active');
+            }
+        }
+    </script>
+
+
+
+
+    <div class="content">
+
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+            </a>
+            <a href="#" class="sidebar-toggler flex-shrink-0">
+                <i class="fa fa-bars"></i>
+            </a>
+            <form class="d-none d-md-flex ms-4">
+
+            </form>
+            <div class="navbar-nav align-items-center ms-auto">
+
+                <!-- 个人中心 -->
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                             style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex">您好，马冬梅</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a href="#" class="dropdown-item">我的信息</a>
+                        <a href="#" class="dropdown-item">退出登录</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End -->
+
+
+        <!-- Table Start -->
+        <div class="main-content">
+            <!--页面内容开始-->
+            <div class="main-content">
+                <div id="person1" class="page-content">
+                    <p>1</p>
+                </div>
+                <div id="person2" class="page-content">
+                    <p>2</p>
+                </div>
+                <div id="classes1" class="page-content">
+                    <p>2</p>
+                </div>
+                <div id="classes2" class="page-content">
+                    <p>3</p>
+                </div>
+                <div id="classesm1" class="page-content">
+                    <p>21</p>
+                </div>
+                <div id="classesm2" class="page-content">
+                    <p>31</p>
+                </div>
+                <div id="dormitory1" class="page-content">
+                    <p>4</p>
+                </div>
+                <div id="dormitory2" class="page-content">
+                    <p>5</p>
+                </div>
+                <div id="dormitorym1" class="page-content">
+                    <p>41</p>
+                </div>
+                <div id="dormitorym2" class="page-content">
+                    <p>51</p>
+                </div>
+                <div id="leave1" class="page-content">
+                    <p>6</p>
+                </div>
+                <div id="leave2" class="page-content">
+                    <p>7</p>
+                </div>
+                <div id="leavem1" class="page-content">
+                    <p>61</p>
+                </div>
+                <div id="send" class="page-content">
+                    <iframe src="email.html" width="100%" height="500px"></iframe>
+                </div>
+                <div id="ask" class="page-content">
+                    <p>8</p>
+                </div>
+                <div id="info1" class="page-content">
+                    <p>9</p>
+                </div>
+                <div id="info2" class="page-content">
+                    <p>10</p>
+                </div>
+                <div id="info3" class="page-content">
+                    <p>11</p>
+                </div>
+                <div id="info4" class="page-content">
+                    <p>12</p>
+                </div>
+                <div id="system1" class="page-content">
+                    <p>13</p>
+                </div>
+                <div id="system2" class="page-content">
+                    <p>14</p>
+                </div>
+            </div>
+            <!--页面内容结束-->
+        </div>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

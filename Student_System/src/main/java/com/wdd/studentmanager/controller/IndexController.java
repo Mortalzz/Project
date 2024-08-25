@@ -19,6 +19,6 @@ public class IndexController {
 
     @RequestMapping("/show")
     public String show(){
-        return "view";
+        return "index";
     }
 }
