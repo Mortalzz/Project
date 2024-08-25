@@ -65,14 +65,15 @@
             $.ajax({
                 url: 'http://localhost:8080/student/change_password', // 替换为实际的 API 地址
                 method: 'POST',
-                contentType: 'application/json', // 指定发送的数据格式
-                data: JSON.stringify(data),
+                data: data,
                 success: function (response) {
                     if (response.code === 200) {
                         $('#message').text("密码修改成功！").css("color", "green");
                         $('#currentPassword').val('');
                         $('#newPassword').val('');
                         $('#confirmPassword').val('');
+                        window.parent.close(); // 关闭父窗口
+                        window.location.href = 'http://localhost:8080/index/login'; // 跳转到登录页面
                     } else {
                         $('#message').text("错误: " + response.message).css("color", "red");
                     }
