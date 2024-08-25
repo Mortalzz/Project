@@ -96,6 +96,12 @@ public class CourseController {
         } else {
             return ResultData.fail("Failed to select course, please try again later");
         }
+    }
 
+    @RequestMapping("/get_all")
+    @ResponseBody
+    public ResultData get_all_course(HttpServletRequest request){
+        List<S_course> s_courses=courseService.list();
+        return ResultData.success_course(s_courses);
     }
 }
