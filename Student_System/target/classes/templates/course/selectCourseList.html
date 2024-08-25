@@ -70,14 +70,13 @@
             $('.course-checkbox:checked').each(function () {
                 selectedCourses.push($(this).val()); // 获取选中的课程ID
             });
-
+            console.log(selectedCourses);
             if (selectedCourses.length > 0) {
                 // AJAX 提交选课请求
                 $.ajax({
                     url: 'http://localhost:8080/course/select', // 替换为实际的选课 API 地址
                     method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({courseIds: selectedCourses}),
+                    data:selectedCourses,
                     success: function (response) {
                         if (response.code == 200) {
                             alert('选课成功！');
