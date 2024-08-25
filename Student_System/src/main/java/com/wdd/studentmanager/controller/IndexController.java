@@ -12,13 +12,28 @@ public class IndexController {
         return  "login&regist";
     }
 
-    @RequestMapping("/welcome")
-    public String index_welcome(){
-        return "/system/welcome";
-    }
-
     @RequestMapping("/show")
     public String show(){
         return "view";
+    }
+
+    @RequestMapping("/index")
+    public String index(){
+        return "/system/index";
+    }
+
+    @RequestMapping("/view")
+    public String view(){
+        return "view";
+    }
+
+    @RequestMapping("/email")
+    public String email(){
+        return "/system/email";
+    }
+
+    @RequestMapping("/stu_list")
+    public String list(){
+        return "/student/studentList";
     }
 }

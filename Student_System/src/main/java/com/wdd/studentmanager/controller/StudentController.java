@@ -4,8 +4,11 @@ import cn.hutool.captcha.LineCaptcha;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wdd.studentmanager.common.ResultData;
 import com.wdd.studentmanager.domain.S_admin;
+import com.wdd.studentmanager.domain.S_clazz;
 import com.wdd.studentmanager.domain.S_student;
 import com.wdd.studentmanager.service.AdminService;
+import com.wdd.studentmanager.service.ClazzService;
+import com.wdd.studentmanager.service.CourseService;
 import com.wdd.studentmanager.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,9 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private ClazzService clazzService;
     @Autowired
     private AdminService adminService;
     public String code="";
@@ -49,11 +55,21 @@ public class StudentController {
         if (findBySn(sn) != null) {
             return ResultData.fail("学生已经存在，请勿重复添加");
         } else {
-            boolean save = studentService.save(student);
-            if (save) {
-                return ResultData.success(save);
-            } else {
-                return ResultData.fail("保存失败，请联系网站管理员");
+            QueryWrapper<S_clazz> clazzQueryWrapper=new QueryWrapper<>();
+            clazzQueryWrapper.eq("id",student.getClazzid());
+            S_clazz clazz1=clazzService.getOne(clazzQueryWrapper);
+            if(clazz1!=null)
+            {
+                boolean save = studentService.save(student);
+                if (save) {
+                    return ResultData.success(save);
+                } else {
+                 return ResultData.fail("保存失败，请联系网站管理员");
+                }
+            }
+            else
+            {
+                return ResultData.fail("注册失败！该专业不存在！");
             }
         }
     }//注册测试通过 测试人：邹正强
@@ -133,6 +149,7 @@ public class StudentController {
     //下面为显示和修改学生的信息
 
     @GetMapping("/get_profile")
+    @ResponseBody
     public ResultData getProfile(HttpServletRequest request) {
         HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
