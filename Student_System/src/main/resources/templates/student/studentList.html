@@ -25,7 +25,7 @@
     </table>
     <script>
         $(document).ready(function () {
-            $('#dataGrid').DataTable({
+            var table=$('#dataGrid').DataTable({
                 language: {
                     "lengthMenu": "显示 _MENU_ 条记录",
                     "zeroRecords": "没有找到记录",
@@ -43,20 +43,16 @@
             $.ajax({
                 url: 'http://localhost:8080/student/get_profile', // 替换为实际的 API 地址
                 method: 'GET',
+                datatype:"json",
                 success: function (data) {
                     if(data.code==200){
-                        // 清空当前表格数据
-                        table.clear();
-                        // 遍历数据并添加到表格
-                        data.forEach(function (item) {
-                            table.row.add([
-                                item.data.sn,
-                                item.data.username,
-                                item.data.mobile,
-                                item.data.qq,
-                                item.data.address
-                            ]).draw(); // 使用 draw() 来展示更新后的表格
-                        });
+                        table.row.add([
+                            studentData.sn,
+                            studentData.username,
+                            studentData.mobile,
+                            studentData.qq,
+                            studentData.address
+                        ]).draw();
                     }
                 },
             });
