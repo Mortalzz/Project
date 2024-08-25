@@ -61,7 +61,6 @@
                     <button type="button" id="submitBtn" class="lowin-btn login-btn">
                         登录
                     </button>
-
                     <div class="text-foot">
                         没有帐户? <a href="#" class="register-link">注册</a>
                     </div>
@@ -81,6 +80,21 @@
                     <div class="lowin-group">
                         <label>姓名</label>
                         <input type="text" id="name" name="yourname" autocomplete="yourname" class="lowin-input" placeholder="请输入姓名" required>
+                    </div>
+                    <div class="lowin-group">
+                        <label>性别</label>
+                        <select name="yoursex" class="lowin-input" id="sex">
+                            <option value="man">男</option>
+                            <option value="woman">女</option>
+                        </select>
+                    </div>
+                    <div class="lowin-group">
+                        <label>qq</label>
+                        <input type="text" id="qq" name="yourqq" autocomplete="qq" class="lowin-input" placeholder="请输入qq" required>
+                    </div>
+                    <div class="lowin-group">
+                        <label>专业id</label>
+                        <input type="text" id="clazzid" name="classzzid" class="lowin-input" placeholder="请输入专业id" required>
                     </div>
                     <div class="lowin-group">
                         <label>账号</label>
@@ -156,6 +170,9 @@
         var dataToSend = {
             sn: $("#sn1").val(),
             password: $("#new-password").val(),
+            sex: $("#sex").val,
+            qq: $("#qq").val,
+            clazzid: $("#clazzid").val,
             role:"student",
             username: $("#name").val()
         };

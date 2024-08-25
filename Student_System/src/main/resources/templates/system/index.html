@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>学生管理系统</title>
@@ -48,6 +47,11 @@
 		document.getElementById('nameHeading').textContent = indexname;
 		document.getElementById('nameSpan').textContent = indexname;
 	</script>
+	<script>
+		function showpage(person){
+
+		}
+	</script>
 </head>
 
 
@@ -79,6 +83,7 @@
 					    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-address-card" aria-hidden="true"></i>信息管理</a>
 					    <div class="dropdown-menu bg-transparent border-0">
 							<div class="aa">
+							<a href="http://localhost:8080/student/get_profile" class="dropdown-item" onclick="showPage('person')"><i class="fa fa-genderless" aria-hidden="true"></i> 个人信息列表</a>
 					        <a href="#" class="dropdown-item" onclick="showPage('person1')"><i class="fa fa-genderless" aria-hidden="true"></i> 个人信息修改</a>
 						    </div>
 						</div>
@@ -164,8 +169,7 @@
 		
 		
 		<div class="content">
-			
-		    <!-- Navbar Start -->
+
 		    <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
 		        <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
 		            <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
@@ -185,16 +189,13 @@
 		                    <span class="d-none d-lg-inline-flex">您好，<span id="nameSpan"></span></span>
 		                </a>
 		                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-		                    <a href="#" class="dropdown-item">我的信息</a> 
-		                    <a href="#" class="dropdown-item">退出登录</a>
+		                    <a href="http://localhost:8080/student/get_profile" class="dropdown-item">我的信息</a>
+		                    <a href="http://localhost:8080/student/login" class="dropdown-item">退出登录</a>
 		                </div>
 		            </div>
 		        </div>
 		    </nav>
-		    <!-- Navbar End -->
-		
-		
-		    <!-- Table Start -->
+
 		    <div class="container-fluid pt-4 px-4">
 			    <div class="row g-4"> 
 				    <div class="col-12">
@@ -211,6 +212,9 @@
 		                        <table class="table table-striped">
 									<!--页面内容开始-->
 									<div class="main-content">
+										<div id="person" class="page-content">
+											<a href="http://localhost:8080/student/get_profile" class="request"></a>
+										</div>
 									    <div id="person1" class="page-content">   
 									        <p>1</p>  
 									    </div>  
