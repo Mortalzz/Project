@@ -82,18 +82,21 @@
 
                     // 为申请按钮添加事件
                     $('.apply-button').click(function () {
+                        // 从按钮元素中获取宿舍信息
                         var data1 = {
-                            build: data.build,
-                            room: data.room,
-                            takeincounts: data.takeincounts,
-                            status: data.status
+                            build: $(this).data('build'), // 获取楼栋信息
+                            room: $(this).data('room'),   // 获取寝室信息
+                            takeincounts: $(this).data('takeincounts'), // 获取已住人数
+                            status: $(this).data('status') // 获取状态
                         }
+                        console.log(data1);
                         // AJAX 请求以提交申请
                         $.ajax({
                             url: 'http://localhost:8080/dormitory/req_dormit', // 替换为实际的申请 API 地址
                             method: 'POST',
                             data:data1,
                             success: function (response) {
+                                console.log(response);
                                 if (response.code == 200) {
                                     alert('申请成功！');
                                     location.reload(); // 刷新页面
