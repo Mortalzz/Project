@@ -57,8 +57,8 @@
             }
 
             var data = {
-                currentPassword: currentPassword,
-                newPassword: newPassword
+                currentPassword: $('#currentPassword').val(),
+                newPassword: $('#newPassword').val()
             };
 
             // 发送 AJAX 请求来修改密码
@@ -66,6 +66,7 @@
                 url: 'http://localhost:8080/student/change_password', // 替换为实际的 API 地址
                 method: 'POST',
                 data: data,
+                dataType: "json",
                 success: function (response) {
                     if (response.code === 200) {
                         $('#message').text("密码修改成功！").css("color", "green");

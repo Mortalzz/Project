@@ -46,4 +46,9 @@ public class IndexController {
     public String set_profile(){
         return "/student/studentEdit";
     }
+
+    @RequestMapping("change_password")
+    public String change_password(){
+        return "/system/personnalView";
+    }
 }

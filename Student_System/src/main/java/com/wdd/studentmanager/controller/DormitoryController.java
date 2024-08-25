@@ -27,10 +27,10 @@ public class DormitoryController {
     //申请宿舍
     @RequestMapping("/req_dormit")
     @ResponseBody
-    public ResultData reqDormit(HttpServletRequest request,@RequestParam("dormitoryId") Integer dormitoryId ) {
+    public ResultData reqDormit(HttpServletRequest request) {
         HttpSession session=request.getSession(false);
         S_student currentStu = (S_student) session.getAttribute("currentUser");
-
+        Integer dormitoryId=Integer.valueOf(request.getParameter("dormitoryId"));
         // 校验参数是否有效
         if ( currentStu.getId()== null || dormitoryId == null) {
             return ResultData.fail( "Student ID and Dormitory ID must be provided.");
@@ -45,6 +45,7 @@ public class DormitoryController {
         updateWrapper.eq("id", currentStu.getId()).set("dormitid", currentStu.getDormitid());
         boolean result = studentService.update(updateWrapper); // 调用 update 方法
         if (result) {
+
             return ResultData.success("Dormitory assigned successfully.");
         } else {
             return ResultData.fail("Error!");

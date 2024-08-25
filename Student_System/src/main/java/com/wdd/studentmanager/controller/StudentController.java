@@ -166,15 +166,21 @@ public class StudentController {
     public ResultData ch_password(HttpServletRequest request){
         HttpSession session=request.getSession(false);
         S_student currentUser=(S_student) session.getAttribute("currentUser");
-        currentUser.setPassword(request.getParameter("password"));
-        if (currentUser != null) {
-            // 设置用户详细信息
-            session.setAttribute("currentUser",currentUser);
-            boolean result=studentService.updateById(currentUser);
-            return ResultData.success(currentUser);
-        } else {
-            return ResultData.fail("用户未登录");
+        String currentPassword=request.getParameter("currentPassword");
+        if(currentPassword.equals(currentUser.getPassword()))
+        {
+            currentUser.setPassword(request.getParameter("newPassword"));
+            if (currentUser != null) {
+                // 设置用户详细信息
+                 session.setAttribute("currentUser",currentUser);
+                 boolean result=studentService.updateById(currentUser);
+                 return ResultData.success(currentUser);
+            } else {
+                 return ResultData.fail("用户未登录");
+            }
         }
+        else
+            return ResultData.fail("原密码不正确！");
     }
 
 
