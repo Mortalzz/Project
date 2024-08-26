@@ -128,6 +128,14 @@
 
 <script src="/js/auth.js"></script>
 <script>
+    if(typeof Storage != "undefined"){
+        console.log("支持");
+    }
+    else{
+        console.log("不支持");
+    }
+</script>
+<script>
     Auth.init({
         login_url: '#login',
         forgot_url: '#forgot'

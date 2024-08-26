@@ -184,6 +184,8 @@ public class StudentController {
     }
 
 
+
+
     @RequestMapping("/get_all")
     @ResponseBody
     public ResultData getall_Profile(HttpServletRequest request){
