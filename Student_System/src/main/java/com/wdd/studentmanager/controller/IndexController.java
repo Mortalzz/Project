@@ -76,4 +76,9 @@ public class IndexController {
     public String admin_leave(){
         return "/system/leaveadmin";
     }
+
+    @RequestMapping("/admin_dormitlist")
+    public String admin_dormitlist(){
+        return "/dormit/adminDormitList";
+    }
 }

@@ -8,7 +8,7 @@ public class S_leave {
     private int studentid;
     private String info;
     private boolean status;
-    private String remark;
+    private int remark;
     private String timestart;
     private String timeend;
     private String phone;
