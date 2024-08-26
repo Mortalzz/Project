@@ -85,7 +85,7 @@
 	<body>
 		<h2>请假申请</h2>
 		<div class="form-container">
-			<form action="/submit-leave-request" method="post">
+			<<form id="leaveRequestForm">>
 
 				<div class="form-group">
 				    <label for="startDate">请假开始日期：</label>  
@@ -100,73 +100,75 @@
 				<div class="form-group">
 					<label>请假原因：</label>
 					<textarea id="reason" name="reason" required></textarea>
-					<script>
-						var reasonTextarea = document.getElementById('reason');
-						var placeholderText = '（病假、事假）请详细填写';
-						reasonTextarea.addEventListener('focus', function() {
-							if (this.value === placeholderText) {
-								this.value = '';
-								this.style.color = '';
-							}
-						});
-						reasonTextarea.addEventListener('blur', function() {
-							if (this.value === '') {
-								this.value = placeholderText;
-								this.style.color = '#888';
-							}
-						});
-						window.onload = function() {
-							if (reasonTextarea.value === '') {
-								reasonTextarea.value = placeholderText;
-								reasonTextarea.style.color = '#888';
-							}
-						};
-						
-						function getinf() {   
-						        var userInput = document.getElementById('reason').value;  
-						        alert('您输入的请假原因是：' + userInput);  
-						    }  
-							
-					</script>
+
 				</div>
 
 				<div class="form-group phone-input">
-					<label for="phone">个人电话：</label>
+					<label>个人电话：</label>
 					<input type="tel" id="phone1" name="phone1" >
 				</div>
 
-				<script>
-					function getinfo() {
-						var phoneInput1 = document.getElementById('phone1').value;
-						alert('您输入的电话号码1是：' + phoneInput1);
-						
+				<button  type="submit" class="submit-btn" id="submit">提交申请</button>
+
+			<script>
+				$(document).ready(function () {
+					$('#submit').click(function () {
+						var Data = {
+							datestart: $('#startDate').val(),
+							dateend: $('#endDate').val(),
+							phone: $('#phone1').val(),
+							reason: $('#reason').val(),
+						};
+						console.log(Data);
+						// 使用 AJAX 发送更新请求
+						$.ajax({
+							type: "post",
+							url: 'http://localhost:8080/leave/request', // 替换为实际的更新 API 地址
+							data: Data,
+							dataType: "json",
+							success: function (response) {
+								if (response.code == 200) {
+									alert("申请成功！");
+								} else {
+									alert("更新失败: " + response.message);
+								}
+							},
+							error: function (xhr, status, error) {
+								console.error('申请出错，请重试:', status, error);
+							}
+						});
+					});
+				});
+			</script>
+
+			<script>
+				var reasonTextarea = document.getElementById('reason');
+				var placeholderText = '（病假、事假）请详细填写';
+				reasonTextarea.addEventListener('focus', function() {
+					if (this.value === placeholderText) {
+						this.value = '';
+						this.style.color = '';
 					}
-				</script>
-		
-				<button  type="submit" class="submit-btn" onclick="getinf();  getinfo();">提交申请</button>
-				<script>
-				var submitBtn = document.querySelector('.submit-btn');  
-				submitBtn.addEventListener('click', function() {  
-				    var startDate = document.getElementById('startDate').value;  
-					alert('您选择的日期1是: ' + startDate);
-				});  
-				</script> 
-				
-				<script>
-				var submitBtn = document.querySelector('.submit-btn');  
-				submitBtn.addEventListener('click', function() {  
-				    var endDate = document.getElementById('endDate').value;  
-					alert('您选择的日期2是: ' + endDate);
-				});  
-				</script> 
-				
-				<script>
-				var submitBtn = document.querySelector('.submit-btn');  
-				submitBtn.addEventListener('click', function() {  
-					alert('请假信息提交成功');
-				});  
-				</script> 
-				
+				});
+				reasonTextarea.addEventListener('blur', function() {
+					if (this.value === '') {
+						this.value = placeholderText;
+						this.style.color = '#888';
+					}
+				});
+				window.onload = function() {
+					if (reasonTextarea.value === '') {
+						reasonTextarea.value = placeholderText;
+						reasonTextarea.style.color = '#888';
+					}
+				};
+
+				function getinf() {
+					var userInput = document.getElementById('reason').value;
+					alert('您输入的请假原因是：' + userInput);
+				}
+
+			</script>
 			</form>
 		</div>
 	</body>

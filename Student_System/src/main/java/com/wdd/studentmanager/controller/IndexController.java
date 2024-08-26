@@ -61,4 +61,19 @@ public class IndexController {
     public String select_course(){
         return "/course/selectCourseList";
     }
+
+    @RequestMapping("/req_leave")
+    public String req_leave(){
+        return "/system/leavestudent1";
+    }
+
+    @RequestMapping("/lea_req_slt")
+    public String leave_request_select(){
+        return "/system/leavestudent2";
+    }
+
+    @RequestMapping("/admin_leave")
+    public String admin_leave(){
+        return "/system/leaveadmin";
+    }
 }

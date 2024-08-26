@@ -25,15 +25,23 @@ public class LeaveController {
     @RequestMapping("/request")
     @ResponseBody
     public ResultData Requestleave(HttpServletRequest request){
-        String Info=request.getParameter("Info");
         HttpSession session=request.getSession(false);
-        S_student currentStu = (S_student) session.getAttribute("currentUser");
-        int stu_id=currentStu.getId();
-        S_leave user = new S_leave();
-        user.setStudentid(stu_id);
-        user.setInfo(Info);
-        user.setStatus(false);
-        boolean save_leave=leaveService.save(user);
+        S_student student=(S_student) session.getAttribute("currentUser");
+        String datestart=request.getParameter("datestart");
+        System.out.println(datestart);
+        String dateend=request.getParameter("dateend");
+        System.out.println(dateend);
+        String reason=request.getParameter("reason");
+        String phone=request.getParameter("phone");
+        S_leave leave=new S_leave();
+        leave.setStudentid(student.getId());
+        leave.setTimestart(datestart);
+        leave.setTimeend(dateend);
+        leave.setInfo(reason);
+        leave.setPhone(phone);
+        leave.setStatus(false);
+        System.out.println(leave);
+        boolean save_leave=leaveService.save(leave);
         if(save_leave==true){
             return ResultData.success("申请成功");
         }
