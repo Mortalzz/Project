@@ -38,6 +38,7 @@ public class LeaveController {
         leave.setInfo(reason);
         leave.setPhone(phone);
         leave.setStatus(false);
+        leave.setRemark(0);
         boolean save_leave=leaveService.save(leave);
         if(save_leave==true){
             return ResultData.success("申请成功");
@@ -80,8 +81,7 @@ public class LeaveController {
         for (S_leave leave : leaves) {
             leave.setStatus(true);  // 将 status 设置为 true
             // 根据不同的记录设置不同的 remark 值
-            String customRemark = remarks.getOrDefault(String.valueOf(leave.getId()),"无备注");
-            leave.setRemark(customRemark);
+            leave.setRemark(1);
         }
 
         // 批量更新记录
