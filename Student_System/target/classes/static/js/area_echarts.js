@@ -41,15 +41,6 @@ var convertData = function (data) {
 
 option = {
    // backgroundColor: '#404a59',
-    title: {
-        text: '实时行驶车辆',
-        subtext: '来源：big-data-view',
-        sublink: 'https://gitee.com/iGaoWei/big-data-view',
-        left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
-    },
     tooltip : {
         trigger: 'item',
 		formatter: function(params) {

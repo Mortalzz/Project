@@ -1,73 +1,146 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>666666</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线咨询</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .chat-window {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background-color: #f4f4f4;
+    }
+
+    .chat-header {
+      padding: 10px;
+      background-color: #333;
+      color: white;
+      text-align: center;
+    }
+
+    .chat-messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .chat-message {
+      display: inline-block;
+      max-width: calc(100% - 20px);
+      padding: 5px 10px;
+      margin: 5px 0;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      word-wrap: break-word;
+      box-sizing: border-box;
+    }
+
+    .sent {
+      background-color: #b2e281;
+      float: right;
+      color: #333;
+    }
+
+    .received {
+      background-color: #e2b281;
+      float: left;
+      color: #fff;
+    }
+
+    .send-message {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      background-color: #ddd;
+    }
+
+    .send-message textarea {
+      flex-grow: 1;
+      padding: 5px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .send-message button {
+      padding: 5px 10px;
+      background-color: #5cb85c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .send-message button:hover {
+      background-color: #4cae4c;
+    }
+
+    /* Clear float */
+    .chat-messages::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  </style>
 </head>
 <body>
-传递来的数据值cid:
-<input type="text" th:value="${cid}" id="cid"/>
-<p>【toUserId】：
-<div><input id="toUserId" name="toUserId" type="text" value="user-1"></div>
-<p>【toUserId】：
-<div><input id="contentText" name="contentText" type="text" value="hello websocket"></div>
-<p>【操作】：
-<div>
-    <button type="button" onclick="sendMessage()">发送消息</button>
+<div class="chat-window">
+  <div class="chat-header">
+    聊天室
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <form class="send-message" onsubmit="sendMessage(event)">
+    <textarea id="messageInput" placeholder="Enter your message..."></textarea>
+    <button type="submit">Send</button>
+  </form>
 </div>
-</body>
 
-<script type="text/javascript">
-    var socket;
-    if (typeof (WebSocket) == "undefined") {
-        console.log("您的浏览器不支持WebSocket");
-    } else {
-        console.log("您的浏览器支持WebSocket");
-        //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+<script>
+  var socket = new WebSocket('ws://localhost:8080/websocket'); // Update with your server URL
 
-        var cid = document.getElementById("cid").value;
-        console.log("cid-->" + cid);
-        var reqUrl = "http://localhost:8080/websocket/" + cid;
-        socket = new WebSocket(reqUrl.replace("http", "ws"));
-        //打开事件
-        socket.onopen = function () {
-            console.log("Socket 已打开");
-            //socket.send("这是来自客户端的消息" + location.href + new Date());
-        };
-        //获得消息事件
-        socket.onmessage = function (msg) {
-            console.log("onmessage--" + msg.data);
-            //发现消息进入    开始处理前端触发逻辑
-        };
-        //关闭事件
-        socket.onclose = function () {
-            console.log("Socket已关闭");
-        };
-        //发生了错误事件
-        socket.onerror = function () {
-            alert("Socket发生了错误");
-            //此时可以尝试刷新页面
-        }
-        //离开页面时，关闭socket
-        //jquery1.8中已经被废弃，3.0中已经移除
-        // $(window).unload(function(){
-        //     socket.close();
-        //});
+  socket.onopen = function() {
+    console.log("Socket已打开");
+  };
+
+  socket.onmessage = function(event) {
+    var chatMessages = document.getElementById('chatMessages');
+    var newMessage = document.createElement('p');
+    newMessage.className = 'chat-message received';
+    newMessage.innerHTML = event.data; // Assuming event.data contains the message text
+    chatMessages.appendChild(newMessage);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+  };
+
+  socket.onclose = function() {
+    console.log("Socket已关闭");
+  };
+
+  function sendMessage(event) {
+    event.preventDefault();
+
+    var messageInput = document.getElementById('messageInput');
+    var message = messageInput.value.trim();
+
+    if (message) {
+      var chatMessages = document.getElementById('chatMessages');
+      var newMessage = document.createElement('p');
+      newMessage.className = 'chat-message sent';
+      newMessage.innerHTML = message;
+      chatMessages.appendChild(newMessage);
+      chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+
+      socket.send(message); // Send the message to the server
+      messageInput.value = ''; // Clear the input
     }
-
-    function sendMessage() {
-        if (typeof (WebSocket) == "undefined") {
-            console.log("您的浏览器不支持WebSocket");
-        } else {
-            // console.log("您的浏览器支持WebSocket");
-            var toUserId = document.getElementById('toUserId').value;
-            var contentText = document.getElementById('contentText').value;
-            var msg = '{"sid":"' + toUserId + '","message":"' + contentText + '"}';
-            console.log(msg);
-            socket.send(msg);
-        }
-    }
-
+  }
 </script>
+</body>
 </html>
-
