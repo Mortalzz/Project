@@ -60,7 +60,7 @@ public class LeaveController {
     }//测试通过 测试人：邹正强
 
     //管理员回复
-    @RequestMapping("/confirm")
+    /*@RequestMapping("/confirm")
     @ResponseBody
     public ResultData confirmLeave(@RequestParam Map<String, String> remarks) {
         // 查询出所有 status 为 false 的记录
@@ -85,6 +85,6 @@ public class LeaveController {
         } else {
             return ResultData.success("批量更新失败");
         }
-    }//测试通过 测试人：邹正强
+    }//测试通过 测试人：邹正强*/
 
 }
