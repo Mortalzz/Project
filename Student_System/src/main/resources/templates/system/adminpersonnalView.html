@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>修改密码</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .change-password-form {
+      width: 300px;
+      margin: auto;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="change-password-form">
+  <h2>修改密码</h2>
+  <div class="form-group">
+    <label for="currentPassword">当前密码：</label>
+    <input type="password" id="currentPassword" required>
+  </div>
+  <div class="form-group">
+    <label for="newPassword">新密码：</label>
+    <input type="password" id="newPassword" required>
+  </div>
+  <div class="form-group">
+    <label for="confirmPassword">确认新密码：</label>
+    <input type="password" id="confirmPassword" required>
+  </div>
+  <button id="changePasswordBtn">保存更改</button>
+  <div id="message" style="margin-top: 10px;"></div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('#changePasswordBtn').click(function () {
+      var currentPassword = $('#currentPassword').val();
+      var newPassword = $('#newPassword').val();
+      var confirmPassword = $('#confirmPassword').val();
+
+      // 确认新密码是否匹配
+      if (newPassword !== confirmPassword) {
+        $('#message').text("新密码和确认密码不匹配！").css("color", "red");
+        return;
+      }
+
+      var data = {
+        currentPassword: $('#currentPassword').val(),
+        newPassword: $('#newPassword').val()
+      };
+
+      // 发送 AJAX 请求来修改密码
+      $.ajax({
+        url: 'http://localhost:8080/student/admin_change_password', // 替换为实际的 API 地址
+        method: 'POST',
+        data: data,
+        dataType: "json",
+        success: function (response) {
+          if (response.code === 200) {
+            $('#message').text("密码修改成功！").css("color", "green");
+            $('#currentPassword').val('');
+            $('#newPassword').val('');
+            $('#confirmPassword').val('');
+            window.parent.close(); // 关闭父窗口
+            window.location.href = 'http://localhost:8080/index/login'; // 跳转到登录页面
+          } else {
+            $('#message').text("错误: " + response.message).css("color", "red");
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error('AJAX Error:', status, error);
+          $('#message').text("请求失败，请稍后再试。").css("color", "red");
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
