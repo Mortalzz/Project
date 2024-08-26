@@ -76,7 +76,7 @@
                                 item.teachername,
                                 item.coursedate,
                                 item.courseplace,
-                                `<button class="deleteButton" data-id="${item.id}">删除</button>` // 在此处使用课程 ID 作为数据属性
+                                `<button class="deleteButton" data-name="${item.name}" data-teacher="${item.teachername}">删除</button>` // 在此处使用课程名称和授课教师作为数据属性
                             ]).draw();
                         });
                     }
@@ -107,7 +107,7 @@
             $.ajax({
                 url: 'http://localhost:8080/course/add', // 替换为实际的添加课程 API 地址
                 method: 'POST',
-                data:courseData,
+                data: courseData,
                 success: function (data) {
                     if (data.code == 200) {
                         loadData(); // 刷新数据表
@@ -126,11 +126,17 @@
 
         // 删除课程
         $('#dataGrid tbody').on('click', '.deleteButton', function () {
-            var courseId = $(this).data('id'); // 获取课程 ID
-            if (confirm('确认删除该课程吗？')) {
+            var courseName = $(this).data('name'); // 获取课程名称
+            var teacherName = $(this).data('teacher'); // 获取授课教师名称
+            if (confirm(`确认删除课程 "${courseName}"（${teacherName}）吗？`)) {
+                var deleteData = {
+                    Cname: courseName,
+                    Tname: teacherName
+                };
                 $.ajax({
-                    url: `http://localhost:8080/course/delete/${courseId}`, // 替换为实际的删除课程 API 地址
+                    url: 'http://localhost:8080/course/sub', // 替换为实际的删除课程 API 地址
                     method: 'DELETE',
+                    data: deleteData,
                     success: function (data) {
                         if (data.code == 200) {
                             loadData(); // 刷新数据表

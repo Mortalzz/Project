@@ -7,6 +7,7 @@ import com.wdd.studentmanager.domain.S_selected_course;
 import com.wdd.studentmanager.domain.S_student;
 import com.wdd.studentmanager.service.CourseService;
 import com.wdd.studentmanager.service.SelectedCourseService;
+import org.hamcrest.Condition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,5 +101,43 @@ public class CourseController {
     public ResultData get_all_course(HttpServletRequest request){
         List<S_course> s_courses=courseService.list();
         return ResultData.success_course(s_courses);
+    }
+
+    @RequestMapping("/add")
+    @ResponseBody
+    public ResultData add_course(HttpServletRequest request){
+         String name=request.getParameter("name");
+         String teachername=request.getParameter("teachername");
+         String coursedate=request.getParameter("coursedate");
+         String courseplace=request.getParameter("courseplace");
+         S_course s_course=new S_course();
+         s_course.setName(name);
+         s_course.setTeachername(teachername);
+         s_course.setCoursedate(coursedate);
+         s_course.setCourseplace(courseplace);
+         boolean result=courseService.save(s_course);
+         if(result){
+             return ResultData.success("增加课程成功!");
+         }
+         else {
+             return ResultData.fail("增加课程失败");
+         }
+    }
+
+    @RequestMapping("/sub")
+    @ResponseBody
+    public ResultData sub_course(HttpServletRequest request){
+        String Cname=request.getParameter("Cname");
+        String Tname=request.getParameter("Tname");
+        QueryWrapper<S_course> s_courseQueryWrapper=new QueryWrapper<>();
+        s_courseQueryWrapper.eq("name",Cname);
+        s_courseQueryWrapper.eq("teachername",Tname);
+        boolean result=courseService.remove(s_courseQueryWrapper);
+        if(result){
+            return ResultData.success("删除课程成功!");
+        }
+        else {
+            return ResultData.fail("删除课程失败");
+        }
     }
 }

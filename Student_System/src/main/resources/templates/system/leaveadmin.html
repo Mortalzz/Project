@@ -67,8 +67,7 @@
                             <th style="text-align: center; vertical-align: middle;">学号</th>  
                             <th style="text-align: center; vertical-align: middle;">请假原因</th>  
                             <th style="text-align: center; vertical-align: middle;">请假开始时间</th>  
-                            <th style="text-align: center; vertical-align: middle;">请假结束时间</th>  
-                            <th style="text-align: center; vertical-align: middle;">是否已查看</th> 
+                            <th style="text-align: center; vertical-align: middle;">请假结束时间</th>
 							  <th style="text-align: center; vertical-align: middle;">是否批准通过</th> 
                         </tr>  
                 `;  
@@ -79,15 +78,7 @@
                        <td style="text-align: center; vertical-align: middle;">${record.reason}</td>  
                        <td style="text-align: center; vertical-align: middle;">${record.startDate}</td>  
                        <td style="text-align: center; vertical-align: middle;">${record.endDate}</td>  
-                       
-					   <td style="text-align: center; vertical-align: middle;">
-					       <select class="approval-select" onchange="changeApprovalColor1(this)">  
-					           <option value="2"></option> <!-- 这个选项可能不需要，或者你可以为其添加一些文本描述 -->  
-					           <option value="0">未查看</option>  
-					           <option value="1">已查看</option>  
-					       </select>  
-					   </td>
-                       
+
 					   
 					   <td style="text-align: center; vertical-align: middle;">  
 					       <select class="approval-select" onchange="changeApprovalColor(this)">  
@@ -122,17 +113,7 @@
 	     }    
 	 }
 	 </script>
-	 
-	 <script>
-	 function changeApprovalColor1(selectElement) {  
-	     var selectedValue = selectElement.value;  
-	     if (selectedValue === "0") {  
-	         alert("选择的结果是0：审批未通过");  
-	     } else if (selectedValue === "1") {  
-	         alert("选择的结果是1：审批通过");  
-	     }    
-	 }
-	 </script>
+
 	 
 </body>  
 </html>
