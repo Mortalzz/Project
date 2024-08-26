@@ -86,6 +86,17 @@
 
 				<div class="nav-item dropdown">
 					<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+							class="fa fa-address-card" aria-hidden="true"></i>用户信息</a>
+					<div class="dropdown-menu bg-transparent border-0">
+						<div class="aa">
+							<a href="#" class="dropdown-item" onclick="showPage('personm')"><i
+									class="fa fa-genderless" aria-hidden="true"></i> 个人信息查询</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
 							class="fa fa-graduation-cap" aria-hidden="true"></i>课程管理</a>
 					<div class="dropdown-menu bg-transparent border-0">
 						<div class="aa">
@@ -117,8 +128,6 @@
 						<div class="aa">
 							<a href="#" class="dropdown-item" onclick="showPage('dormitory1')"><i
 									class="fa fa-genderless" aria-hidden="true"></i> 申请寝室</a>
-							<a href="#" class="dropdown-item" onclick="showPage('dormitory2')"><i
-									class="fa fa-genderless" aria-hidden="true"></i> 寝室更换</a>
 						</div>
 					</div>
 				</div>
@@ -130,8 +139,6 @@
 						<div class="aa">
 							<a href="#" class="dropdown-item" onclick="showPage('dormitorym1')"><i
 									class="fa fa-genderless" aria-hidden="true"></i> 宿舍信息查询</a>
-							<a href="#" class="dropdown-item" onclick="showPage('dormitorym2')"><i
-									class="fa fa-genderless" aria-hidden="true"></i> 宿舍信息管理</a>
 						</div>
 					</div>
 				</div>
@@ -221,30 +228,33 @@
 		function toggleMenu() {
 			const menus = document.querySelectorAll('.navbar-nav .nav-item');
 			if (userType == 'student') {
-				menus[1].style.display = 'block';
-				menus[2].style.display = 'none';
-				menus[3].style.display = 'block';
-				menus[4].style.display = 'none';
-				menus[5].style.display = 'block';
-				menus[6].style.display = 'none';
-				menus[7].style.display = 'none';
-				menus[8].style.display = 'block';
-				menus[9].style.display = 'block';
-				menus[10].style.display = 'block';
-				menus[11].style.display = 'block';
-			}
-			if (userType =='admin') {
 				menus[1].style.display = 'none';
 				menus[2].style.display = 'block';
 				menus[3].style.display = 'none';
 				menus[4].style.display = 'block';
 				menus[5].style.display = 'none';
 				menus[6].style.display = 'block';
+				menus[7].style.display = 'none';
+				menus[8].style.display = 'none';
+				menus[9].style.display = 'block';
+				menus[10].style.display = 'block';
+				menus[11].style.display = 'block';
+				menus[12].style.display = 'block';
+			}
+			if (userType =='admin') {
+				menus[0].style.display = 'none';
+				menus[1].style.display = 'block';
+				menus[2].style.display = 'none';
+				menus[3].style.display = 'block';
+				menus[4].style.display = 'none';
+				menus[5].style.display = 'block';
+				menus[6].style.display = 'none';
 				menus[7].style.display = 'block';
 				menus[8].style.display = 'block';
 				menus[9].style.display = 'block';
-				menus[10].style.display = 'none';
+				menus[10].style.display = 'block';
 				menus[11].style.display = 'block';
+				menus[12].style.display = 'block';
 			}
 		}
 		window.onload = toggleMenu;
@@ -305,6 +315,9 @@
 				<div id="person1" class="page-content">
 					<iframe src="http://localhost:8080/index/set_stu_profile" width="100%" height="1000px"></iframe>
 				</div>
+				<div id="personm" class="page-content">
+					<iframe src="http://localhost:8080/index/set_stu_profile" width="100%" height="1000px"></iframe>
+				</div>
 				<div id="person2" class="page-content">
 					<iframe src="http://localhost:8080/index/stu_list" width="100%" height="1000px"></iframe>
 				</div>
@@ -323,14 +336,8 @@
 				<div id="dormitory1" class="page-content">
 					<iframe src="http://localhost:8080/index/dormit_list" width="100%" height="1000px"></iframe>
 				</div>
-				<div id="dormitory2" class="page-content">
-					<p>5</p>
-				</div>
 				<div id="dormitorym1" class="page-content">
 					<iframe src="http://localhost:8080/index/admin_dormitlist" width="100%" height="1000px"></iframe>
-				</div>
-				<div id="dormitorym2" class="page-content">
-					<p>51</p>
 				</div>
 				<div id="leave1" class="page-content">
 					<iframe src="http://localhost:8080/index/req_leave" width="100%" height="1000px"></iframe>
