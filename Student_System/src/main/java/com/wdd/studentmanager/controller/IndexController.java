@@ -74,17 +74,17 @@ public class IndexController {
 
     @RequestMapping("/req_leave")
     public String req_leave(){
-        return "/system/leavestudent1";
+        return "/leave/leavestudent1";
     }
 
     @RequestMapping("/lea_req_slt")
     public String leave_request_select(){
-        return "/system/leavestudent2";
+        return "/leave/leavestudent2";
     }
 
     @RequestMapping("/admin_leave")
     public String admin_leave(){
-        return "/system/leaveadmin";
+        return "/leave/leaveadmin";
     }
 
     @RequestMapping("/admin_dormitlist")

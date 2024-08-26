@@ -11,10 +11,14 @@
 <div><input id="toUserId" name="toUserId" type="text" value="user-1"></div>
 <p>【toUserId】：
 <div><input id="contentText" name="contentText" type="text" value="hello websocket"></div>
+<p>【接收到的消息】：
+<div><textarea id="receivedMessage" rows="5" cols="50" readonly></textarea></div>
 <p>【操作】：
 <div>
     <button type="button" onclick="sendMessage()">发送消息</button>
 </div>
+
+
 </body>
 
 <script type="text/javascript">
@@ -37,6 +41,7 @@
         //获得消息事件
         socket.onmessage = function (msg) {
             console.log("onmessage--" + msg.data);
+            document.getElementById('receivedMessage').value += msg.data; // 显示接收到的消息
             //发现消息进入    开始处理前端触发逻辑
         };
         //关闭事件
