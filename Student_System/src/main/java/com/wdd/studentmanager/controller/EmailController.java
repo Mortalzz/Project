@@ -45,6 +45,7 @@ public class EmailController {
         QueryWrapper<S_student> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("qq",student.getQq());
         S_student tmp=studentService.getOne(queryWrapper);
+        System.out.println(tmp);
         sendEmailNotification(tmp);//通过qq号找到的学生
         return ResultData.success("已发送邮件通知");
     }
