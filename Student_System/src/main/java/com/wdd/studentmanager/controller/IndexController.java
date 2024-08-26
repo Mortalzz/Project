@@ -37,6 +37,11 @@ public class IndexController {
         return "/student/studentList";
     }
 
+    @RequestMapping("/stu_alllist")
+    public String list_all(){
+        return "/student/adminStudentList";
+    }
+
     @RequestMapping("stu_get_all")
     public String stu_all(){
         return "/student/adminStudentList";
@@ -85,5 +90,10 @@ public class IndexController {
     @RequestMapping("/admin_dormitlist")
     public String admin_dormitlist(){
         return "/dormit/adminDormitList";
+    }
+
+    @RequestMapping("/course_add_sub")
+    public String course_add_sub(){
+        return "/course/adminCourseList";
     }
 }
