@@ -65,7 +65,7 @@ public class LeaveController {
             return ResultData.fail("没有请假信息");
         }
         else{
-            return ResultData.success(users);
+            return ResultData.success_leave(users);
         }
 
     }//测试通过 测试人：邹正强

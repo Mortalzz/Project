@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程列表</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<!-- 刷新页面的按钮 -->
+<button id="refreshButton">刷新页面</button>
+<!-- 添加课程的按钮 -->
+<button id="addCourseButton">添加课程</button>
+
+<table id="dataGrid" class="display" style=" width:100%">
+    <thead>
+    <tr>
+        <th>课程名称</th>
+        <th>授课教师</th>
+        <th>上课时间</th>
+        <th>上课地点</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Rows will be added here by JavaScript -->
+    </tbody>
+</table>
+
+<!-- 添加课程的模态框 -->
+<div id="addCourseModal" style="display:none;">
+    <h2>添加课程</h2>
+    <label for="courseName">课程名称:</label>
+    <input type="text" id="courseName"><br>
+    <label for="teacherName">授课教师:</label>
+    <input type="text" id="teacherName"><br>
+    <label for="courseDate">上课时间:</label>
+    <input type="text" id="courseDate"><br>
+    <label for="coursePlace">上课地点:</label>
+    <input type="text" id="coursePlace"><br>
+    <button id="submitAddCourse">确定</button>
+    <button id="cancelAddCourse">取消</button>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#dataGrid').DataTable({
+            language: {
+                "lengthMenu": "显示 _MENU_ 条记录",
+                "zeroRecords": "没有找到记录",
+                "info": "显示第 _START_ 到 _END_ 条记录，总共 _TOTAL_ 条记录",
+                "infoEmpty": "没有记录",
+                "infoFiltered": "(从 _MAX_ 条记录中筛选)",
+                "search": "搜索:",
+                "paginate": {
+                    "next": "下一页",
+                    "previous": "上一页"
+                }
+            }
+        });
+
+        // 使用 AJAX 从后端获取数据
+        function loadData() {
+            $.ajax({
+                url: 'http://localhost:8080/course/get_all', // 替换为实际的 API 地址
+                method: 'GET',
+                success: function (data) {
+                    if (data.code == 200) {
+                        table.clear();
+                        data.list_course.forEach(function (item) {
+                            // 这里添加删除按钮
+                            table.row.add([
+                                item.name,
+                                item.teachername,
+                                item.coursedate,
+                                item.courseplace,
+                                `<button class="deleteButton" data-id="${item.id}">删除</button>` // 在此处使用课程 ID 作为数据属性
+                            ]).draw();
+                        });
+                    }
+                },
+            });
+        }
+
+        loadData(); // 初始加载数据
+
+        // 刷新按钮点击事件
+        $('#refreshButton').on('click', function () {
+            loadData();
+        });
+
+        // 显示添加课程模态框
+        $('#addCourseButton').on('click', function () {
+            $('#addCourseModal').show();
+        });
+
+        // 提交添加课程
+        $('#submitAddCourse').on('click', function () {
+            var courseData = {
+                name: $('#courseName').val(),
+                teachername: $('#teacherName').val(),
+                coursedate: $('#courseDate').val(),
+                courseplace: $('#coursePlace').val(),
+            };
+            $.ajax({
+                url: 'http://localhost:8080/course/add', // 替换为实际的添加课程 API 地址
+                method: 'POST',
+                data:courseData,
+                success: function (data) {
+                    if (data.code == 200) {
+                        loadData(); // 刷新数据表
+                        $('#addCourseModal').hide(); // 关闭模态框
+                    } else {
+                        alert('添加失败: ' + data.message);
+                    }
+                },
+            });
+        });
+
+        // 取消添加课程
+        $('#cancelAddCourse').on('click', function () {
+            $('#addCourseModal').hide();
+        });
+
+        // 删除课程
+        $('#dataGrid tbody').on('click', '.deleteButton', function () {
+            var courseId = $(this).data('id'); // 获取课程 ID
+            if (confirm('确认删除该课程吗？')) {
+                $.ajax({
+                    url: `http://localhost:8080/course/delete/${courseId}`, // 替换为实际的删除课程 API 地址
+                    method: 'DELETE',
+                    success: function (data) {
+                        if (data.code == 200) {
+                            loadData(); // 刷新数据表
+                        } else {
+                            alert('删除失败: ' + data.message);
+                        }
+                    },
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
