@@ -217,7 +217,8 @@
 
 	<script>
 
-		var userType = 'student';
+		var userType = localStorage.getItem('role');
+		console.log(userType);
 		function toggleMenu() {
 			const menus = document.querySelectorAll('.navbar-nav .nav-item');
 			if (userType == 'student') {
