@@ -81,6 +81,7 @@ public class CourseController {
         if(courses==null){
             return ResultData.fail("没有已选的课程");
         }
+        System.out.println(courses);
         return ResultData.success(courses);
     }
 
