@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>请假申请</title>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<style>
 			body {
 				font-family: Arial, sans-serif;
@@ -80,46 +81,43 @@
 			}
 		</style>
 	</head>
-
-
-	<body>
+<body>
 		<h2>请假申请</h2>
 		<div class="form-container">
-			<<form id="leaveRequestForm">>
+			<form id="leaveRequestForm">
 
 				<div class="form-group">
-				    <label for="startDate">请假开始日期：</label>  
-				    <input type="date" id="startDate" name="startDate" required>  
+				    <label for="startDate">请假开始日期：</label>
+				    <input type="date" id="startDate" name="start_Date" required>
 				</div>
 
 				<div class="form-group">
 				    <label for="startDate">请假结束日期：</label>  
-				    <input type="date" id="endDate" name="endDate" required>  
+				    <input type="date" id="endDate" name="end_Date" required>
 				</div>
 
 				<div class="form-group">
 					<label>请假原因：</label>
-					<textarea id="reason" name="reason" required></textarea>
+					<textarea id="reason" name="reason1" required></textarea>
 
 				</div>
 
 				<div class="form-group phone-input">
 					<label>个人电话：</label>
-					<input type="tel" id="phone1" name="phone1" >
+					<input type="tel" id="phone1" name="phone_1" >
 				</div>
-
-				<button  type="submit" class="submit-btn" id="submit">提交申请</button>
-
+				<button class="submit-btn" id="submit">提交申请</button>
+			</form>
+		</div>
 			<script>
-				$(document).ready(function () {
-					$('#submit').click(function () {
-						var Data = {
-							datestart: $('#startDate').val(),
-							dateend: $('#endDate').val(),
-							phone: $('#phone1').val(),
-							reason: $('#reason').val(),
-						};
-						console.log(Data);
+				$(document).on('click', '#submit', function() {
+					event.preventDefault();
+					var Data = {
+						datestart: $('#startDate').val(),
+						dateend: $('#endDate').val(),
+						phone: $('#phone1').val(),
+						reason: $('#reason').val(),
+					};
 						// 使用 AJAX 发送更新请求
 						$.ajax({
 							type: "post",
@@ -127,10 +125,11 @@
 							data: Data,
 							dataType: "json",
 							success: function (response) {
+								console.log(response);
 								if (response.code == 200) {
 									alert("申请成功！");
 								} else {
-									alert("更新失败: " + response.message);
+									alert("更新失败: " + response.msg);
 								}
 							},
 							error: function (xhr, status, error) {
@@ -138,7 +137,6 @@
 							}
 						});
 					});
-				});
 			</script>
 
 			<script>
@@ -169,7 +167,6 @@
 				}
 
 			</script>
-			</form>
-		</div>
+
 	</body>
 </html>
