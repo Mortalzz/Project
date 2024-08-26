@@ -73,21 +73,23 @@ public class DormitoryController {
 
     @RequestMapping("/get_dormitInfo")
     @ResponseBody
-    public ResultData getDormit(HttpServletRequest request){
-        HttpSession session=request.getSession(false);
-        S_student currentStu = (S_student) session.getAttribute("currentUser");
-        Integer tmp_dormitId=currentStu.getDormitid();//tmp_dormit为获取学生的宿舍id
-        System.out.println(tmp_dormitId);
-        if(tmp_dormitId==null){
+    public ResultData getDormit(@RequestBody S_student student){
+        int stu_id=student.getId();//获取当前用户id
+        QueryWrapper<S_student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",stu_id);
+        S_student currstudent=studentService.getOne(queryWrapper);
+
+        Integer dormitId=currstudent.getDormitid();
+
+        System.out.println(dormitId);
+
+        if(dormitId==null){
             return ResultData.fail("该学生暂未申请宿舍");
         }
-        if(tmp_dormitId!=null){
-            S_dormit tmp=dormitoryService.getById(tmp_dormitId);
-            return ResultData.success(tmp);
-        }
-        else {
-            return ResultData.fail("查找失败");
-        }
+
+        S_dormit tmp=dormitoryService.getById(dormitId);
+        System.out.println(tmp);
+        return ResultData.success(tmp);
     }//获取测试通过，测试人：邹正强
 
 

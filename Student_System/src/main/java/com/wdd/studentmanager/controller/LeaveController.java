@@ -7,6 +7,7 @@ import com.wdd.studentmanager.domain.S_student;
 import com.wdd.studentmanager.service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,17 +25,13 @@ public class LeaveController {
     LeaveService leaveService;
     @RequestMapping("/request")
     @ResponseBody
-    public ResultData Requestleave(HttpServletRequest request){
-        String Info=request.getParameter("Info");
-        HttpSession session=request.getSession(false);
-        S_student currentStu = (S_student) session.getAttribute("currentUser");
-        int stu_id=currentStu.getId();
-        S_leave user = new S_leave();
-        user.setStudentid(stu_id);
-        user.setInfo(Info);
-        user.setStatus(false);
-        boolean save_leave=leaveService.save(user);
-        if(save_leave==true){
+    public ResultData Requestleave(@RequestBody S_leave leave){
+
+
+        S_leave tmp=leave;
+        tmp.setStatus(false);
+        boolean save_leave=leaveService.save(tmp);
+        if(save_leave){
             return ResultData.success("申请成功");
         }
         else{
