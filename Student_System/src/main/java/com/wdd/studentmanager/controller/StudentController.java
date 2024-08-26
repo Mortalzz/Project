@@ -243,8 +243,8 @@ public ResultData login(HttpServletRequest request) throws JSONException {
         if(student.getUsername()!=""){
             tmp.setUsername(student.getUsername());
         }
-        if(student.getSn()!=""){
-            tmp.setSn(student.getSn());
+        if(student.getPassword()!=""){
+            tmp.setPassword(student.getPassword());
         }
         if(student.getSex()!=""){
             tmp.setSex(student.getSex());
