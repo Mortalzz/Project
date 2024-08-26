@@ -44,6 +44,7 @@
             url: 'http://localhost:8080/leave/get', // 替换为实际的 API 地址
             method: 'GET',
             success: function (data) {
+                console.log(data);
                 if(data.code==200){
                     table.clear();
                     data.list_leave.forEach(function (item){
@@ -51,7 +52,7 @@
                             item.info,
                             item.timestart,
                             item.timeend,
-                            item.remark=0?'审批中':(1?'已通过':'未通过')
+                            item.remark==0?'审批中':(1?'已通过':'未通过')
                         ]).draw();
                     });
                 }
