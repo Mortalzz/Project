@@ -153,8 +153,7 @@
             success: function(data){
                 if(data.code == 200){
                     // 将user对象保存到localStorage
-                    localStorage.setItem("'user", JSON.stringify(data.data));
-                    localStorage.setItem("role",JSON.stringify(data.data.role));
+                    localStorage.setItem("role",JSON.stringify(dataToSend.role));
                     window.location.href = "http://localhost:8080/index/index"; // 替换为需要跳转的页面
                 } else {
                     alert("消息提醒: " + data.msg);
