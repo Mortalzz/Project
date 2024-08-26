@@ -37,6 +37,11 @@ public class IndexController {
         return "/student/studentList";
     }
 
+    @RequestMapping("stu_get_all")
+    public String stu_all(){
+        return "/student/adminStudentList";
+    }
+
     @RequestMapping("/course_list")
     public String list_course(){
         return "/course/courseList";
