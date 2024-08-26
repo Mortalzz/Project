@@ -28,9 +28,7 @@ public class LeaveController {
         HttpSession session=request.getSession(false);
         S_student student=(S_student) session.getAttribute("currentUser");
         String datestart=request.getParameter("datestart");
-        System.out.println(datestart);
         String dateend=request.getParameter("dateend");
-        System.out.println(dateend);
         String reason=request.getParameter("reason");
         String phone=request.getParameter("phone");
         S_leave leave=new S_leave();
@@ -40,7 +38,6 @@ public class LeaveController {
         leave.setInfo(reason);
         leave.setPhone(phone);
         leave.setStatus(false);
-        System.out.println(leave);
         boolean save_leave=leaveService.save(leave);
         if(save_leave==true){
             return ResultData.success("申请成功");

@@ -106,18 +106,18 @@
 					<label>个人电话：</label>
 					<input type="tel" id="phone1" name="phone_1" >
 				</div>
-				<button  type="submit" class="submit-btn" id="submit">提交申请</button>
+				<button class="submit-btn" id="submit">提交申请</button>
 			</form>
 		</div>
 			<script>
 				$(document).on('click', '#submit', function() {
+					event.preventDefault();
 					var Data = {
 						datestart: $('#startDate').val(),
 						dateend: $('#endDate').val(),
 						phone: $('#phone1').val(),
 						reason: $('#reason').val(),
 					};
-						console.log(Data);
 						// 使用 AJAX 发送更新请求
 						$.ajax({
 							type: "post",
@@ -125,10 +125,11 @@
 							data: Data,
 							dataType: "json",
 							success: function (response) {
+								console.log(response);
 								if (response.code == 200) {
 									alert("申请成功！");
 								} else {
-									alert("更新失败: " + response.message);
+									alert("更新失败: " + response.msg);
 								}
 							},
 							error: function (xhr, status, error) {
