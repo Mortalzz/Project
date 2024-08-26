@@ -27,6 +27,7 @@ public class LeaveController {
     @ResponseBody
     public ResultData Requestleave(@RequestBody S_leave leave){
 
+        System.out.println(leave);
 
         S_leave tmp=leave;
         tmp.setStatus(false);
@@ -42,13 +43,12 @@ public class LeaveController {
     //查看请假状态
     @RequestMapping("/get")
     @ResponseBody
-    private ResultData Getleave(HttpServletRequest request){
-        HttpSession session=request.getSession();
-        S_student stu=(S_student) session.getAttribute("currentUser");
+    private ResultData Getleave(@RequestBody S_student student){
 
-        int stu_id=stu.getId();
+        int stu_id=student.getId();
         QueryWrapper<S_leave> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("studentid", stu_id);
+
         List<S_leave> users = leaveService.list(queryWrapper);
         if(users==null){
             return ResultData.fail("没有请假信息");
