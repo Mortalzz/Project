@@ -96,4 +96,5 @@ public class IndexController {
     public String course_add_sub(){
         return "/course/adminCourseList";
     }
+
 }

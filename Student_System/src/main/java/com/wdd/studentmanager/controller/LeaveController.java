@@ -110,13 +110,14 @@ public class LeaveController {
     public ResultData confirm(HttpServletRequest request){
         String sn=request.getParameter("sn");
         String remark=request.getParameter("remark");
-        int flag=(remark=="审核中")?0:((remark=="已通过")?1:2);
+        System.out.println(remark);
+        int flag=Integer.valueOf(remark);
         QueryWrapper<S_student> s_studentQueryWrapper=new QueryWrapper<>();
         s_studentQueryWrapper.eq("sn",sn);
         S_student student=studentService.getOne(s_studentQueryWrapper);
         int id=student.getId();
         UpdateWrapper<S_leave> s_leaveUpdateWrapper=new UpdateWrapper<>();
-        s_leaveUpdateWrapper.eq("studentid",id).set("remark",flag);
+        s_leaveUpdateWrapper.eq("studentid",id).set("remark",flag).set("status",1);
         boolean result=leaveService.update(s_leaveUpdateWrapper);
         if(result){
             return ResultData.success("状态更新成功！");
