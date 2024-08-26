@@ -59,11 +59,10 @@ public class CourseController {
 
     @RequestMapping("/get_courseInfo")
     @ResponseBody
-    public ResultData GetcourseInfo(HttpServletRequest request){
-        HttpSession session=request.getSession(false);
-        S_student currentStu = (S_student) session.getAttribute("currentUser");
+    public ResultData GetcourseInfo(@RequestBody S_student student){
+        int stu_id=student.getId();
+
         //用学生的id匹配选课记录
-        int stu_id=currentStu.getId();
         QueryWrapper<S_selected_course> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("studentid",stu_id);
         List<S_selected_course> selectedcourses=selectedCourseService.list(queryWrapper);
