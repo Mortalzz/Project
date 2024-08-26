@@ -37,11 +37,13 @@ public class DormitoryController {
         courseQuery.eq("build",dormit.getBuild());
         courseQuery.eq("room",dormit.getRoom());
         S_dormit stuDormit = dormitoryService.getOne(courseQuery);//找出匹配的宿舍
+        System.out.println(stuDormit);
         if(stuDormit==null){
             return ResultData.fail("宿舍不存在");
         }
 
         Integer stu_id=dormit.getStuId();
+        System.out.println(stu_id);
 
         // 校验参数是否有效
         if ( stu_id== null ) {

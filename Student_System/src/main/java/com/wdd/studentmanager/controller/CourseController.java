@@ -3,6 +3,7 @@ package com.wdd.studentmanager.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wdd.studentmanager.common.ResultData;
 import com.wdd.studentmanager.domain.S_course;
+import com.wdd.studentmanager.domain.S_dormit;
 import com.wdd.studentmanager.domain.S_selected_course;
 import com.wdd.studentmanager.domain.S_student;
 import com.wdd.studentmanager.service.CourseService;
@@ -31,6 +32,31 @@ public class CourseController {
 
     @Autowired
     StudentService studentService;
+
+    @RequestMapping("/get_all")
+    @ResponseBody
+    public ResultData Getallcourse(@RequestBody S_course sCourse){
+        System.out.println(sCourse);
+        if(sCourse.getName()!=null){
+            QueryWrapper<S_course> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("name", sCourse.getName());
+            List<S_course> courses = courseService.list(queryWrapper);
+            return ResultData.success(courses);
+        }
+
+        if(sCourse.getTeachername()!=null){
+            QueryWrapper<S_course> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("teachername", sCourse.getTeachername());
+            List<S_course> courses = courseService.list(queryWrapper);
+            System.out.println(courses);
+            return ResultData.success(courses);
+        }
+
+        else{
+            return ResultData.fail("查找失败");
+        }
+    }
+
     @RequestMapping("/get_courseInfo")
     @ResponseBody
     public ResultData GetcourseInfo(HttpServletRequest request){
