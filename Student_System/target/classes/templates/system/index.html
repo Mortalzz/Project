@@ -221,11 +221,10 @@
 	<!-- Sidebar End -->
 
 	<script>
-		var userType = "student";
-		console.log(userType);
+		var userType = localStorage.getItem('role');
 		function toggleMenu() {
 			const menus = document.querySelectorAll('.navbar-nav .nav-item');
-			if (userType == 'student') {
+			if (userType == 'student' ) {
 				menus[1].style.display = 'none';
 				menus[2].style.display = 'block';
 				menus[3].style.display = 'none';
@@ -239,7 +238,7 @@
 				menus[11].style.display = 'block';
 				menus[12].style.display = 'block';
 			}
-			if (userType =='admin') {
+			else if (userType == 'admin' ) {
 				menus[0].style.display = 'none';
 				menus[1].style.display = 'block';
 				menus[2].style.display = 'none';
@@ -353,16 +352,16 @@
 					<p>8</p>
 				</div>
 				<div id="info1" class="page-content">
-					<p>61</p>
+
 				</div>
 				<div id="info2" class="page-content">
-					<p>10</p>
+
 				</div>
 				<div id="info3" class="page-content">
-					<p>11</p>
+				
 				</div>
 				<div id="info4" class="page-content">
-					<p>12</p>
+
 				</div>
 				<div id="system1" class="page-content">
 					<iframe src="http://localhost:8080/index/change_password" width="100%" height="1000px"></iframe>

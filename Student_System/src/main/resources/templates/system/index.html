@@ -222,10 +222,9 @@
 
 	<script>
 		var userType = localStorage.getItem('role');
-		console.log(userType);
 		function toggleMenu() {
 			const menus = document.querySelectorAll('.navbar-nav .nav-item');
-			if (userType.equals('student')) {
+			if (userType == 'student' ) {
 				menus[1].style.display = 'none';
 				menus[2].style.display = 'block';
 				menus[3].style.display = 'none';
@@ -239,7 +238,7 @@
 				menus[11].style.display = 'block';
 				menus[12].style.display = 'block';
 			}
-			if (userType.equals('admin')) {
+			else if (userType == 'admin' ) {
 				menus[0].style.display = 'none';
 				menus[1].style.display = 'block';
 				menus[2].style.display = 'none';
