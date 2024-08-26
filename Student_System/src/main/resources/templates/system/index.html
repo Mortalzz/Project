@@ -212,8 +212,6 @@
 						<div class="aa">
 							<a href="#" class="dropdown-item" onclick="showPage('system1')"><i
 									class="fa fa-genderless" aria-hidden="true"></i> 密码修改</a>
-							<a href="#" class="dropdown-item" onclick="showPage('system2')"><i
-									class="fa fa-genderless" aria-hidden="true"></i> 系统改进建议</a>
 						</div>
 					</div>
 				</div>
@@ -224,7 +222,7 @@
 
 	<script>
 
-		var userType = "admin";
+		var userType = localStorage.getItem("role");
 		console.log(userType);
 		function toggleMenu() {
 			const menus = document.querySelectorAll('.navbar-nav .nav-item');
@@ -317,7 +315,7 @@
 					<iframe src="http://localhost:8080/index/set_stu_profile" width="100%" height="1000px"></iframe>
 				</div>
 				<div id="personm" class="page-content">
-					<iframe src="http://localhost:8080/index/stu_get_all" width="100%" height="1000px"></iframe>
+					<iframe src="http://localhost:8080/index/stu_list" width="100%" height="1000px"></iframe>
 				</div>
 				<div id="person2" class="page-content">
 					<iframe src="http://localhost:8080/index/stu_list" width="100%" height="1000px"></iframe>
@@ -369,9 +367,6 @@
 				</div>
 				<div id="system1" class="page-content">
 					<iframe src="http://localhost:8080/index/change_password" width="100%" height="1000px"></iframe>
-				</div>
-				<div id="system2" class="page-content">
-					<p>14</p>
 				</div>
 			</div>
 			<!--页面内容结束-->
