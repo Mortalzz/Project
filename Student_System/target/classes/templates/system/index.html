@@ -199,7 +199,7 @@
 							class="fa fa-users" aria-hidden="true"></i>在线咨询</a>
 					<div class="dropdown-menu bg-transparent border-0">
 						<div class="aa">
-							<a href="#" class="dropdown-item" onclick="showPage('ask')"><i
+							<a href="#" class="dropdown-item" onclick="loadIframe()"><i
 									class="fa fa-genderless" aria-hidden="true"></i>在线咨询</a>
 						</div>
 					</div>
@@ -215,6 +215,18 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+							class="fa fa-users" aria-hidden="true"></i>在线咨询</a>
+					<div class="dropdown-menu bg-transparent border-0">
+						<div class="aa">
+							<a href="#" class="dropdown-item" onclick="loadadminIframe()"><i
+									class="fa fa-genderless" aria-hidden="true"></i>在线咨询</a>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</nav>
 	</div>
@@ -237,7 +249,7 @@
 				menus[9].style.display = 'block';
 				menus[10].style.display = 'block';
 				menus[11].style.display = 'block';
-				menus[12].style.display = 'block';
+				menus[12].style.display = 'none';
 			}
 			if (userType.equals('admin')) {
 				menus[0].style.display = 'none';
@@ -250,9 +262,9 @@
 				menus[7].style.display = 'block';
 				menus[8].style.display = 'block';
 				menus[9].style.display = 'block';
-				menus[10].style.display = 'block';
-				menus[11].style.display = 'block';
 				menus[12].style.display = 'block';
+				menus[11].style.display = 'block';
+				menus[10].style.display = 'none';
 			}
 		}
 		window.onload = toggleMenu;
@@ -349,20 +361,23 @@
 				<div id="send" class="page-content">
 					<iframe src="http://localhost:8080/index/email" width="100%" height="1000px"></iframe>
 				</div>
-				<div id="ask" class="page-content">
-					<p>8</p>
+				<div id="ask_student" class="page-content">
+					<iframe id="studentIframe" src="" width="100%" height="1000px" style="border: none;"></iframe>
+				</div>
+				<div id="ask_admin" class="page-content">
+					<iframe id="adminIframe" src="" width="100%" height="1000px" style="border: none;"></iframe>
 				</div>
 				<div id="info1" class="page-content">
-
+					<p>111</p>
 				</div>
 				<div id="info2" class="page-content">
-
+					<p>112</p>
 				</div>
 				<div id="info3" class="page-content">
-				
+					<p>113</p>
 				</div>
 				<div id="info4" class="page-content">
-
+					<p>114</p>
 				</div>
 				<div id="system1" class="page-content">
 					<iframe src="http://localhost:8080/index/change_password" width="100%" height="1000px"></iframe>
@@ -372,7 +387,17 @@
 		</div>
 	</div>
 </div>
+<script>
+	function loadIframe() {
+		document.getElementById('studentIframe').src = 'http://localhost:8080/web/toWebSocketDemo/student';
+		document.getElementById('ask_student').style.display = 'block'; // Ensure the iframe container is visible
+	}
 
+	function loadadminIframe() {
+		document.getElementById('adminIframe').src = 'http://localhost:8080/web/toWebSocketDemo/admin';
+		document.getElementById('ask_admin').style.display = 'block'; // Ensure the iframe container is visible
+	}
+</script>
 <script src="/js/main.js"></script>
 </body>
 </html>
