@@ -112,6 +112,14 @@ public class InfomationController {
         return ResultData.success(tmp);
     }
 
+    @RequestMapping("/allstu")
+    @ResponseBody
+    public ResultData getall(){
+        List<S_student> students=studentMapper.getAllStudents();
+        int sum=students.size();
+        return ResultData.success(sum);
+    }
+
 
 
 
