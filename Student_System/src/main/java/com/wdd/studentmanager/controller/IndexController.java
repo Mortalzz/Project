@@ -29,17 +29,17 @@ public class IndexController {
 
     @RequestMapping("/email_collective")
     public String email_collective(){
-        return "/system/email_collective";
+        return "/email/email_collective";
     }
 
     @RequestMapping("/email_lose_course")
     public String email_lose_course(){
-        return "/system/email_lose_course";
+        return "/email/email_lose_course";
     }
 
     @RequestMapping("/email_loseinfo")
     public String email_loseinfo(){
-        return "/system/email_loseinfo";
+        return "/email/email_loseinfo";
     }
 
     @RequestMapping("/stu_list")
