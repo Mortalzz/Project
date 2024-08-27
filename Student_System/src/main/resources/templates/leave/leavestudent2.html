@@ -52,7 +52,7 @@
                             item.info,
                             item.timestart,
                             item.timeend,
-                            item.remark==0?'审批中':(1?'已通过':'未通过')
+                            item.remark === 0 ? '审批中' : ((item.remark === 1) ? '已通过' : '未通过')
                         ]).draw();
                     });
                 }
