@@ -185,7 +185,7 @@ public class StudentController {
     }
 
 
-    @RequestMapping("no_selece_course_list")
+    @RequestMapping("/no_select_course_list")
     @ResponseBody
     public ResultData no_course_list(){
         List<S_student> list=studentService.list();
@@ -194,10 +194,22 @@ public class StudentController {
             int id=item.getId();
             QueryWrapper<S_selected_course> s_selected_courseQueryWrapper=new QueryWrapper<>();
             s_selected_courseQueryWrapper.eq("studentid",id);
-            S_selected_course s_selected_course=selectedCourseService.getOne(s_selected_courseQueryWrapper);
-            if(s_selected_course==null){
+            List<S_selected_course> s_selected_course=selectedCourseService.list(s_selected_courseQueryWrapper);
+            if(s_selected_course.size() ==0 ){
                 back.add(item);
             }
+        }
+        return ResultData.success(back);
+    }
+
+    @RequestMapping("/no_complete_info")
+    @ResponseBody
+    public ResultData no_complete_info(){
+        List<S_student> list=studentService.list();
+        List<S_student> back=new ArrayList<>();
+        for(S_student item:list){
+            if(item.getMobile()==null||item.getAddress()==null||item.getDormitid()==null)
+                back.add(item);
         }
         return ResultData.success(back);
     }
@@ -228,5 +240,6 @@ public class StudentController {
             return ResultData.fail("用户未登录");
         }
     }
+
 
 }
