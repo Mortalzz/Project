@@ -222,11 +222,11 @@
 
 				<div class="nav-item dropdown">
 					<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-							class="fa fa-users" aria-hidden="true"></i>在线咨询</a>
+							class="fa fa-users" aria-hidden="true"></i>在线回复</a>
 					<div class="dropdown-menu bg-transparent border-0">
 						<div class="aa">
 							<a href="#" class="dropdown-item" onclick="loadadminIframe()"><i
-									class="fa fa-genderless" aria-hidden="true"></i>在线咨询</a>
+									class="fa fa-genderless" aria-hidden="true"></i>在线回复</a>
 						</div>
 					</div>
 				</div>
@@ -265,9 +265,9 @@
 				menus[7].style.display = 'block';
 				menus[8].style.display = 'block';
 				menus[9].style.display = 'block';
-				menus[12].style.display = 'block';
-				menus[11].style.display = 'block';
 				menus[10].style.display = 'none';
+				menus[11].style.display = 'none';
+				menus[12].style.display = 'block';
 			}
 		}
 		window.onload = toggleMenu;
@@ -406,6 +406,7 @@
 		document.getElementById('adminIframe').src = 'http://localhost:8080/web/toWebSocketDemo/admin';
 		document.getElementById('ask_admin').style.display = 'block'; // Ensure the iframe container is visible
 	}
+
 </script>
 <script src="/js/main.js"></script>
 </body>

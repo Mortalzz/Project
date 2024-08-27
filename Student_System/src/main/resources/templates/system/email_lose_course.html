@@ -120,6 +120,8 @@
 
                 alert(Data1);
 
+
+
                 // 使用 AJAX 发送更新请求
                 $.ajax({
                     type: "post",
@@ -219,11 +221,7 @@
 
                 const [incompleteQqs1, incompleteQqs2] = await Promise.all([studentPromise, dormitoryPromise]);
 
-                alert(incompleteQqs1);
-                alert(incompleteQqs2);
-
                 const incompleteQqss = incompleteQqs1.filter(id => ! incompleteQqs2.includes(id));
-                alert(incompleteQqss);
 
 
 

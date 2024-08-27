@@ -131,15 +131,13 @@
           var Data1 = {
             info: this.sentEmailContent
           };
-          Data1 = JSON.stringify(Data1);
-          alert(Data1);
+          console.log(Data1);
 
           // 使用 AJAX 发送更新请求
           $.ajax({
             type: "post",
             url: 'http://localhost:8080/email/sendall',
             data: Data1,
-            dataType: "json",
             success: function (response) {
               console.log(response);
               if (response.code == 200) {

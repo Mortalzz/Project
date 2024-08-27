@@ -46,9 +46,16 @@ public class DormitoryController {
         QueryWrapper<S_dormit> s_dormitQueryWrapper=new QueryWrapper<>();
         s_dormitQueryWrapper.eq("build",temp);
         S_dormit s_dormit=dormitoryService.getOne(s_dormitQueryWrapper);
+
+        int count=s_dormit.getTakeincounts()+1;
+        UpdateWrapper<S_dormit> s_dormitUpdateWrapper=new UpdateWrapper<>();
+        s_dormitUpdateWrapper.eq("build",temp).set("takeincounts",count);
+        boolean t=dormitoryService.update(s_dormitUpdateWrapper);
+
         currentStu.setDormitid(s_dormit.getId());
         UpdateWrapper<S_student> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", currentStu.getId()).set("dormitid", currentStu.getDormitid());
+
         boolean result = studentService.update(updateWrapper); // 调用 update 方法
         if (result) {
             return ResultData.success("Dormitory assigned successfully.");
