@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 @Data
-public class S_student {
-    @TableId(value = "id", type = IdType.AUTO)
+public class S_student_S {
     private Integer id;
     private String sn;
     private String username;
@@ -15,7 +14,7 @@ public class S_student {
     private String sex;
     private String mobile;
     private String qq;
-    private byte[] photo;
+    private String  photo;
     private String address;
     private Integer dormitid;
 

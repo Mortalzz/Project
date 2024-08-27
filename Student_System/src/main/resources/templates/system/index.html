@@ -15,7 +15,82 @@
 	<link href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/main-style.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- 引入Bootstrap的CSS文件 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 20px;
+		}
 
+		/* 打开弹窗的按钮 */
+		.open-modal-btn {
+			padding: 10px 20px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+
+		/* 弹窗背景 */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0, 0, 0);
+			background-color: rgba(0, 0, 0, 0.4);
+			padding-top: 60px;
+		}
+
+		/* 弹窗内容 */
+		.modal-content {
+			background-color: #fefefe;
+			margin: 5% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			max-width: 400px;
+		}
+
+		/* 关闭按钮 */
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		.form-group {
+			margin-bottom: 15px;
+		}
+
+		.form-group label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		.change-password-form {
+			width: 100%;
+		}
+
+		#message {
+			margin-top: 10px;
+		}
+	</style>
 	<style>
 		.main-content {
 		/ padding: 20px;
@@ -47,6 +122,33 @@
 
 
 <body>
+<!-- 弹窗结构 -->
+<div id="passwordModal" class="modal">
+
+	<!-- 弹窗内容 -->
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<div class="change-password-form">
+			<h2>修改密码</h2>
+			<div class="form-group">
+				<label for="currentPassword">当前密码：</label>
+				<input type="password" id="currentPassword" required>
+			</div>
+			<div class="form-group">
+				<label for="newPassword">新密码：</label>
+				<input type="password" id="newPassword" required>
+			</div>
+			<div class="form-group">
+				<label for="confirmPassword">确认新密码：</label>
+				<input type="password" id="confirmPassword" required>
+			</div>
+			<button id="changePasswordBtn">保存更改</button>
+			<div id="message"></div>
+		</div>
+	</div>
+
+</div>
+
 <div class="container-fluid position-relative bg-white d-flex p-0">
 
 	<!--Sidebar Start-->
@@ -302,8 +404,8 @@
 						<span class="d-none d-lg-inline-flex">您好</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-						<a href="#" class="dropdown-item" onclick="showPage('system1')">修改密码</a>
-						<a href="http://localhost:8080/index/login" class="dropdown-item">退出登录</a>
+						<a href="#" class="dropdown-item" id="openModalBtn">修改密码</a>
+						<a href="http://localhost:8080/index/login" class="dropdown-item" target="_top">退出登录</a>
 					</div>
 				</div>
 			</div>
@@ -381,9 +483,6 @@
 				<div id="info4" class="page-content">
 					<p>114</p>
 				</div>
-				<div id="system1" class="page-content">
-					<iframe src="http://localhost:8080/index/change_password" width="100%" height="1000px"></iframe>
-				</div>
 			</div>
 			<!--页面内容结束-->
 		</div>
@@ -391,17 +490,88 @@
 </div>
 <script>
 	function loadIframe() {
-		location.reload();
 		document.getElementById('studentIframe').src = 'http://localhost:8080/web/toWebSocketDemo/student';
 		document.getElementById('ask_student').style.display = 'block'; // Ensure the iframe container is visible
 	}
 
 	function loadadminIframe() {
-		location.reload();
 		document.getElementById('adminIframe').src = 'http://localhost:8080/web/toWebSocketDemo/admin';
 		document.getElementById('ask_admin').style.display = 'block'; // Ensure the iframe container is visible
 	}
 
+</script>
+<script>
+	$(document).ready(function () {
+		// 获取弹窗元素
+		var modal = $('#passwordModal');
+
+		// 获取打开弹窗的按钮
+		var btn = $('#openModalBtn');
+
+		// 获取关闭弹窗的 <span> 元素
+		var span = $('.close');
+
+		// 当用户点击按钮时，打开弹窗
+		btn.on('click', function () {
+			modal.show();
+		});
+
+		// 当用户点击 <span> (x) 时，关闭弹窗
+		span.on('click', function () {
+			modal.hide();
+		});
+
+		// 当用户点击弹窗外的区域时，关闭弹窗
+		$(window).on('click', function (event) {
+			if (event.target.id === 'passwordModal') {
+				modal.hide();
+			}
+		});
+
+		// 处理密码修改
+		$('#changePasswordBtn').click(function () {
+			var currentPassword = $('#currentPassword').val();
+			var newPassword = $('#newPassword').val();
+			var confirmPassword = $('#confirmPassword').val();
+
+			// 确认新密码和确认密码是否匹配
+			if (newPassword !== confirmPassword) {
+				$('#message').text("新密码和确认密码不匹配！").css("color", "red");
+				return;
+			}
+
+			var data = {
+				currentPassword: currentPassword,
+				newPassword: newPassword
+			};
+
+			// 发送 AJAX 请求来修改密码
+			$.ajax({
+				url: 'http://localhost:8080/student/change_password', // 替换为实际的 API 地址
+				method: 'POST',
+				data: data,
+				dataType: "json",
+				success: function (response) {
+					if (response.code === 200) {
+						$('#message').text("密码修改成功！").css("color", "green");
+						$('#currentPassword').val('');
+						$('#newPassword').val('');
+						$('#confirmPassword').val('');
+						setTimeout(function() {
+							modal.hide();
+							window.location.href = 'http://localhost:8080/index/login'; // 跳转到登录页面
+						}, 2000);
+					} else {
+						$('#message').text("错误: " + response.message).css("color", "red");
+					}
+				},
+				error: function (xhr, status, error) {
+					console.error('AJAX Error:', status, error);
+					$('#message').text("请求失败，请稍后再试。").css("color", "red");
+				}
+			});
+		});
+	});
 </script>
 <script src="/js/main.js"></script>
 </body>
