@@ -50,7 +50,7 @@ public class StudentController {
         student.setPassword(password);
         student.setSn(sn);
         student.setUsername(username);
-        student.setClazzid(Integer.valueOf(clazz));
+        student.setClazzid(clazz);
         student.setQq(qq);
         student.setSex(sex);
         if (findBySn(sn) != null) {

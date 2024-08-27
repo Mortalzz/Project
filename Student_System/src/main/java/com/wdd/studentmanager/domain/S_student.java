@@ -11,7 +11,7 @@ public class S_student {
     private String sn;
     private String username;
     private String password;
-    private int clazzid;
+    private String clazzid;
     private String sex;
     private String mobile;
     private String qq;
@@ -19,7 +19,4 @@ public class S_student {
     private String address;
     private Integer dormitid;
 
-    public String getProvince(){
-        return address;
-    }
 }
