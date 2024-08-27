@@ -3,19 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>在线咨询</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none; /* 禁止拉伸 */
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-当前用户
-<input type="text" th:value="${cid}" id="cid"/>
-<p>发送对象：
-<div><input id="toUserId" name="toUserId" type="text" value="user-1"></div>
-<p>发送内容：
-<div><input id="contentText" name="contentText" type="text" value="hello websocket"></div>
-<p>操作：
-<div>
+<div class="container">
+    <h1>在线咨询</h1>
+    <input type="text" th:value="${cid}" id="cid" class="hidden"/>
+    <div><input id="toUserId" name="toUserId" type="text" value="user-1" class="hidden"></div>
+
+    <p>【问题】：</p>
+    <textarea id="contentText" name="contentText" rows="3" placeholder="请输入问题..."></textarea>
+
+    <p>【回答】：</p>
+    <textarea id="receivedMessage" rows="5" cols="50" readonly placeholder="接收到的消息将显示在这里..."></textarea>
+
     <button type="button" onclick="sendMessage()">发送消息</button>
 </div>
-</body>
 
 <script type="text/javascript">
     var socket;
@@ -23,51 +68,40 @@
         console.log("您的浏览器不支持WebSocket");
     } else {
         console.log("您的浏览器支持WebSocket");
-        //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
-
-        var cid = student;
+        var cid = document.getElementById("cid").value;
         console.log("cid-->" + cid);
         var reqUrl = "http://localhost:8080/websocket/" + cid;
         socket = new WebSocket(reqUrl.replace("http", "ws"));
-        //打开事件
+
         socket.onopen = function () {
             console.log("Socket 已打开");
-            //socket.send("这是来自客户端的消息" + location.href + new Date());
         };
-        //获得消息事件
+
         socket.onmessage = function (msg) {
             console.log("onmessage--" + msg.data);
-            //发现消息进入    开始处理前端触发逻辑
+            document.getElementById('receivedMessage').value = msg.data;
         };
-        //关闭事件
+
         socket.onclose = function () {
             console.log("Socket已关闭");
         };
-        //发生了错误事件
+
         socket.onerror = function () {
             alert("Socket发生了错误");
-            //此时可以尝试刷新页面
         }
-        //离开页面时，关闭socket
-        //jquery1.8中已经被废弃，3.0中已经移除
-        // $(window).unload(function(){
-        //     socket.close();
-        //});
     }
 
     function sendMessage() {
         if (typeof (WebSocket) == "undefined") {
             console.log("您的浏览器不支持WebSocket");
         } else {
-            // console.log("您的浏览器支持WebSocket");
-            var toUserId = document.getElementById('toUserId').value;
+            var toUserId = (cid == "student") ? "admin" : "student";
             var contentText = document.getElementById('contentText').value;
             var msg = '{"sid":"' + toUserId + '","message":"' + contentText + '"}';
             console.log(msg);
             socket.send(msg);
         }
     }
-
 </script>
+</body>
 </html>
-
