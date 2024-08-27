@@ -5,11 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wdd.studentmanager.common.ResultData;
 import com.wdd.studentmanager.domain.S_admin;
 import com.wdd.studentmanager.domain.S_clazz;
+import com.wdd.studentmanager.domain.S_selected_course;
 import com.wdd.studentmanager.domain.S_student;
-import com.wdd.studentmanager.service.AdminService;
-import com.wdd.studentmanager.service.ClazzService;
-import com.wdd.studentmanager.service.CourseService;
-import com.wdd.studentmanager.service.StudentService;
+import com.wdd.studentmanager.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,6 +29,8 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private SelectedCourseService  selectedCourseService;
     @Autowired
     private ClazzService clazzService;
     @Autowired
@@ -184,7 +185,22 @@ public class StudentController {
     }
 
 
-
+    @RequestMapping("no_selece_course_list")
+    @ResponseBody
+    public ResultData no_course_list(){
+        List<S_student> list=studentService.list();
+        List<S_student> back=new ArrayList<>();
+        for(S_student item:list){
+            int id=item.getId();
+            QueryWrapper<S_selected_course> s_selected_courseQueryWrapper=new QueryWrapper<>();
+            s_selected_courseQueryWrapper.eq("studentid",id);
+            S_selected_course s_selected_course=selectedCourseService.getOne(s_selected_courseQueryWrapper);
+            if(s_selected_course==null){
+                back.add(item);
+            }
+        }
+        return ResultData.success(back);
+    }
 
     @RequestMapping("/get_all")
     @ResponseBody
