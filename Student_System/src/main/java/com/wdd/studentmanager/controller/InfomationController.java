@@ -120,8 +120,4 @@ public class InfomationController {
         return ResultData.success(sum);
     }
 
-
-
-
-
 }
