@@ -15,21 +15,19 @@
   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
   <style type="text/css">
     .biaoti{
-      color: black;
+      color: #1aa6ff;
       width: 150px;
       height: 10px;
-      margin: 50px auto 20px auto;
+      margin: 20px auto 30px auto;
     }
-    .scrollable-table-container {
-      max-height: 300px;
-      overflow-y: auto;
-      border: 1px solid #ddd;
-      margin: 5px 80px 10px 90px;
+    #biaoti2{
+      color: #191C24;
+      font-size: 2em;
+      margin: 0px auto 10px auto;
     }
     .image-center {
       text-align: center;
     }
-
     .modal {
       display: block;
       position: fixed;
@@ -42,7 +40,6 @@
       background-color: rgb(0,0,0);
       background-color: rgba(0,0,0,0.4);
     }
-
     .modal-content {
       margin: 10% auto;
       border: 2px solid #888;
@@ -72,7 +69,7 @@
       flex-direction: column;
     }
     textarea {
-      width: 120%;
+      width: 100%;
       height: 200px;
       padding: 10px;
       box-sizing: border-box;
@@ -82,16 +79,20 @@
     #aa {
       text-align: right;
     }
+    #dataGrid1 tbody td, #dataGrid1 thead th {
+      text-align: center;
+    }
+    #buttons{
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 
 <body>
 <h3 class="biaoti">集体邮件通知</h3>
-<div class="col-xs-1 col-md-1"></div>
-<div class="col-xs-3 col-md-3">以下是全体新生人员：</div>
-<div class="col-xs-5 col-md-5"></div>
-<div class="col-xs-3 col-md-3" id="a6">
-  <button type="button" class="btn btn-primary" @click="showModal = true">一键发送邮件</button>
+<div class="col-xs-11 col-md-11"></div>
+<div class="col-xs-1 col-md-1" id="a6">
+  <button type="button" class="btn btn-primary" @click="showModal = true" id="buttons">一键发送邮件</button>
   <div v-if="showModal" class="modal">
     <div class="modal-content">
       <span class="close" @click="showModal = false">&times;</span>
@@ -136,7 +137,7 @@
           // 使用 AJAX 发送更新请求
           $.ajax({
             type: "post",
-            url: 'http://localhost:8080/leave/request',
+            url: 'http://localhost:8080/email/sendall',
             data: Data1,
             dataType: "json",
             success: function (response) {
@@ -168,11 +169,19 @@
 <table id="dataGrid1" class="display" style="width:100%">
   <thead>
   <tr>
-    <th>身份证号码</th>
-    <th>姓名</th>
-    <th>联系方式</th>
-    <th>qq</th>
-    <th>家庭住址</th>
+    <div id="biaoti2">
+      <th>学号</th>
+      <th>身份证号</th>
+      <th>姓名</th>
+      <th>账号密码</th>
+      <th>班级</th>
+      <th>性别</th>
+      <th>电话号码</th>
+      <th>qq号</th>
+      <th>个人照片</th>
+      <th>家庭住址</th>
+      <th>寝室号</th>
+    </div>
   </tr>
   </thead>
   <tbody>
@@ -207,11 +216,17 @@
         if(data.code==200){
           data.list.forEach(function (student){
             table.row.add([
+              student.id,
               student.sn,
               student.username,
+              student.password,
+              student.clazzid,
+              student.sex,
               student.mobile,
               student.qq,
-              student.address
+              student.photo ? '已提供': '',
+              student.address,
+              student.dormitid
             ]).draw();
           });
         }
@@ -223,9 +238,8 @@
   });
 </script>
 
-
 <div class="image-center">
-  <img src="/imges/2.png" style="width: 1000px; height: 70px;">
+  <img src="/imges/1.png" style="width: 1200px; height: 135px;">
 </div>
 </body>
 </html>
