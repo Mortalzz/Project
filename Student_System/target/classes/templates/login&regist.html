@@ -128,14 +128,6 @@
 
 <script src="/js/auth.js"></script>
 <script>
-    if(typeof Storage != "undefined"){
-        console.log("支持");
-    }
-    else{
-        console.log("不支持");
-    }
-</script>
-<script>
     Auth.init({
         login_url: '#login',
         forgot_url: '#forgot'
@@ -160,7 +152,9 @@
             dataType: "json",
             success: function(data){
                 if(data.code == 200){
-                    localStorage['role']=dataToSend.role;
+                    // 将user对象保存到localStorage
+                    localStorage.setItem("'user", JSON.stringify(data.data));
+                    localStorage.setItem("role",JSON.stringify(data.data.role));
                     window.location.href = "http://localhost:8080/index/index"; // 替换为需要跳转的页面
                 } else {
                     alert("消息提醒: " + data.msg);
