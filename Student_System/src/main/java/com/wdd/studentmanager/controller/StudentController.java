@@ -255,6 +255,9 @@ public ResultData login(HttpServletRequest request) throws JSONException {
         if(student.getQq()!=""){
             tmp.setQq(student.getQq());
         }
+        if(student.getMobile()!=""){
+            tmp.setMobile(student.getMobile());
+        }
 
 
         //S_student temp=student;
