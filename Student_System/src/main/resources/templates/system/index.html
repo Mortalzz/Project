@@ -398,11 +398,13 @@
 </div>
 <script>
 	function loadIframe() {
+		location.reload();
 		document.getElementById('studentIframe').src = 'http://localhost:8080/web/toWebSocketDemo/student';
 		document.getElementById('ask_student').style.display = 'block'; // Ensure the iframe container is visible
 	}
 
 	function loadadminIframe() {
+		location.reload();
 		document.getElementById('adminIframe').src = 'http://localhost:8080/web/toWebSocketDemo/admin';
 		document.getElementById('ask_admin').style.display = 'block'; // Ensure the iframe container is visible
 	}
