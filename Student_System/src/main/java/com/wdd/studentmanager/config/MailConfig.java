@@ -16,8 +16,7 @@ public class MailConfig {
         mailSender.setHost("smtp.qq.com");
         mailSender.setPort(587);
         mailSender.setUsername("3342931517@qq.com");
-        mailSender.setPassword("zisauwuyccxjdaea");
-
+        mailSender.setPassword("wcphexrjopbucjfe");
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
