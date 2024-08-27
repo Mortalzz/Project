@@ -50,11 +50,12 @@
 
             // 使用 AJAX 从后端获取已选课程数据
             $.ajax({
-                url: 'http://localhost:8080/course/get_selected', // 替换为实际的 API 地址
+                url: 'http://localhost:8080/student/selected_course', // 替换为实际的 API 地址
                 method: 'GET',
                 success: function (data) {
+                    console.log(data);
                     if (data.code == 200) {
-                        data.selected_courses.forEach(function (course) {
+                        data.list_course.forEach(function (course) {
                             // 添加已选课程数据到表格
                             selectedCoursesTable.row.add([
                                 course.name,

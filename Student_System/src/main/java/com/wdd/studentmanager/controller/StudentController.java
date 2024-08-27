@@ -3,10 +3,7 @@ package com.wdd.studentmanager.controller;
 import cn.hutool.captcha.LineCaptcha;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wdd.studentmanager.common.ResultData;
-import com.wdd.studentmanager.domain.S_admin;
-import com.wdd.studentmanager.domain.S_clazz;
-import com.wdd.studentmanager.domain.S_selected_course;
-import com.wdd.studentmanager.domain.S_student;
+import com.wdd.studentmanager.domain.*;
 import com.wdd.studentmanager.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +28,9 @@ public class StudentController {
 
     @Autowired
     private SelectedCourseService  selectedCourseService;
+
+    @Autowired
+    private CourseService courseService;
     @Autowired
     private ClazzService clazzService;
     @Autowired
@@ -184,6 +184,27 @@ public class StudentController {
             return ResultData.fail("原密码不正确！");
     }
 
+
+    @RequestMapping("/selected_course")
+    @ResponseBody
+    public ResultData selected_course(HttpServletRequest request){
+        HttpSession session=request.getSession(false);
+        S_student student=(S_student) session.getAttribute("currentUser");
+        System.out.println(student);
+        int id=student.getId();
+        QueryWrapper<S_selected_course> s_selected_courseQueryWrapper=new QueryWrapper<>();
+        s_selected_courseQueryWrapper.eq("studentid",id);
+        List<S_selected_course> s_selected_courses=selectedCourseService.list(s_selected_courseQueryWrapper);
+        List<S_course> s_courses=new ArrayList<>();
+        for(S_selected_course item:s_selected_courses){
+            int classid=item.getCourseid();
+            QueryWrapper<S_course> s_courseQueryWrapper=new QueryWrapper<>();
+            s_courseQueryWrapper.eq("id",classid);
+            S_course s_course=courseService.getOne(s_courseQueryWrapper);
+            s_courses.add(s_course);
+        }
+        return ResultData.success_course(s_courses);
+    }
 
     @RequestMapping("/no_select_course_list")
     @ResponseBody

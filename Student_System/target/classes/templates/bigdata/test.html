@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECharts Example</title>
+    <!-- 引入 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 图表容器 -->
+    <div id="pie_fanzui" style="width: 600px; height: 400px;"></div>
+    
+    <script>
+        // 初始化图表
+        var pie_fanzui = echarts.init(document.getElementById('pie_fanzui'), 'infographic');
+
+        // 函数: 从后端获取数据
+        function fetchData() {
+            fetch('http://localhost:8080/Bigdata/sex') // 确保使用正确的协议
+                .then(response => response.json())
+                .then(data => {
+                    // 处理数据并更新图表
+                    updateChart(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        // 函数: 更新图表
+        function updateChart(data) {
+            // 转换数据为 ECharts 所需格式
+            var chartData = Object.entries(data).map(([key, value]) => ({
+                value: value,
+                name: key
+            }));
+
+            // 配置图表
+            var option = {
+                title: {
+                    text: '新生男女比例分析',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: chartData.map(item => item.name),
+                    textStyle: { color: '#fff' }
+                },
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: 'red'  // 改变标示文字的颜色
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: '性别分布',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: chartData,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            // 设置图表配置项
+            pie_fanzui.setOption(option);
+        }
+
+        // 页面加载完成后获取数据
+        window.onload = function() {
+            fetchData();
+        };
+    </script>
+</body>
+</html>
+
+
+
