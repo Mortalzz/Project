@@ -136,7 +136,6 @@
         // 使用 AJAX 从后端获取数据
         $.ajax({
             url: 'http://localhost:8080/student/no_select_course_list',
-            //url: 'http://localhost:8080/student/get_all', // 替换为实际的 API 地址
             method: 'GET',
             success: function (data) {
                 console.log(data);
@@ -163,7 +162,7 @@
                     $('.apply-button').click(function () {
                         // 从按钮元素中获取宿舍信息
                         var data1 = {
-                            qq: $(this).data('qq'), // 获取楼栋信息
+                            qq: $(this).data('student-id'), // 获取楼栋信息
                         }
                         // AJAX 请求以提交申请
                         $.ajax({

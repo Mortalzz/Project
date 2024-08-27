@@ -9,6 +9,7 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
+<button id="refreshButton">刷新页面</button>
 <table id="dataGrid" class="display" style="width:100%">
     <thead>
     <tr>
@@ -104,6 +105,9 @@
             var sn = $(this).data('sn');
             $('#sn').val(sn); // 自动填充身份证号码
             $('#remark').focus(); // 聚焦到审批结果选择框
+        });
+        $('#refreshButton').click(function(){
+            location.reload();
         });
     });
 </script>
