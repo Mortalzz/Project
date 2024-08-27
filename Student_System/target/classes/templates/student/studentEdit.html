@@ -183,13 +183,17 @@
             success: function (data) {
                 if (data.code == 200) {
                     // 检查返回的数据是否包含 "data:image/png;base64," 或 "data:image/jpeg;base64," 前缀
-                    var photoBase64 = data.data.photo;
-                    if (!photoBase64.startsWith('data:image/')) {
-                        // 假设默认是 PNG 格式，根据实际情况修改
-                        photoBase64 = 'data:image/png;base64,' + photoBase64;
+                    var imgHtml="";
+                    if(data.data.photo!=null)
+                    {   var photoBase64 = data.data.photo;
+                        if (!photoBase64.startsWith('data:image/')) {
+                           // 假设默认是 PNG 格式，根据实际情况修改
+                           photoBase64 = 'data:image/png;base64,' + photoBase64;
+                        }
+                         console.log("test");
+                        // 将照片数据添加到表格
+                        imgHtml = '<img src="' + photoBase64 + '" class="student-photo">';
                     }
-                    // 将照片数据添加到表格
-                    var imgHtml = '<img src="' + photoBase64 + '" class="student-photo">';
                     table.row.add([
                         imgHtml, // 照片
                         data.data.sn,
@@ -270,7 +274,7 @@
 
                         $('#editModal').hide(); // 隐藏模态框
                     } else {
-                        alert("更新失败: " + response.message);
+                        alert("更新失败: " + response.msg);
                     }
                 },
                 error: function (xhr, status, error) {

@@ -94,7 +94,7 @@ public class EmailController {
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setFrom("3342931517@qq.com");  // 替换为您的QQ邮箱
+        helper.setFrom("2283012562@qq.com");  // 替换为您的QQ邮箱
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(content, false);  // false表示内容是纯文本格式

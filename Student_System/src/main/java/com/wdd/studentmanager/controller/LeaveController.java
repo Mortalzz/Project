@@ -36,6 +36,7 @@ public class LeaveController {
         S_student student=(S_student) session.getAttribute("currentUser");
         String datestart=request.getParameter("datestart");
         String dateend=request.getParameter("dateend");
+        int justice=dateend.compareTo(datestart);
         String reason=request.getParameter("reason");
         String phone=request.getParameter("phone");
         S_leave leave=new S_leave();
@@ -46,12 +47,23 @@ public class LeaveController {
         leave.setPhone(phone);
         leave.setStatus(false);
         leave.setRemark(0);
-        boolean save_leave=leaveService.save(leave);
-        if(save_leave==true){
-            return ResultData.success("申请成功");
+        QueryWrapper<S_leave> s_leaveQueryWrapper=new QueryWrapper<>();
+        s_leaveQueryWrapper.eq("studentid",student.getId()).eq("status",0);
+        List<S_leave> s_leaves=leaveService.list(s_leaveQueryWrapper);
+        if(s_leaves.size()==0) {
+            if (justice == 1) {
+                boolean save_leave = leaveService.save(leave);
+                if (save_leave == true) {
+                    return ResultData.success("申请成功");
+                } else {
+                    return ResultData.fail("申请请假失败");
+                }
+            } else {
+                return ResultData.fail("结束日期要在开始日期之后！");
+            }
         }
-        else{
-            return ResultData.fail("申请请假失败");
+        else {
+            return ResultData.fail("不可重复请假！");
         }
     }//测试通过 测试人：邹正强
 

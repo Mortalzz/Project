@@ -113,7 +113,7 @@
                         loadData(); // 刷新数据表
                         $('#addCourseModal').hide(); // 关闭模态框
                     } else {
-                        alert('添加失败: ' + data.message);
+                        alert('添加失败: ' + data.msg);
                     }
                 },
             });
@@ -141,7 +141,7 @@
                         if (data.code == 200) {
                             loadData(); // 刷新数据表
                         } else {
-                            alert('删除失败: ' + data.message);
+                            alert('删除失败: ' + data.msg);
                         }
                     },
                 });

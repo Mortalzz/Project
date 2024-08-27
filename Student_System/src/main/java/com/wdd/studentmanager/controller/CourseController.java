@@ -80,7 +80,7 @@ public class CourseController {
         int count = (int) selectedCourseService.count(selectedCourseQuery);
 
         if (count > 0) {
-            return ResultData.fail("You have already selected this course");
+            return ResultData.fail("你已经选过该课，无需重复选择！");
         }
 
         //选择该课程
@@ -90,9 +90,9 @@ public class CourseController {
 
         boolean saveResult = selectedCourseService.save(userSelection);
         if (saveResult) {
-            return ResultData.success("Course selected successfully");
+            return ResultData.success("选课成功！");
         } else {
-            return ResultData.fail("Failed to select course, please try again later");
+            return ResultData.fail("选课失败，请稍后重试或联系管理员！");
         }
     }
 

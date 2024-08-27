@@ -95,6 +95,7 @@
 	</style>
 </head>
 <body>
+<button id="refreshButton">刷新</button>
 <h3 class="biaoti">请假申请</h3>
 <div class="form-container">
 	<form id="leaveRequestForm">
@@ -149,6 +150,10 @@
 				console.error('申请出错，请重试:', status, error);
 			}
 		});
+	});
+
+	$('#refreshButton').on('click',function (){
+		location.reload();
 	});
 </script>
 

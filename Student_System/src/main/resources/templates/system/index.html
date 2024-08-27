@@ -499,12 +499,12 @@
 <script>
 	function loadIframe() {
 		document.getElementById('studentIframe').src = 'http://localhost:8080/web/toWebSocketDemo/student';
-		document.getElementById('ask_student').style.display = 'block'; // Ensure the iframe container is visible
+		showPage("ask_student");
 	}
 
 	function loadadminIframe() {
 		document.getElementById('adminIframe').src = 'http://localhost:8080/web/toWebSocketDemo/admin';
-		document.getElementById('ask_admin').style.display = 'block'; // Ensure the iframe container is visible
+		showPage("ask_admin");
 	}
 
 </script>
@@ -570,7 +570,7 @@
 							window.location.href = 'http://localhost:8080/index/login'; // 跳转到登录页面
 						}, 2000);
 					} else {
-						$('#message').text("错误: " + response.message).css("color", "red");
+						$('#message').text("错误: " + response.msg).css("color", "red");
 					}
 				},
 				error: function (xhr, status, error) {

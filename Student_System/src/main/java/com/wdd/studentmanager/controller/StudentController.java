@@ -57,7 +57,7 @@ public class StudentController {
             return ResultData.fail("学生已经存在，请勿重复添加");
         } else {
             QueryWrapper<S_clazz> clazzQueryWrapper=new QueryWrapper<>();
-            clazzQueryWrapper.eq("id",student.getClazzid());
+            clazzQueryWrapper.eq("name",student.getClazzid());
             S_clazz clazz1=clazzService.getOne(clazzQueryWrapper);
             if(clazz1!=null)
             {
@@ -112,7 +112,7 @@ public class StudentController {
             session.setAttribute("currentUser",student);
             return ResultData.success(student);
         } else {
-            return ResultData.fail("学生用户不存在");
+            return ResultData.fail("请检查账号与密码！");
         }
     }
 
@@ -166,7 +166,8 @@ public class StudentController {
             s_student_s.setSex(student.getSex());
             s_student_s.setMobile(student.getMobile());
             s_student_s.setQq(student.getQq());
-            s_student_s.setPhoto(new String(student.getPhoto()));
+            if(student.getPhoto()!=null)
+            {s_student_s.setPhoto(new String(student.getPhoto()));}
             s_student_s.setAddress(student.getAddress());
             s_student_s.setDormitid(student.getDormitid());
             return ResultData.success(s_student_s);
@@ -202,7 +203,6 @@ public class StudentController {
     public ResultData selected_course(HttpServletRequest request){
         HttpSession session=request.getSession(false);
         S_student student=(S_student) session.getAttribute("currentUser");
-        System.out.println(student);
         int id=student.getId();
         QueryWrapper<S_selected_course> s_selected_courseQueryWrapper=new QueryWrapper<>();
         s_selected_courseQueryWrapper.eq("studentid",id);
