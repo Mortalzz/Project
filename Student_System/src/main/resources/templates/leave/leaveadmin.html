@@ -56,7 +56,7 @@
 
         // 使用 AJAX 获取数据
         $.ajax({
-            url: 'http://localhost:8080/leave/get', // 替换为实际的 API 地址
+            url: 'http://localhost:8080/leave/get_allconfirm', // 替换为实际的 API 地址
             method: 'GET',
             success: function (data) {
                 console.log(data);
@@ -69,7 +69,7 @@
                             item.timestart,
                             item.timeend,
                             item.info,
-                            item.remark === 0 ? '审批中' : (item.remark === 1 ? '已通过' : '未通过'),
+                            item.remark === 0 ? '审批中' : ((item.remark === 1) ? '已通过' : '未通过'),
                             `<button class="approve" data-sn="${item.sn}">审批</button>`
                         ]).draw();
                     });

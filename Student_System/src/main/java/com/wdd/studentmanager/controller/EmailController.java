@@ -42,6 +42,7 @@ public class EmailController {
     @ResponseBody
     public ResultData sendall(HttpServletRequest request) throws MessagingException {
         String info=request.getParameter("info");
+        System.out.println(info);
         List<S_student> list=studentService.list();
         for(S_student item:list){
             try {
@@ -85,7 +86,7 @@ public class EmailController {
     private void sendEmailNotification(String to,String info) throws MessagingException {
         // 假设QQ邮箱信息保存在to这个字段中
         to = to + "@qq.com";
-        String subject = "提醒：请完成您的注册信息";//主题
+        String subject = "提醒：请完成您官网的相关信息";//主题
         StringBuilder contentBuilder = new StringBuilder();
         contentBuilder.append(info);//信息
         String content = contentBuilder.toString();
