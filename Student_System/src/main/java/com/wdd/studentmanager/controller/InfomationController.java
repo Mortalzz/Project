@@ -1,5 +1,6 @@
 package com.wdd.studentmanager.controller;
 
+import com.wdd.studentmanager.common.ResultData;
 import com.wdd.studentmanager.domain.S_dormit;
 import com.wdd.studentmanager.domain.S_leave;
 import com.wdd.studentmanager.domain.S_student;
@@ -10,6 +11,7 @@ import com.wdd.studentmanager.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -31,22 +33,36 @@ public class InfomationController {
     @Autowired
     LeaveMapper leaveMapper;
 
+    @RequestMapping("/test")
+    public String test(){
+        return "/bigdata/test";
+    }
+
     @RequestMapping("/province")
-    public Map<String, Long> getProvince() {
+    @ResponseBody
+    public ResultData getProvince() {
         List<S_student> students = studentMapper.getAllStudents(); // 假设有一个方法来获取所有学生
-        return students.stream()
+
+        Map<String,Long> tmp=students.stream()
                 .collect(Collectors.groupingBy(S_student::getAddress, Collectors.counting()));
+        return ResultData.success(tmp);
     }
 
     @RequestMapping("/sex")
-    public Map<String, Long> getSex() {
+    @ResponseBody
+    public ResultData getSex() {
         List<S_student> students = studentMapper.getAllStudents();
-        return students.stream()
+
+        Map<String,Long> tmp=students.stream()
                 .collect(Collectors.groupingBy(S_student::getSex, Collectors.counting()));
+        System.out.println(tmp);
+        return ResultData.success(tmp);
     }
 
     @RequestMapping("/dormit")
-    public List<Map<String, Object>> getDormit() {
+    @ResponseBody
+    //List<Map<String, Object>>
+    public ResultData getDormit() {
         // 获取所有宿舍数据
         List<S_dormit> dormits = dormitoryMapper.getAlldormit();
 
@@ -62,11 +78,13 @@ public class InfomationController {
         }
 
         // 返回包含所需字段的列表
-        return result;
+        return ResultData.success(result);
     }
 
     @RequestMapping("/leave")
-    public List<Map<String, Object>> getLeave() {
+    //List<Map<String, Object>>
+    @ResponseBody
+    public ResultData getLeave() {
         List<S_leave> leaves = leaveMapper.getAllleaves();
         List<Map<String, Object>> result = new ArrayList<>();
 
@@ -82,14 +100,28 @@ public class InfomationController {
             leaveData.put("name", studentName);
             result.add(leaveData);
         }
-        return result;
+        return ResultData.success(result);
     }
 
     @RequestMapping("/major")
-    public Map<String,Long> getMajor(){
+    @ResponseBody
+    public ResultData getMajor(){
         List<S_student> students=studentMapper.getAllStudents();
-        return students.stream()
+        Map<String,Long> tmp=students.stream()
                 .collect(Collectors.groupingBy(S_student::getClazzid, Collectors.counting()));
+        return ResultData.success(tmp);
     }
+
+    @RequestMapping("/allstu")
+    @ResponseBody
+    public ResultData getall(){
+        List<S_student> students=studentMapper.getAllStudents();
+        int sum=students.size();
+        return ResultData.success(sum);
+    }
+
+
+
+
 
 }
