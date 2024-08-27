@@ -90,63 +90,6 @@
 
 
 <h3 id="biaoti">信息不完善</h3>
-<div>
-	<div class="col-xs-1 col-md-1"></div>
-	<div class="col-xs-3 col-md-3">以下是信息不完善人员：</div>
-	<div class="col-xs-5 col-md-5"></div>
-	<div class="col-xs-3 col-md-3" id="a6">
-		<button type="button" @click="sendEmail"  class="submit-btn" id="someSubmitButtonId">一键发送邮件</button>
-	</div>
-</div>
-
-<script type="text/javascript">
-	var vm = new Vue({
-		el: "#a6",
-		data: {
-			incompleteQqs: [] // 用于存储信息不全的学生的 QQ 号
-		},
-		methods: {
-			sendEmail: function() {
-				let qqs = this.incompleteQqs.join(', '); // 将 QQ 号数组转换为字符串
-				this.sentEmailContent = qqs; // 设置 sentEmailContent 为 QQ 号字符串
-				this.submitEmailContent(); // 发送邮件
-			},
-			submitEmailContent: function() {
-				var Data1 = {
-					info: this.sentEmailContent // 使用 Vue 实例的 data 属性
-				};
-				Data1 = JSON.stringify(Data1);
-
-				alert(Data1);
-
-				// 使用 AJAX 发送更新请求
-				$.ajax({
-					type: "post",
-					url: 'http://localhost:8080/leave/request',
-					data: Data1,
-					dataType: "json",
-					success: function (response) {
-						console.log(response);
-						if (response.code == 200) {
-							alert("申请成功！");
-						} else {
-							alert("更新失败: " + response.msg);
-						}
-					},
-					error: function (xhr, status, error) {
-						console.error('申请出错，请重试:', status, error);
-					}
-				});
-			}
-		}
-	});
-
-	// 绑定一个点击事件到提交按钮（假设你有一个按钮用于提交邮件内容）
-	$(document).on('click', '#someSubmitButtonId', function(event) {
-		event.preventDefault();
-		alert("邮件发送成功");
-	});
-</script>
 
 <table id="dataGrid1" class="display" style="width:100%">
 	<thead>
@@ -162,6 +105,7 @@
 		<th>个人照片</th>
 		<th>家庭住址</th>
 		<th>寝室号</th>
+		<th>操作</th>
 
 	</tr>
 	</thead>
@@ -196,8 +140,8 @@
 			success: function (data) {
 				console.log(data);
 				if(data.code==200){
-					vm.incompleteQqs = [];
 					data.list.forEach(function (student){
+						var buttonHtml = `<button class="apply-button" data-student-id="${student.qq}">发送邮件</button>`;
 						if(student.photo==null||student.mobile==null||student.address==null||student.dormitid==null) {
 							table.row.add([
 								student.id,
@@ -210,10 +154,36 @@
 								student.qq,
 								student.photo ? '已提供': '',
 								student.address,
-								student.dormitid
+								student.dormitid,
+								buttonHtml
 							]).draw();
-							vm.incompleteQqs.push(student.qq);
 						}
+					});
+
+					// 为申请按钮添加事件
+					$('.apply-button').click(function () {
+						// 从按钮元素中获取宿舍信息
+						var data1 = {
+							qq: $(this).data('qq'), // 获取楼栋信息
+						}
+						// AJAX 请求以提交申请
+						$.ajax({
+							url: 'http://localhost:8080/email/info_lost', // 替换为实际的申请 API 地址
+							method: 'POST',
+							data: data1,
+							success: function (response) {
+								if (response.code == 200) {
+									alert('申请成功！');
+									location.reload(); // 刷新页面
+								} else {
+									alert('申请失败: ' + response.message);
+								}
+							},
+							error: function (xhr, status, error) {
+								console.error('AJAX Error:', status, error);
+								alert('请求失败，请稍后再试。');
+							}
+						});
 					});
 				}
 			},
