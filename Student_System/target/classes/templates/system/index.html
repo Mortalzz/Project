@@ -166,7 +166,7 @@
 					</div>
 				</div>
 				<div class="ms-3">
-					<h6 class="mb-0">学生</h6>
+					<h6 class="mb-0"></h6>
 				</div>
 			</div>
 
@@ -332,6 +332,14 @@
 
 	<script>
 		var userType = localStorage.getItem('role');
+		// 定义英文到中文的映射
+		var userTypeMap = {
+			'student': '学生',
+			'admin': '管理员',
+		};
+		if (userType && userTypeMap[userType]) {
+			$('.ms-3 h6.mb-0').text(userTypeMap[userType]);  // 用中文替换
+		}
 		function toggleMenu() {
 			const menus = document.querySelectorAll('.navbar-nav .nav-item');
 			if (userType == 'student' ) {

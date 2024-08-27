@@ -21,95 +21,29 @@
             margin: 20px auto 50px auto;
             font-weight: bold;
         }
-        .scrollable-table-container {
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            margin: 5px 80px 10px 90px;
-        }
         .image-center {
             text-align: center;
-        }
-
-        .modal {
-            display: block;
-            position: fixed;
-            z-index: 1;
-            left: 10px;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            margin: 10% auto;
-            border: 2px solid #888;
-            background-color: #fefefe;
-            padding: 50px;
-            width: 30%;
-        }
-
-        .close {
-            color:black;
-            float: right;
-            font-size: 30px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: red;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .textarea-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 210px;
-            flex-direction: column;
-        }
-        textarea {
-            width: 120%;
-            height: 200px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        #aa {
-            text-align: right;
         }
         #dataGrid1 tbody td, #dataGrid1 thead th {
             text-align: center;
         }
 
-        .apply-button {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
+        button[id="aaa"] {
             color: #191C24;
             background-color: #80ceff;
-            border: 1px solid #1aa6ff;
-            border-radius: 5px;
-            padding: 10px 20px;
-            margin: 8px;
-            cursor: pointer;
         }
-        .apply-button:hover {
+        button[id="aaa"]:hover {
             background-color:  #1aa6ff;
             color: #fefefe;
         }
-        .apply-button:active {
+        button[id="aaa"]:active {
             background-color: #1aa6ff;
-            transform: translateY(1px);
-            color: #fefefe;
         }
+
         .dataTables_wrapper {
             font-size: 15px; /* 你可以根据需要调整这个值 */
         }
+
         /* 修改表头（thead）的字体大小 */
         .dataTables_wrapper th {
             font-size: 16px;
@@ -173,7 +107,7 @@
                 console.log(data);
                 if(data.code==200){
                     data.list.forEach(function (student){
-                        var buttonHtml = `<button class="apply-button" data-student-id="${student.qq}">发送邮件</button>`;
+                        var buttonHtml = `<button id="aaa" class="apply-button" data-student-id="${student.qq}">发送邮件</button>`;
                         table.row.add([
                             student.id,
                             student.sn,
