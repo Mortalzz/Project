@@ -61,7 +61,6 @@ public class LeaveController {
     private ResultData Getleave(HttpServletRequest request){
         HttpSession session=request.getSession();
         S_student stu=(S_student) session.getAttribute("currentUser");
-
         int stu_id=stu.getId();
         QueryWrapper<S_leave> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("studentid", stu_id);
