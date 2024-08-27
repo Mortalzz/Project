@@ -5,15 +5,13 @@
     <title>666666</title>
 </head>
 <body>
-传递来的数据值cid:
-<input type="text" th:value="${cid}" id="cid"/>
-<p>【toUserId】：
-<div><input id="toUserId" name="toUserId" type="text" value="user-1"></div>
-<p>【toUserId】：
-<div><input id="contentText" name="contentText" type="text" value="hello websocket"></div>
-<p>【接收到的消息】：
+<input type="text" th:value="${cid}" id="cid" style="display: none;"/>
+<div><input id="toUserId" name="toUserId" type="text" value="user-1" style="display: none;"></div>
+<p>【Question】：
+<div><input id="contentText" name="contentText" type="text"></div>
+<p>【Answer】：
 <div><textarea id="receivedMessage" rows="5" cols="50" readonly></textarea></div>
-<p>【操作】：
+<p>【Submit】：
 <div>
     <button type="button" onclick="sendMessage()">发送消息</button>
 </div>
@@ -41,7 +39,7 @@
         //获得消息事件
         socket.onmessage = function (msg) {
             console.log("onmessage--" + msg.data);
-            document.getElementById('receivedMessage').value += msg.data; // 显示接收到的消息
+            document.getElementById('receivedMessage').value = msg.data; // 显示接收到的消息
             //发现消息进入    开始处理前端触发逻辑
         };
         //关闭事件
@@ -65,7 +63,7 @@
             console.log("您的浏览器不支持WebSocket");
         } else {
             // console.log("您的浏览器支持WebSocket");
-            var toUserId = document.getElementById('toUserId').value;
+            var toUserId = (cid=="student")?"admin":"student";
             var contentText = document.getElementById('contentText').value;
             var msg = '{"sid":"' + toUserId + '","message":"' + contentText + '"}';
             console.log(msg);
