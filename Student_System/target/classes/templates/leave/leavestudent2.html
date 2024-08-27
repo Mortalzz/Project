@@ -7,9 +7,57 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <style>
+        /* 使表格内容居中 */
+        /* 使表格内容居中 */
+        table.dataTable td, table.dataTable th {
+            text-align: center;
+            vertical-align: middle;
+        }
+        #dataGrid tbody td, #dataGrid thead th {
+            text-align: center;
+        }
+        button[id="refreshButton"] {
+            font-family: Arial, sans-serif;
+            font-size: 17px;
+            color: #191C24;
+            background-color: #80ceff;
+            border: 1px solid #1aa6ff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        button[id="refreshButton"]:hover {
+            background-color:  #1aa6ff;
+            color: #fefefe;
+            margin-bottom: 20px;
+        }
+        button[id="refreshButton"]:active {
+            background-color: #1aa6ff;
+            transform: translateY(1px);
+            color: #fefefe;
+            margin-bottom: 20px;
+        }
+        .dataTables_wrapper {
+            font-size: 15px; /* 你可以根据需要调整这个值 */
+        }
+        /* 修改表头（thead）的字体大小 */
+        .dataTables_wrapper th {
+            font-size: 16px;
+        }
+        .biaoti{
+            color: #1aa6ff;
+            width: 150px;
+            height: 10px;
+            margin: 20px auto 30px auto;
+            font-weight: bold;
+        }
+    </style>
 </head>  
   
 <body>
+<h2 class="biaoti">个人请假列表</h2>
 <button id="refreshButton">刷新页面</button>
 <table id="dataGrid" class="display" style=" width:100%">
     <thead>
