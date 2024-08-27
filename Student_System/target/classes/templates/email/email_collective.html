@@ -19,11 +19,7 @@
       width: 150px;
       height: 10px;
       margin: 20px auto 30px auto;
-    }
-    #biaoti2{
-      color: #191C24;
-      font-size: 2em;
-      margin: 0px auto 10px auto;
+      font-weight: bold;
     }
     .image-center {
       text-align: center;
@@ -85,6 +81,41 @@
     #buttons{
       margin-bottom: 20px;
     }
+
+
+
+
+
+
+
+    button[type="button"] {
+      font-family: Arial, sans-serif;
+      font-size: 17px;
+      color: #191C24;
+      background-color: #80ceff;
+      border: 1px solid #1aa6ff;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    button[type="button"]:hover {
+      background-color:  #1aa6ff;
+      color: #fefefe;
+    }
+    button[type="button"]:active {
+      background-color: #1aa6ff;
+      transform: translateY(1px);
+      color: #fefefe;
+    }
+    .dataTables_wrapper {
+      font-size: 15px; /* 你可以根据需要调整这个值 */
+    }
+    /* 修改表头（thead）的字体大小 */
+    .dataTables_wrapper th {
+      font-size: 16px;
+    }
+
   </style>
 </head>
 
@@ -167,19 +198,17 @@
 <table id="dataGrid1" class="display" style="width:100%">
   <thead>
   <tr>
-    <div id="biaoti2">
-      <th>学号</th>
-      <th>身份证号</th>
-      <th>姓名</th>
-      <th>账号密码</th>
-      <th>班级</th>
-      <th>性别</th>
-      <th>电话号码</th>
-      <th>qq号</th>
-      <th>个人照片</th>
-      <th>家庭住址</th>
-      <th>寝室号</th>
-    </div>
+    <th>学号</th>
+    <th>身份证号</th>
+    <th>姓名</th>
+    <th>账号密码</th>
+    <th>班级</th>
+    <th>性别</th>
+    <th>电话号码</th>
+    <th>qq号</th>
+    <th>个人照片</th>
+    <th>家庭住址</th>
+    <th>寝室号</th>
   </tr>
   </thead>
   <tbody>

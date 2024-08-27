@@ -182,8 +182,14 @@
             method: 'GET',
             success: function (data) {
                 if (data.code == 200) {
-                    // 将照片数据转为base64并添加到表格
-                    var imgHtml = '<img src="data:image/png;base64,' + data.data.photo + '" class="student-photo">';
+                    // 检查返回的数据是否包含 "data:image/png;base64," 或 "data:image/jpeg;base64," 前缀
+                    var photoBase64 = data.data.photo;
+                    if (!photoBase64.startsWith('data:image/')) {
+                        // 假设默认是 PNG 格式，根据实际情况修改
+                        photoBase64 = 'data:image/png;base64,' + photoBase64;
+                    }
+                    // 将照片数据添加到表格
+                    var imgHtml = '<img src="' + photoBase64 + '" class="student-photo">';
                     table.row.add([
                         imgHtml, // 照片
                         data.data.sn,
@@ -200,6 +206,7 @@
             }
         });
 
+
         // 处理编辑按钮的点击事件
         $('#dataGrid tbody').on('click', '.edit-btn', function () {
             var data = table.row($(this).parents('tr')).data();
@@ -212,13 +219,15 @@
             $('#editModal').show(); // 显示模态框
         });
 
-        // 处理照片上传预览
+        // 处理照片上传预览和Base64编码
         $('#editPhoto').change(function () {
+            var file = this.files[0];
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#photoPreview').attr('src', e.target.result).show();
+                $('#photoPreview').attr('src', e.target.result).show(); // 显示预览
+                $('#photoPreview').data('base64', e.target.result); // 将Base64编码存储在元素上
             };
-            reader.readAsDataURL(this.files[0]);
+            reader.readAsDataURL(file); // 读取文件并进行Base64编码
         });
 
         // 点击保存更改按钮
@@ -229,9 +238,11 @@
                 mobile: $('#editMobile').val(),
                 qq: $('#editQQ').val(),
                 address: $('#editAddress').val(),
-                photo: $('#photoPreview').attr('src') // 将照片数据存储为base64
+                photo: $('#photoPreview').data('base64') // 从预览元素中获取Base64编码
             };
-            console.log(updatedData);
+
+            console.log(updatedData); // 用于调试，显示编码后的数据
+
             // 使用 AJAX 发送更新请求
             $.ajax({
                 type: "post",

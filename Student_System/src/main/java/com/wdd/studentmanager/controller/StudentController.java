@@ -157,7 +157,19 @@ public class StudentController {
         if (currentStu != null) {
             // 获取用户详细信息
             S_student student = studentService.getById(currentStu.getId());
-            return ResultData.success(student);
+            S_student_S s_student_s=new S_student_S();
+            s_student_s.setId(student.getId());
+            s_student_s.setSn(student.getSn());
+            s_student_s.setUsername(student.getUsername());
+            s_student_s.setPassword(student.getPassword());
+            s_student_s.setClazzid(student.getClazzid());
+            s_student_s.setSex(student.getSex());
+            s_student_s.setMobile(student.getMobile());
+            s_student_s.setQq(student.getQq());
+            s_student_s.setPhoto(new String(student.getPhoto()));
+            s_student_s.setAddress(student.getAddress());
+            s_student_s.setDormitid(student.getDormitid());
+            return ResultData.success(s_student_s);
         } else {
             return ResultData.fail("用户未登录");
         }
@@ -251,7 +263,8 @@ public class StudentController {
         currentStu.setMobile(request.getParameter("mobile"));
         currentStu.setQq(request.getParameter("qq"));
         currentStu.setAddress(request.getParameter("address"));
-        currentStu.setPhoto(request.getParameter("photo"));
+        byte[] temp=request.getParameter("photo").getBytes();
+        currentStu.setPhoto(temp);
         session.setAttribute("currentUser",currentStu);
         if (currentStu != null) {
             // 设置用户详细信息
