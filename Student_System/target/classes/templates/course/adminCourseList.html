@@ -66,7 +66,8 @@
         }
         /* 修改表头（thead）的字体大小 */
         .dataTables_wrapper th {
-            font-size: 16px;
+            font-size: 17px;
+            color: #1aa6ff;
         }
         .biaoti{
             color: #1aa6ff;
@@ -75,10 +76,51 @@
             margin: 20px auto 30px auto;
             font-weight: bold;
         }
+        .image-center {
+            text-align: center;
+        }
+        button[class="deleteButton"] {
+            color: #191C24;
+            background-color: #80ceff;
+        }
+        button[class="deleteButton"]:hover {
+            background-color:  #1aa6ff;
+            color: #fefefe;
+        }
+        button[class="deleteButton"]:active {
+            background-color: #1aa6ff;
+        }
+        button[id="cancelAddCourse"] {
+            color: #191C24;
+            background-color: #80ceff;
+        }
+        button[id="cancelAddCourse"]:hover {
+            background-color:  #1aa6ff;
+            color: #fefefe;
+        }
+        button[id="cancelAddCourse"]:active {
+            background-color: #1aa6ff;
+        }
+        button[id="submitAddCourse"] {
+            color: #191C24;
+            background-color: #80ceff;
+        }
+        button[id="submitAddCourse"]:hover {
+            background-color:  #1aa6ff;
+            color: #fefefe;
+        }
+        button[id="submitAddCourse"]:active {
+            background-color: #1aa6ff;
+        }
+        #addCourseModal{
+            text-align: center;
+            font-size: 17px;
+            color: #1aa6ff;
+        }
     </style>
 </head>
 <body>
-<h2 class="biaoti">已选课程列表</h2>
+<h2 class="biaoti">课程增减</h2>
 <!-- 刷新页面的按钮 -->
 <button id="refreshButton">刷新页面</button>
 <!-- 添加课程的按钮 -->
@@ -219,6 +261,8 @@
         });
     });
 </script>
-
+<div class="image-center">
+    <img src="/imges/12.png" style="width: 1200px; height: 200px;">
+</div>
 </body>
 </html>

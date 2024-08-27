@@ -17,10 +17,13 @@
         /* 全局字体和背景 */
         body {
             font-family: 'Noto Sans', sans-serif;
-            background-color: #f4f7f6;
+            background-color: white;
             margin: 0;
             padding: 20px;
             color: #333;
+        }
+        .dataTables_wrapper {
+            font-size: 15px; /* 你可以根据需要调整这个值 */
         }
 
         /* 表格样式 */
@@ -28,21 +31,22 @@
             width: 100%;
             border-collapse: collapse;
             background-color: #fff;
-            border-radius: 10px;
+            border-radius: 0%;
             overflow: hidden;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
 
         th, td {
             padding: 12px 15px;
-            text-align: left;
+            text-align: center;
+            font-size: 15px;
             border-bottom: 1px solid #e2e2e2;
         }
 
         th {
-            background-color: #AEFAF6 ;
-            color: white;
+            background-color:white ;
+            font-size: 17px;
+            color: #1aa6ff;
         }
 
         tr:hover {
@@ -54,8 +58,8 @@
             width: 50px;
             height: 50px;
             object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #ddd;
+            border-radius: 0%;
+            border: 2px solid #e2e2e2;
         }
 
         /* 模态框样式 */
@@ -68,7 +72,7 @@
             width: 100%;
             height: 100%;
             overflow: auto; /* 允许页面滚动 */
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+            background-color: rgba(0, 0, 0, 0.05); /* 半透明背景 */
             backdrop-filter: blur(5px); /* 背景模糊效果 */
         }
 
@@ -76,10 +80,9 @@
             background-color: #fff;
             margin: 10% auto; /* 10%顶部间距, auto 左右居中 */
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 0%;
             width: 80%;
             max-width: 500px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .close {
@@ -98,8 +101,8 @@
 
         /* 按钮样式 */
         button {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #80ceff;
+            color: black;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -109,7 +112,8 @@
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color:  #1aa6ff;
+            color: #fefefe;
         }
 
         /* 照片预览样式 */
@@ -121,10 +125,21 @@
             border: 2px solid #ddd;
             margin-top: 10px;
         }
+        .biaoti{
+            color: #1aa6ff;
+            width: 150px;
+            height: 10px;
+            margin: 20px auto 30px auto;
+            font-weight: bold;
+        }
+        .image-center {
+            text-align: center;
+        }
     </style>
 </head>
-<body>
 
+<body>
+<h2 class="biaoti">个人信息修改</h2>
 <!-- 学生信息修改模态框 -->
 <div id="editModal" class="modal">
     <div class="modal-content">
@@ -187,10 +202,10 @@
                     if(data.data.photo!=null)
                     {   var photoBase64 = data.data.photo;
                         if (!photoBase64.startsWith('data:image/')) {
-                           // 假设默认是 PNG 格式，根据实际情况修改
-                           photoBase64 = 'data:image/png;base64,' + photoBase64;
+                            // 假设默认是 PNG 格式，根据实际情况修改
+                            photoBase64 = 'data:image/png;base64,' + photoBase64;
                         }
-                         console.log("test");
+                        console.log("test");
                         // 将照片数据添加到表格
                         imgHtml = '<img src="' + photoBase64 + '" class="student-photo">';
                     }
@@ -301,5 +316,8 @@
         location.reload();
     }
 </script>
+<div class="image-center">
+    <img src="/imges/8.png" style="width: 1200px; height: 380px;">
+</div>
 </body>
 </html>

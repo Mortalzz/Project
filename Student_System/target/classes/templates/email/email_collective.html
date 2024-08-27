@@ -113,7 +113,8 @@
     }
     /* 修改表头（thead）的字体大小 */
     .dataTables_wrapper th {
-      font-size: 16px;
+      font-size: 17px;
+      color: #1aa6ff;
     }
 
   </style>
@@ -171,7 +172,7 @@
             success: function (response) {
               console.log(response);
               if (response.code == 200) {
-                alert("申请成功！");
+
               } else {
                 alert("更新失败: " + response.msg);
               }

@@ -39,12 +39,35 @@
             color: #fefefe;
             margin-bottom: 20px;
         }
+        button[id="loadSelectedButton"] {
+            font-family: Arial, sans-serif;
+            font-size: 17px;
+            color: #191C24;
+            background-color: #80ceff;
+            border: 1px solid #1aa6ff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        button[id="loadSelectedButton"]:hover {
+            background-color:  #1aa6ff;
+            color: #fefefe;
+            margin-bottom: 20px;
+        }
+        button[id="loadSelectedButton"]:active {
+            background-color: #1aa6ff;
+            transform: translateY(1px);
+            color: #fefefe;
+            margin-bottom: 20px;
+        }
         .dataTables_wrapper {
             font-size: 15px; /* 你可以根据需要调整这个值 */
         }
         /* 修改表头（thead）的字体大小 */
         .dataTables_wrapper th {
-            font-size: 16px;
+            font-size: 17px;
+            color: #1aa6ff;
         }
         .biaoti{
             color: #1aa6ff;
@@ -53,10 +76,15 @@
             margin: 20px auto 30px auto;
             font-weight: bold;
         }
+        .image-center {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 <h2 class="biaoti">已选课程列表</h2>
+<button id="loadSelectedButton">加载已选课程</button>
+
 <table id="selectedCoursesGrid" class="display" style="width:100%">
     <thead>
     <tr>
@@ -70,8 +98,6 @@
     <!-- 数据行将在JavaScript中加载 -->
     </tbody>
 </table>
-
-<button id="loadSelectedButton">加载已选课程</button>
 
 <script>
     $(document).ready(function () {
@@ -123,6 +149,8 @@
         });
     });
 </script>
-
+<div class="image-center">
+    <img src="/imges/1.png" style="width: 1200px; height: 135px;">
+</div>
 </body>
 </html>

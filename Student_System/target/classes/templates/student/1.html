@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学生信息修改</title>
+
+  <!-- 引入 Google 字体 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap">
+
+  <!-- 引入 DataTables 和 jQuery 的外部样式和脚本 -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+  <style>
+    /* 全局字体和背景 */
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background-color: white;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .dataTables_wrapper {
+      font-size: 15px; /* 你可以根据需要调整这个值 */
+    }
+
+    /* 表格样式 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #e2e2e2;
+    }
+
+    th {
+      background-color:white ;
+      font-size: 17px;
+      color: #1aa6ff;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* 学生照片样式 */
+    .student-photo {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+    }
+
+    /* 模态框样式 */
+    .modal {
+      display: none; /* 初始隐藏 */
+      position: fixed;
+      z-index: 1; /* 在最上层 */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto; /* 允许页面滚动 */
+      background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+      backdrop-filter: blur(5px); /* 背景模糊效果 */
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto; /* 10%顶部间距, auto 左右居中 */
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* 按钮样式 */
+    button {
+      background-color: #80ceff;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color:  #1aa6ff;
+      color: #fefefe;
+    }
+
+    /* 照片预览样式 */
+    #photoPreview {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      margin-top: 10px;
+    }
+    .biaoti{
+      color: #1aa6ff;
+      width: 150px;
+      height: 10px;
+      margin: 20px auto 30px auto;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+<h2 class="biaoti">个人信息修改</h2>
+<!-- 学生信息修改模态框 -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>修改学生信息</h3>
+    <label>身份证号码: <input type="text" id="editSn" disabled></label><br><br>
+    <label>姓名: <input type="text" id="editUsername"></label><br><br>
+    <label>联系方式: <input type="text" id="editMobile"></label><br><br>
+    <label>QQ: <input type="text" id="editQQ"></label><br><br>
+    <label>家庭住址: <input type="text" id="editAddress"></label><br><br>
+    <label>照片: <input type="file" id="editPhoto" accept="image/*"></label><br>
+    <img id="photoPreview" src="#" alt="预览照片" style="display: none;">
+    <button id="saveChanges">保存更改</button>
+  </div>
+</div>
+
+<table id="dataGrid" class="display" style="width:100%">
+  <thead>
+  <tr>
+    <th>照片</th>
+    <th>身份证号码</th>
+    <th>姓名</th>
+    <th>联系方式</th>
+    <th>QQ</th>
+    <th>家庭住址</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- 数据行将由JavaScript动态添加 -->
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function () {
+    var table;
+    table = $('#dataGrid').DataTable({
+      language: {
+        "lengthMenu": "显示 _MENU_ 条记录",
+        "zeroRecords": "没有找到记录",
+        "info": "显示第 _START_ 到 _END_ 条记录，总共 _TOTAL_ 条记录",
+        "infoEmpty": "没有记录",
+        "infoFiltered": "(从 _MAX_ 条记录中筛选)",
+        "search": "搜索:",
+        "paginate": {
+          "next": "下一页",
+          "previous": "上一页"
+        }
+      }
+    });
+
+    // 使用 AJAX 从后端获取数据
+    $.ajax({
+      url: 'http://localhost:8080/student/get_profile', // 替换为实际的 API 地址
+      method: 'GET',
+      success: function (data) {
+        if (data.code == 200) {
+          // 检查返回的数据是否包含 "data:image/png;base64," 或 "data:image/jpeg;base64," 前缀
+          var imgHtml="";
+          if(data.data.photo!=null)
+          {   var photoBase64 = data.data.photo;
+            if (!photoBase64.startsWith('data:image/')) {
+              // 假设默认是 PNG 格式，根据实际情况修改
+              photoBase64 = 'data:image/png;base64,' + photoBase64;
+            }
+            console.log("test");
+            // 将照片数据添加到表格
+            imgHtml = '<img src="' + photoBase64 + '" class="student-photo">';
+          }
+          table.row.add([
+            imgHtml, // 照片
+            data.data.sn,
+            data.data.username,
+            data.data.mobile,
+            data.data.qq,
+            data.data.address,
+            '<button class="edit-btn">编辑</button>' // 添加编辑按钮
+          ]).draw();
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error('AJAX错误:', status, error);
+      }
+    });
+
+
+    // 处理编辑按钮的点击事件
+    $('#dataGrid tbody').on('click', '.edit-btn', function () {
+      var data = table.row($(this).parents('tr')).data();
+      $('#editSn').val(data[1]); // 设置身份证号码
+      $('#editUsername').val(data[2]); // 设置姓名
+      $('#editMobile').val(data[3]); // 设置联系方式
+      $('#editQQ').val(data[4]); // 设置QQ
+      $('#editAddress').val(data[5]); // 设置家庭住址
+      $('#photoPreview').attr('src', $(data[0]).attr('src')).show(); // 显示照片预览
+      $('#editModal').show(); // 显示模态框
+    });
+
+    // 处理照片上传预览和Base64编码
+    $('#editPhoto').change(function () {
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#photoPreview').attr('src', e.target.result).show(); // 显示预览
+        $('#photoPreview').data('base64', e.target.result); // 将Base64编码存储在元素上
+      };
+      reader.readAsDataURL(file); // 读取文件并进行Base64编码
+    });
+
+    // 点击保存更改按钮
+    $('#saveChanges').click(function () {
+      var updatedData = {
+        sn: $('#editSn').val(),
+        username: $('#editUsername').val(),
+        mobile: $('#editMobile').val(),
+        qq: $('#editQQ').val(),
+        address: $('#editAddress').val(),
+        photo: $('#photoPreview').data('base64') // 从预览元素中获取Base64编码
+      };
+
+      console.log(updatedData); // 用于调试，显示编码后的数据
+
+      // 使用 AJAX 发送更新请求
+      $.ajax({
+        type: "post",
+        url: 'http://localhost:8080/student/set_profile', // 替换为实际的更新 API 地址
+        data: updatedData,
+        dataType: "json",
+        success: function (response) {
+          if (response.code == 200) {
+            // 使用身份证号码找到行索引
+            var rowIndex = table.row(function (idx, data, node) {
+              return data[1] === updatedData.sn;
+            }).index();
+
+            // 更新 DataTable 中的行
+            var imgHtml = '<img src="' + updatedData.photo + '" class="student-photo">';
+            table.row(rowIndex).data([
+              imgHtml,
+              updatedData.sn,
+              updatedData.username,
+              updatedData.mobile,
+              updatedData.qq,
+              updatedData.address,
+              '<button class="edit-btn">编辑</button>'
+            ]).draw();
+
+            $('#editModal').hide(); // 隐藏模态框
+          } else {
+            alert("更新失败: " + response.msg);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error('更新失败:', status, error);
+        }
+      });
+    });
+
+    // 关闭模态框的事件
+    $('.close').click(function () {
+      $('#editModal').hide();
+    });
+
+    // 点击模态框外部关闭模态框
+    $(window).click(function (event) {
+      if (event.target.id === 'editModal') {
+        $('#editModal').hide();
+      }
+    });
+  });
+
+  // 刷新页面
+  function refreshPage(){
+    location.reload();
+  }
+</script>
+</body>
+</html>
