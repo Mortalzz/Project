@@ -39,6 +39,7 @@ public class InfomationController {
     }
 
     @RequestMapping("/province")
+    @ResponseBody
     public ResultData getProvince() {
         List<S_student> students = studentMapper.getAllStudents(); // 假设有一个方法来获取所有学生
 
@@ -59,6 +60,7 @@ public class InfomationController {
     }
 
     @RequestMapping("/dormit")
+    @ResponseBody
     //List<Map<String, Object>>
     public ResultData getDormit() {
         // 获取所有宿舍数据
@@ -81,6 +83,7 @@ public class InfomationController {
 
     @RequestMapping("/leave")
     //List<Map<String, Object>>
+    @ResponseBody
     public ResultData getLeave() {
         List<S_leave> leaves = leaveMapper.getAllleaves();
         List<Map<String, Object>> result = new ArrayList<>();
@@ -101,12 +104,15 @@ public class InfomationController {
     }
 
     @RequestMapping("/major")
+    @ResponseBody
     public ResultData getMajor(){
         List<S_student> students=studentMapper.getAllStudents();
         Map<String,Long> tmp=students.stream()
                 .collect(Collectors.groupingBy(S_student::getClazzid, Collectors.counting()));
         return ResultData.success(tmp);
     }
+
+
 
 
 
