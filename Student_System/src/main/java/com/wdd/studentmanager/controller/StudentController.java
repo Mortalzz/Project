@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -133,8 +134,16 @@ public ResultData login(HttpServletRequest request) throws JSONException {
         e.printStackTrace();
         return ResultData.fail("JSON 解析失败: " + e.getMessage());
     }
+    //---------------------------------------
+    String captcha=jsonObject.getString("code");
+    System.out.println(captcha);
+    System.out.println(code);
+    if(!Objects.equals(captcha, code)){
+        return ResultData.fail("验证码错误");
+    }
 
     String role = jsonObject.getString("role");
+    System.out.println(role);
     if ("student".equals(role)) {
         return loginStudent(jsonObject,request);
     } else if ("admin".equals(role)) {
@@ -186,10 +195,17 @@ public ResultData login(HttpServletRequest request) throws JSONException {
     public void getCaptcha(HttpServletResponse response) throws IOException {
         LineCaptcha lineCaptcha = new LineCaptcha(200, 100, 4, 150);
         // 将验证码的文本存储到会话中
-        code=lineCaptcha.getCode();
-        // 输出图片到前端
-        response.setContentType("image/png");
-        lineCaptcha.write(response.getOutputStream());
+        code = lineCaptcha.getCode();
+        if (code == null) {
+            System.out.println("验证码为空");
+            // 输出图片到前端
+        }
+        else {
+            System.out.println("验证码不为空");
+        }
+            response.setContentType("image/png");
+            lineCaptcha.write(response.getOutputStream());
+
     }//验证码测试通过 测试人：邹正强
 
 
