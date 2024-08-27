@@ -160,6 +160,8 @@
             dataType: "json",
             success: function(data){
                 if(data.code == 200){
+                    // 将user对象保存到localStorage
+                    localStorage.setItem("role",JSON.stringify(dataToSend.role));
                     localStorage['role']=dataToSend.role;
                     window.location.href = "http://localhost:8080/index/index"; // 替换为需要跳转的页面
                 } else {
