@@ -10,6 +10,7 @@
 </head>  
   
 <body>
+<button id="refreshButton">刷新页面</button>
 <table id="dataGrid" class="display" style=" width:100%">
     <thead>
     <tr>
@@ -58,6 +59,9 @@
                 }
             },
         });
+    });
+    $('#refreshButton').click(function(){
+        location.reload();
     });
 </script>
 </body>  
