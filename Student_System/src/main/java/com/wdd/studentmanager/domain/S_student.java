@@ -18,4 +18,8 @@ public class S_student {
     private String photo;
     private String address;
     private Integer dormitid;
+
+    public String getProvince(){
+        return address;
+    }
 }
