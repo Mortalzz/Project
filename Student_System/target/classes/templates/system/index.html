@@ -171,8 +171,12 @@
 					<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-envelope" aria-hidden="true"></i>邮件发送</a>
 					<div class="dropdown-menu bg-transparent border-0">
 						<div class="aa">
-							<a href="#" class="dropdown-item" onclick="showPage('send')"><i
-									class="fa fa-genderless" aria-hidden="true"></i> 邮件通知</a>
+							<a href="#" class="dropdown-item" onclick="showPage('send1')"><i
+									class="fa fa-genderless" aria-hidden="true"></i> 集体邮件通知</a>
+							<a href="#" class="dropdown-item" onclick="showPage('send2')"><i
+									class="fa fa-genderless" aria-hidden="true"></i> 信息不完善通知</a>
+							<a href="#" class="dropdown-item" onclick="showPage('send3')"><i
+									class="fa fa-genderless" aria-hidden="true"></i> 未选课通知</a>
 						</div>
 					</div>
 				</div>
@@ -234,10 +238,9 @@
 
 	<script>
 		var userType = localStorage.getItem('role');
-		console.log(userType);
 		function toggleMenu() {
 			const menus = document.querySelectorAll('.navbar-nav .nav-item');
-			if (userType.equals('student')) {
+			if (userType == 'student' ) {
 				menus[1].style.display = 'none';
 				menus[2].style.display = 'block';
 				menus[3].style.display = 'none';
@@ -251,7 +254,7 @@
 				menus[11].style.display = 'block';
 				menus[12].style.display = 'none';
 			}
-			if (userType.equals('admin')) {
+			else if (userType == 'admin' ) {
 				menus[0].style.display = 'none';
 				menus[1].style.display = 'block';
 				menus[2].style.display = 'none';
@@ -358,8 +361,14 @@
 				<div id="leavem1" class="page-content">
 					<iframe src="http://localhost:8080/index/admin_leave" width="100%" height="1000px"></iframe>
 				</div>
-				<div id="send" class="page-content">
-					<iframe src="http://localhost:8080/index/email" width="100%" height="1000px"></iframe>
+				<div id="send1" class="page-content">
+					<iframe src="http://localhost:8080/index/email_collective" width="100%" height="1000px"></iframe>
+				</div>
+				<div id="send2" class="page-content">
+					<iframe src="http://localhost:8080/index/email_loseinfo" width="100%" height="1000px"></iframe>
+				</div>
+				<div id="send3" class="page-content">
+					<iframe src="http://localhost:8080/index/email_lose_course" width="100%" height="1000px"></iframe>
 				</div>
 				<div id="ask_student" class="page-content">
 					<iframe id="studentIframe" src="" width="100%" height="1000px" style="border: none;"></iframe>

@@ -27,9 +27,19 @@ public class IndexController {
         return "view";
     }
 
-    @RequestMapping("/email")
-    public String email(){
-        return "email2";
+    @RequestMapping("/email_collective")
+    public String email_collective(){
+        return "/system/email_collective";
+    }
+
+    @RequestMapping("/email_lose_course")
+    public String email_lose_course(){
+        return "/system/email_lose_course";
+    }
+
+    @RequestMapping("/email_loseinfo")
+    public String email_loseinfo(){
+        return "/system/email_loseinfo";
     }
 
     @RequestMapping("/stu_list")

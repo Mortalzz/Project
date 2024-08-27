@@ -28,6 +28,7 @@
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
+            resize: none; /* 禁止拉伸 */
         }
         button {
             background-color: #5cb85c;
@@ -53,7 +54,7 @@
     <div><input id="toUserId" name="toUserId" type="text" value="user-1" class="hidden"></div>
 
     <p>【问题】：</p>
-    <input id="contentText" name="contentText" type="text" placeholder="请输入消息...">
+    <textarea id="contentText" name="contentText" rows="3" placeholder="请输入问题..."></textarea>
 
     <p>【回答】：</p>
     <textarea id="receivedMessage" rows="5" cols="50" readonly placeholder="接收到的消息将显示在这里..."></textarea>
