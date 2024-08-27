@@ -60,6 +60,7 @@ public class EmailController {
     @ResponseBody
     public ResultData info_lost(HttpServletRequest request){
         String qq=request.getParameter("qq");
+        System.out.println(qq);
         try {
             sendEmailNotification(qq,"亲爱的重庆大学同学，你的身份信息不完善，请尽快完善，感谢配合");
         } catch (MessagingException e) {
