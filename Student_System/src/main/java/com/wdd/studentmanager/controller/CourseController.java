@@ -6,6 +6,7 @@ import com.wdd.studentmanager.domain.S_course;
 import com.wdd.studentmanager.domain.S_dormit;
 import com.wdd.studentmanager.domain.S_selected_course;
 import com.wdd.studentmanager.domain.S_student;
+import com.wdd.studentmanager.mapper.CourseMapper;
 import com.wdd.studentmanager.service.CourseService;
 import com.wdd.studentmanager.service.SelectedCourseService;
 import com.wdd.studentmanager.service.StudentService;
@@ -29,6 +30,9 @@ public class CourseController {
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    CourseMapper courseMapper;
 
     @Autowired
     StudentService studentService;
@@ -130,5 +134,13 @@ public class CourseController {
             return ResultData.fail("Failed to select course, please try again later");
         }
 
+    }
+
+    @RequestMapping("/getc")
+    @ResponseBody
+    public ResultData getc(){
+
+        List<String> names=courseMapper.getDistinctCourseNames();
+        return ResultData.success(names);
     }
 }

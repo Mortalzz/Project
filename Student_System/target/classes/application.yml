@@ -19,7 +19,7 @@ mail:
     host: smtp.qq.com
     port: 587
     username: 3342931517@qq.com
-    password: zisauwuyccxjdaea
+    password: wcphexrjopbucjfe
     properties:
       mail:
         smtp:
