@@ -46,7 +46,7 @@ public class CourseController {
 
         if(sCourse.getTeachername()!=null){
             QueryWrapper<S_course> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("teachername", sCourse.getTeachername());
+            queryWrapper.eq("teachername    ", sCourse.getTeachername());
             List<S_course> courses = courseService.list(queryWrapper);
             System.out.println(courses);
             return ResultData.success(courses);
