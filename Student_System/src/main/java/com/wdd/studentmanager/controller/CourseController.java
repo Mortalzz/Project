@@ -6,6 +6,7 @@ import com.wdd.studentmanager.domain.S_course;
 import com.wdd.studentmanager.domain.S_dormit;
 import com.wdd.studentmanager.domain.S_selected_course;
 import com.wdd.studentmanager.domain.S_student;
+import com.wdd.studentmanager.mapper.ClazzMapper;
 import com.wdd.studentmanager.mapper.CourseMapper;
 import com.wdd.studentmanager.service.CourseService;
 import com.wdd.studentmanager.service.SelectedCourseService;
@@ -36,6 +37,9 @@ public class CourseController {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    ClazzMapper clazzMapper;
 
     @RequestMapping("/get_all")
     @ResponseBody
@@ -142,5 +146,12 @@ public class CourseController {
 
         List<String> names=courseMapper.getDistinctCourseNames();
         return ResultData.success(names);
+    }
+
+    @RequestMapping("/regmajor")
+    @ResponseBody
+    public ResultData regmajor(){
+        List<String> majors=clazzMapper.getAllmajors();
+        return ResultData.success(majors);
     }
 }
