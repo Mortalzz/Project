@@ -2,7 +2,7 @@
 
 <head>
     <style type="text/css">
-        #dataGrid1 tbody td, #dataGrid1 thead th {
+        #dataGrid tbody td, #dataGrid thead th {
             text-align: center;
         }
         button[id="refreshButton"] {
@@ -13,17 +13,19 @@
             border: 1px solid #1aa6ff;
             border-radius: 5px;
             padding: 10px 20px;
-            margin: 10px;
             cursor: pointer;
+            margin-bottom: 20px;
         }
         button[id="refreshButton"]:hover {
             background-color:  #1aa6ff;
             color: #fefefe;
+            margin-bottom: 20px;
         }
         button[id="refreshButton"]:active {
             background-color: #1aa6ff;
             transform: translateY(1px);
             color: #fefefe;
+            margin-bottom: 20px;
         }
         .dataTables_wrapper {
             font-size: 15px; /* 你可以根据需要调整这个值 */
@@ -52,6 +54,10 @@
 
 <body>
 <h2 class="biaoti">请假管理</h2>
+<div class="col-xs-10 col-md-10"></div>
+<div class="col-xs-1 col-md-1 ">
+<button id="refreshButton">刷新页面</button>
+</div>
 <table id="dataGrid" class="display" style="width:100%">
     <thead>
     <tr>
@@ -78,11 +84,6 @@
         <option value="2">拒绝</option>
     </select>
     <button id="confirm">确认</button>
-</div>
-
-<div class="col-xs-10 col-md-10"></div>
-<div class="col-xs-1 col-md-1 d-flex justify-content-end">
-    <button id="refreshButton">刷新页面</button>
 </div>
 
 <script>
