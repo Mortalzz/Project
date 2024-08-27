@@ -1,6 +1,45 @@
 <!DOCTYPE html>
-<html lang="th">
+
 <head>
+    <style type="text/css">
+        #dataGrid1 tbody td, #dataGrid1 thead th {
+            text-align: center;
+        }
+        button[id="refreshButton"] {
+            font-family: Arial, sans-serif;
+            font-size: 17px;
+            color: #191C24;
+            background-color: #80ceff;
+            border: 1px solid #1aa6ff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        button[id="refreshButton"]:hover {
+            background-color:  #1aa6ff;
+            color: #fefefe;
+        }
+        button[id="refreshButton"]:active {
+            background-color: #1aa6ff;
+            transform: translateY(1px);
+            color: #fefefe;
+        }
+        .dataTables_wrapper {
+            font-size: 15px; /* 你可以根据需要调整这个值 */
+        }
+        /* 修改表头（thead）的字体大小 */
+        .dataTables_wrapper th {
+            font-size: 16px;
+        }
+        .biaoti{
+            color: #1aa6ff;
+            width: 150px;
+            height: 10px;
+            margin: 20px auto 30px auto;
+            font-weight: bold;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>请假列表</title>
@@ -12,7 +51,7 @@
 
 
 <body>
-<button id="refreshButton">刷新页面</button>
+<h2 class="biaoti">请假管理</h2>
 <table id="dataGrid" class="display" style="width:100%">
     <thead>
     <tr>
@@ -39,6 +78,11 @@
         <option value="2">拒绝</option>
     </select>
     <button id="confirm">确认</button>
+</div>
+
+<div class="col-xs-10 col-md-10"></div>
+<div class="col-xs-1 col-md-1 d-flex justify-content-end">
+    <button id="refreshButton">刷新页面</button>
 </div>
 
 <script>
