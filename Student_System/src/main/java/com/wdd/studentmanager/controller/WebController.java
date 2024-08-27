@@ -21,7 +21,7 @@ public class WebController {
     @GetMapping("/toWebSocketDemo/{cid}")
     public String toWebSocketDemo(@PathVariable String cid, Model model) {
         model.addAttribute("cid", cid);
-        return "websocketDemo";
+        return "/system/onlineChat";
     }
 
 }

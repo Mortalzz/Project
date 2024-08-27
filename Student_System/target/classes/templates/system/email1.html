@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>邮件通知</title>
+  <!--引入vue-->
+  <script src="/js/v2.6.10/vue.js" type="text/javascript" charset="utf-8"></script>>
+  <!-- Bootstrap引入一个外部样式文件 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@1.10.21/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <style type="text/css">
+    .biaoti{
+      color: black;
+      width: 150px;
+      height: 10px;
+      margin: 50px auto 20px auto;
+    }
+    .scrollable-table-container {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      margin: 5px 80px 10px 90px;
+    }
+    .image-center {
+      text-align: center;
+    }
+
+    .modal {
+      display: block;
+      position: fixed;
+      z-index: 1;
+      left: 10px;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      margin: 10% auto;
+      border: 2px solid #888;
+      background-color: #fefefe;
+      padding: 50px;
+      width: 30%;
+    }
+
+    .close {
+      color:black;
+      float: right;
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: red;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .textarea-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 210px;
+      flex-direction: column;
+    }
+    textarea {
+      width: 120%;
+      height: 200px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #aa {
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+<h3 class="biaoti">集体邮件通知</h3>
+<div class="col-xs-1 col-md-1"></div>
+<div class="col-xs-3 col-md-3">以下是全体新生人员：</div>
+<div class="col-xs-5 col-md-5"></div>
+<div class="col-xs-3 col-md-3" id="a6">
+  <button type="button" class="btn btn-primary" @click="showModal = true">一键发送邮件</button>
+  <div v-if="showModal" class="modal">
+    <div class="modal-content">
+      <span class="close" @click="showModal = false">&times;</span>
+      <h4>邮件内容：</h4>
+      <div class="textarea-container">
+        <textarea v-model="emailContent" placeholder="请在此输入邮件内容" ></textarea>
+      </div>
+      <div id="aa">
+        <button type="button"  @click="sendEmail"  class="submit-btn" id="someSubmitButtonId">发送</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var vm = new Vue({
+    el: "#a6",
+    data: {
+      showModal: false,
+      emailContent: '',
+      sentEmailContent: ''
+    },
+    methods: {
+      sendEmail: function() {
+        if (this.emailContent.trim() !== '') {
+          alert("邮件发送成功, 内容：" + this.emailContent);
+          this.sentEmailContent = this.emailContent;
+          this.showModal = false;
+          this.emailContent = '';
+        } else {
+          alert("邮件内容不能为空！");
+        }
+      },
+      submitEmailContent: function() {
+        if (this.sentEmailContent.trim() !== '') {
+          var Data1 = {
+            info: this.sentEmailContent
+          };
+          Data1 = JSON.stringify(Data1);
+          alert(Data1);
+
+          // 使用 AJAX 发送更新请求
+          $.ajax({
+            type: "post",
+            url: 'http://localhost:8080/leave/request',
+            data: Data1,
+            dataType: "json",
+            success: function (response) {
+              console.log(response);
+              if (response.code == 200) {
+                alert("申请成功！");
+              } else {
+                alert("更新失败: " + response.msg);
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error('申请出错，请重试:', status, error);
+            }
+          });
+        } else {
+          alert("没有可发送的邮件内容！");
+        }
+      }
+    }
+  });
+
+  // 绑定一个点击事件到提交按钮（假设你有一个按钮用于提交邮件内容）
+  $(document).on('click', '#someSubmitButtonId', function(event) {
+    event.preventDefault();
+    vm.submitEmailContent();
+  });
+</script>
+
+<table id="dataGrid1" class="display" style="width:100%">
+  <thead>
+  <tr>
+    <th>身份证号码</th>
+    <th>姓名</th>
+    <th>联系方式</th>
+    <th>qq</th>
+    <th>家庭住址</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Rows will be added here by JavaScript -->
+  </tbody>
+</table>
+
+
+<script>
+  $(document).ready(function () {
+    var table = $('#dataGrid1').DataTable({
+      language: {
+        "lengthMenu": "显示 _MENU_ 条记录",
+        "zeroRecords": "没有找到记录",
+        "info": "显示第 _START_ 到 _END_ 条记录，总共 _TOTAL_ 条记录",
+        "infoEmpty": "没有记录",
+        "infoFiltered": "(从 _MAX_ 条记录中筛选)",
+        "search": "搜索:",
+        "paginate": {
+          "next": "下一页",
+          "previous": "上一页"
+        }
+      }
+    });
+
+    // 使用 AJAX 从后端获取数据
+    $.ajax({
+      url: 'http://localhost:8080/student/get_all', // 替换为实际的 API 地址
+      method: 'GET',
+      success: function (data) {
+        console.log(data);
+        if(data.code==200){
+          data.list.forEach(function (student){
+            table.row.add([
+              student.sn,
+              student.username,
+              student.mobile,
+              student.qq,
+              student.address
+            ]).draw();
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error('AJAX Error:', status, error);
+      }
+    });
+  });
+</script>
+
+
+<div class="image-center">
+  <img src="/imges/2.png" style="width: 1000px; height: 70px;">
+</div>
+</body>
+</html>

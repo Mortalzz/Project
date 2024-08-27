@@ -29,7 +29,7 @@ public class IndexController {
 
     @RequestMapping("/email")
     public String email(){
-        return "email2";
+        return "/system/email2";
     }
 
     @RequestMapping("/stu_list")
