@@ -47,7 +47,7 @@ public class EmailController {
         S_student tmp=studentService.getOne(queryWrapper);
         System.out.println(tmp);
         sendEmailNotification(tmp);//通过qq号找到的学生
-        return ResultData.success("已发送邮件通知");
+        return ResultData.success(200,"已发送邮件通知");
     }
 
     private void sendEmailNotification(S_student student) throws MessagingException {

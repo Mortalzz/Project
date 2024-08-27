@@ -35,7 +35,7 @@ import java.util.List;
 @Controller
 @CrossOrigin
 @RequestMapping("/student")
-public class StudentController {
+public class    StudentController {
 
     @Autowired
     private StudentService studentService;
@@ -64,7 +64,7 @@ public class StudentController {
         String sn = jsonObject.getString("sn");
         String password = jsonObject.getString("password");
         String sex = jsonObject.getString("sex");
-        int clazzid = jsonObject.getInt("clazzid");
+        String clazzid = jsonObject.getString("clazzid");
         String qq = jsonObject.getString("qq");
 
         S_student student=new S_student();
