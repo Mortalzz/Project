@@ -107,4 +107,9 @@ public class IndexController {
         return "/course/adminCourseList";
     }
 
+    @RequestMapping("/selected")
+    public String selected_course(){
+        return "/course/selectedCourseList";
+    }
+
 }
