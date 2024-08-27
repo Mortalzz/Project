@@ -15,10 +15,11 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <style type="text/css">
         .biaoti{
-            color: black;
+            color: #1aa6ff;
             width: 150px;
             height: 10px;
-            margin: 50px auto 20px auto;
+            margin: 20px auto 50px auto;
+            font-weight: bold;
         }
         .scrollable-table-container {
             max-height: 300px;
@@ -82,6 +83,37 @@
         #aa {
             text-align: right;
         }
+        #dataGrid1 tbody td, #dataGrid1 thead th {
+            text-align: center;
+        }
+
+        .apply-button {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #191C24;
+            background-color: #80ceff;
+            border: 1px solid #1aa6ff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 8px;
+            cursor: pointer;
+        }
+        .apply-button:hover {
+            background-color:  #1aa6ff;
+            color: #fefefe;
+        }
+        .apply-button:active {
+            background-color: #1aa6ff;
+            transform: translateY(1px);
+            color: #fefefe;
+        }
+        .dataTables_wrapper {
+            font-size: 15px; /* 你可以根据需要调整这个值 */
+        }
+        /* 修改表头（thead）的字体大小 */
+        .dataTables_wrapper th {
+            font-size: 16px;
+        }
     </style>
 
 </head>
@@ -89,7 +121,7 @@
 <body>
 
 
-<h3 id="biaoti">未选课</h3>
+<h3 class="biaoti">未选课人员</h3>
 
 <table id="dataGrid1" class="display" style="width:100%">
     <thead>
@@ -193,7 +225,7 @@
 </script>
 
 <div class="image-center">
-    <img src="/imges/2.png" style="width: 1000px; height: 70px;">
+    <img src="/imges/1.png" style="width: 1200px; height: 135px;">
 </div>
 </body>
 </html>
