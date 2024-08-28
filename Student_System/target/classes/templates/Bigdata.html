@@ -176,18 +176,24 @@
         
     })
 
-    $(document).ready(function() {
+    function fetchStudentCount() {
         $.ajax({
-            url: '/api/student-count', // 替换成你的实际 API 地址
+            url: 'http://localhost:8080/Bigdata/allstu', // 替换成你的实际 API 地址
             method: 'GET',
             success: function(data) {
-                $('#student-count').text(data.count); // 根据实际返回的数据格式调整
+                $('#student-count').text(data.data); // 根据实际返回的数据格式调整
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data:', status, error);
             }
         });
-    });
+    }
+
+    // 初始请求
+    fetchStudentCount();
+
+    // 每五秒请求一次
+    setInterval(fetchStudentCount, 5000);
 </script>
     
 </script>
