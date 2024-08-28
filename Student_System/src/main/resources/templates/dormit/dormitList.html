@@ -51,7 +51,8 @@
         }
         /* 修改表头（thead）的字体大小 */
         .dataTables_wrapper th {
-            font-size: 16px;
+            font-size: 17px;
+            color: #1aa6ff;
         }
         .biaoti{
             color: #1aa6ff;
@@ -60,6 +61,21 @@
             margin: 20px auto 30px auto;
             font-weight: bold;
         }
+        .image-center {
+            text-align: center;
+        }
+        button[id="aaa"] {
+            color: #191C24;
+            background-color: #80ceff;
+        }
+        button[id="aaa"]:hover {
+            background-color:  #1aa6ff;
+            color: #fefefe;
+        }
+        button[id="aaa"]:active {
+            background-color: #1aa6ff;
+        }
+
     </style>
 </head>
 <body>
@@ -111,8 +127,8 @@
                     data.list_dormit.forEach(function(dormitory) {
                         // 创建操作按钮，判断状态
                         var buttonHtml = dormitory.status == 0
-                            ? '<button class="apply-button" data-build="' + dormitory.build + '" data-room="' + dormitory.room + '" data-takeincounts="' + dormitory.takeincounts + '" data-status="' + dormitory.status + '">申请</button>'
-                            : '<button class="disabled-button" disabled>不可申请</button>';
+                            ? '<button id="aaa" class="apply-button" data-build="' + dormitory.build + '" data-room="' + dormitory.room + '" data-takeincounts="' + dormitory.takeincounts + '" data-status="' + dormitory.status + '">申请</button>'
+                            : '<button id="aaa" class="disabled-button" disabled>不可申请</button>';
 
                         table.row.add([
                             dormitory.build, // 楼栋编号
@@ -165,6 +181,8 @@
         });
     });
 </script>
-
+<div class="image-center">
+    <img src="/imges/16.png" style="width: 1200px; height: 300px;">
+</div>
 </body>
 </html>

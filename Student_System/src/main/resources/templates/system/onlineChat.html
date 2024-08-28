@@ -38,27 +38,41 @@
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
+            font-size: 17px;
         }
         button:hover {
             background-color: #4cae4c;
+            font-size: 17px;
         }
         .hidden {
             display: none;
+        }
+        #refreshbutton{
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+        .biaoti{
+            color: #5cb85c;
+            width: 150px;
+            height: 10px;
+            margin: 20px auto 30px auto;
+            font-weight: bold;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 <button type="button" id="refreshbutton" onclick="reload_page()">刷新</button>
 <div class="container">
-    <h1>在线咨询</h1>
+    <h2 class="biaoti">在线聊天</h2>
     <input type="text" th:value="${cid}" id="cid" class="hidden"/>
     <div><input id="toUserId" name="toUserId" type="text" value="user-1" class="hidden"></div>
 
-    <p>【消息】：</p>
-    <textarea id="contentText" name="contentText" rows="3" placeholder="请输入问题..."></textarea>
+    <p style="font-size: 20px;">【消息】：</p>
+    <textarea id="contentText" name="contentText" rows="10" cols="50" style="font-size: 16px; height: 150px; width: 570px;" placeholder="请输入问题..."></textarea>
 
-    <p>【对方的消息】：</p>
-    <textarea id="receivedMessage" rows="5" cols="50" readonly placeholder="接收到的消息将显示在这里..."></textarea>
+    <p style="font-size: 20px;">【对方的消息】：</p>
+    <textarea id="receivedMessage" rows="5" cols="50" style="font-size: 16px; height: 150px; width: 580px;" readonly placeholder="接收到的消息将显示在这里..."></textarea>
 
     <button type="button" onclick="sendMessage()">发送消息</button>
 </div>

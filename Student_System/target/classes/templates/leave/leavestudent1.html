@@ -12,20 +12,25 @@
 		}
 
 		.form-container {
-			max-width: 600px;
+			max-width: 900px;
 			margin: 0 auto;
 			padding: 20px;
 			border: 1px solid #ccc;
 			border-radius: 8px;
+			font-size: 20px;
+			margin-bottom: 20px;
 		}
 
 		.form-group {
 			margin-bottom: 30px;
+			font-size: 20px;
+			margin-bottom: 20px;
 		}
 
 		.form-group label {
 			display: block;
-			margin-bottom: 10px;
+			margin-bottom: 20px;
+			font-size: 20px;
 		}
 
 		.form-group input,
@@ -33,6 +38,8 @@
 			width: 100%;
 			padding: 8px;
 			box-sizing: border-box;
+			font-size: 20px;
+			margin-bottom: 20px;
 		}
 
 		.form-group input[type="text"],
@@ -40,10 +47,14 @@
 			width: 100%;
 			padding: 8px;
 			box-sizing: border-box;
+			font-size: 20px;
+			margin-bottom: 20px;
 		}
 
 		.form-group textarea {
-			height: 100px;
+			height: 400px;
+			font-size: 20px;
+			margin-bottom: 20px;
 		}
 
 		.submit-btn {
@@ -55,10 +66,14 @@
 			border: none;
 			border-radius: 5px;
 			cursor: pointer;
+			font-size: 20px;
+			margin-bottom: 10px;
 		}
 
 		.submit-btn:hover {
 			background-color: #0056b3;
+			font-size: 20px;
+			margin-bottom: 10px;
 		}
 
 		.form-group.phone-input input[type="tel"] {
@@ -68,11 +83,15 @@
 			margin-top: 8px;
 			background-color: transparent;
 			width: calc(100% - 10px);
+			font-size: 20px;
+			margin-bottom: 20px;
 		}
 
 		.form-group.phone-input input[type="tel"]:focus {
 			border-bottom-color: black;
 			outline: none;
+			font-size: 20px;
+			margin-bottom: 20px;
 		}
 
 
@@ -90,13 +109,54 @@
 			font-weight: bold;
 		}
 
+		#dataGrid tbody td, #dataGrid thead th {
+			text-align: center;
+		}
+		button[id="refreshButton"] {
+			font-family: Arial, sans-serif;
+			font-size: 17px;
+			color: #191C24;
+			background-color: #80ceff;
+			border: 1px solid #1aa6ff;
+			border-radius: 5px;
+			padding: 10px 20px;
+			cursor: pointer;
 
+		}
+		button[id="refreshButton"]:hover {
+			background-color:  #1aa6ff;
+			color: #fefefe;
 
+		}
+		button[id="refreshButton"]:active {
+			background-color: #1aa6ff;
+			transform: translateY(1px);
+			color: #fefefe;
+
+		}
+		.dataTables_wrapper {
+			font-size: 15px; /* 你可以根据需要调整这个值 */
+		}
+		/* 修改表头（thead）的字体大小 */
+		.dataTables_wrapper th {
+			font-size: 17px;
+			color: #1aa6ff;
+		}
+		.biaoti{
+			color: #1aa6ff;
+			width: 150px;
+			height: 10px;
+			margin: 40px auto 40px auto;
+			font-weight: bold;
+		}
+		.image-center {
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
-<button id="refreshButton">刷新</button>
-<h3 class="biaoti">请假申请</h3>
+<button id="refreshButton" style="width: 100%;  top: 0; left: 0; z-index: 1000;">刷新页面</button>
+<h2 class="biaoti">请假申请</h2>
 <div class="form-container">
 	<form id="leaveRequestForm">
 
@@ -180,5 +240,8 @@
 	};
 
 </script>
+<div class="image-center">
+	<img src="/imges/15.png" style="width: 1200px; height: 300px;">
+</div>
 </body>
 </html>
