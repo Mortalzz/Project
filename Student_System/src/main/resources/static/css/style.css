@@ -35,6 +35,14 @@ pre {
     color: #333;
 }
 
+#dataGrid_wrapper {
+    overflow: auto; /* 使整个表格容器可滚动 */
+}
+
+.dataTables_scrollBody {
+    max-height: 400px; /* 设置最大高度 */
+    overflow-y: auto; /* 使表格内容垂直滚动 */
+}
 body {
     -webkit-font-feature-settings: 'kern' 1;
     -moz-font-feature-settings: 'kern' 1;
