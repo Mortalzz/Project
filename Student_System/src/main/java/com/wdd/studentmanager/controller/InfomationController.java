@@ -93,6 +93,7 @@ public class InfomationController {
             Map<String, Object> leaveData = new HashMap<>();
             leaveData.put("timestart", leave.getTimestart());
             leaveData.put("timeend", leave.getTimeend());
+            leaveData.put("remark",leave.getRemark());
             leaveData.put("name", studentName);
             result.add(leaveData);
         }
