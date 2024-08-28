@@ -250,7 +250,7 @@ function updateCharDataMajor(data){
         legend: {
             orient: 'vertical',
             x: 'left',
-            data:['软件工程专业','大学数学专业','计算机专业','机械专业','土木专业','其他专业'],
+            data:['软件工程专业','数学专业','计算机专业','机械专业','土木专业','其他专业'],
             textStyle: {color: '#fff'}
         },
         series: [
