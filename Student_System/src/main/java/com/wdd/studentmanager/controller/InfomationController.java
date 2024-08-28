@@ -98,7 +98,6 @@ public class InfomationController {
             leaveData.put("name", studentName);
             result.add(leaveData);
         }
-        System.out.println(result);
         return ResultData.success_Map(result);
     }
     //各专业人数
@@ -122,7 +121,6 @@ public class InfomationController {
     public ResultData getall(){
         List<S_student> students=studentMapper.getAllStudents();
         int sum=students.size();
-        System.out.println(sum);
         return ResultData.success(sum);
     }
 
