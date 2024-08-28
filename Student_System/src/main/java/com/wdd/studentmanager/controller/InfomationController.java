@@ -109,7 +109,7 @@ public class InfomationController {
                 .collect(Collectors.groupingBy(S_student::getClazzid, Collectors.counting()));
         long temp=0;
         for (String key : tmp.keySet()) {
-            if(!key.equals("软件工程专业")&&!key.equals("数学专业")&&!key.equals("计算机专业")&&!key.equals("机械专业")&&!key.equals("土木专业"))
+            if(!key.equals("软件工程专业")&&!key.equals("大学数学专业")&&!key.equals("计算机专业")&&!key.equals("机械专业")&&!key.equals("土木专业"))
                 temp+=1;
         }
         tmp.put("其他专业",temp);
