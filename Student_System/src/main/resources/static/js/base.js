@@ -112,113 +112,136 @@ var timer = setInterval(function () {
 }, 1000)
 
 
-//违法犯罪人员分析占比，带边框效果的饼图
+//新生男女比例分析占比，带边框效果的饼图
 //var pie_fanzui =echarts.init(document.getElementById("pie_fanzui"),'macarons'); 
-var pie_fanzui =echarts.init(document.getElementById("pie_fanzui"),'infographic'); 
-option = {
-    title : {
-        x:'center'
-    },
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['男生','女生'],
-        textStyle: {color: '#fff'}
-    },
-    
-	label: {
-	     normal: {
-	          textStyle: {
-	                color: 'red'  // 改变标示文字的颜色
-	          }
-	     }
-	},
-    series : [
-        {
-            name: '新生男女比例分析',
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '60%'],
-            data:[
-                {value:4900, name:'男生'},
-                {value:3100, name:'女生'},
-                
-                
-            ],
-          
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+var pie_fanzui =echarts.init(document.getElementById("pie_fanzui"),'infographic');
+function updateCharDataSex(data){
+    // 格式化数据
+    option = {
+        title: {
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['男生', '女生'],
+            textStyle: { color: '#fff' }
+        },
+        label: {
+            normal: {
+                textStyle: {
+                    color: 'red'  // 改变标示文字的颜色
                 }
             }
-            
-        }
-    ]
-};
-pie_fanzui.setOption(option);
-//----------------------违法犯罪人员分析占比end---------------
-
-
-
-//违法犯罪人员年龄分析占比，带边框效果的饼图
-//var pie_age =echarts.init(document.getElementById("pie_age"),'macarons'); 
-var pie_age =echarts.init(document.getElementById("pie_age"),'infographic'); 
-//var pie_age =echarts.init(document.getElementById("pie_age"),'shine'); 
-option = {
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    legend: {
-        orient: 'vertical',
-        x: 'left',
-        data:['软件工程专业','大学数学专业','计算机专业','机械专业','土木专业','其他专业'],
-        textStyle: {color: '#fff'}
-    },
-    series: [
-        {
-            name:'新生专业分布',
-            type:'pie',
-            radius: ['30%', '55%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: true,
-                    textStyle: {
-                        fontSize: '20',
-                        fontWeight: 'bold'
+        },
+        series: [
+            {
+                name: '新生男女比例分析',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [
+                    { value: data.data["男"], name: '男生' },
+                    { value: data.data["女"], name: '女生' }
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
                     }
                 }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            data:[
-                {value:335, name:'软件工程专业'},
-                {value:310, name:'大学数学专业'},
-                {value:234, name:'计算机专业'},
-                {value:135, name:'机械专业'},
-                {value:135, name:'土木专业'},
-                {value:1548, name:'其他专业'}
-            ]
+            }
+        ]
+    };
+    pie_fanzui.setOption(option);
+}
+$.ajax({
+    url:"http://localhost:8080/Bigdata/sex",
+    method:"GET",
+    success:function (data){
+        if(data.code==200) {
+            updateCharDataSex(data);
         }
-    ]
-};
-pie_age.setOption(option);
-//----------------------违法犯罪人员年龄分析占比end---------------
+    },
+    error:function (xhr,status,error){
+        console.error("取回数据失败",error);
+    }
+});
+
+
+
+//新生入学报道专业分析占比，带边框效果的饼图
+//var pie_age =echarts.init(document.getElementById("pie_age"),'macarons'); 
+var pie_age =echarts.init(document.getElementById("pie_age"),'infographic'); 
+//var pie_age =echarts.init(document.getElementById("pie_age"),'shine');
+function updateCharDataMajor(data){
+    option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            data:['软件工程专业','大学数学专业','计算机专业','机械专业','土木专业','其他专业'],
+            textStyle: {color: '#fff'}
+        },
+        series: [
+            {
+                name:'新生专业分布',
+                type:'pie',
+                radius: ['30%', '55%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '20',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+                    {value:335, name:'软件工程专业'},
+                    {value:310, name:'数学专业'},
+                    {value:234, name:'计算机专业'},
+                    {value:135, name:'机械专业'},
+                    {value:135, name:'土木专业'},
+                    {value:1548, name:'其他专业'}
+                ]
+            }
+        ]
+    };
+    pie_age.setOption(option);
+}
+
+$.ajax({
+    url:"http://localhost:8080/Bigdata/sex",
+    method:"GET",
+    success:function (data){
+        if(data.code==200) {
+            updateCharDataMajor(data);
+        }
+    },
+    error:function (xhr,status,error){
+        console.error("取回数据失败",error);
+    }
+});
+//----------------------新生入学报道专业分析占比end---------------
 
 
 
