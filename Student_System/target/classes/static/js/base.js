@@ -10,28 +10,26 @@ var china_map =echarts.init(document.getElementById("china_map"),'infographic');
 //var china_map =echarts.init(document.getElementById("china_map"),'shine'); 
 
 
-function randomData() {
-		return Math.round(Math.random()*500);
-	}
+
  
 	var mydata = [
-		{name: '北京',value: randomData() },{name: '天津',value: randomData() },
-		{name: '上海',value: randomData() },{name: '重庆',value: randomData() },
-		{name: '河北',value: randomData() },{name: '河南',value: randomData() },
-		{name: '云南',value: randomData() },{name: '辽宁',value: randomData() },
-		{name: '黑龙江',value: randomData() },{name: '湖南',value: randomData()},
-		{name: '安徽',value: randomData() },{name: '山东',value: randomData() },
-		{name: '新疆',value: randomData() },{name: '江苏',value: randomData() },
-		{name: '浙江',value: randomData() },{name: '江西',value: randomData() },
-		{name: '湖北',value: randomData() },{name: '广西',value: randomData() },
-		{name: '甘肃',value: randomData() },{name: '山西',value: randomData() },
-		{name: '内蒙古',value: randomData() },{name: '陕西',value: randomData()},
-		{name: '吉林',value: randomData() },{name: '福建',value: randomData() },
-		{name: '贵州',value: randomData() },{name: '广东',value: randomData() },
-		{name: '青海',value: randomData() },{name: '西藏',value: randomData() },
-		{name: '四川',value: randomData() },{name: '宁夏',value: randomData() },
-		{name: '海南',value: randomData() },{name: '台湾',value: randomData() },
-		{name: '香港',value: randomData() },{name: '澳门',value: randomData() }
+		{name: '北京',value: data.data[""] },{name: '天津',value: data.data[""] },
+		{name: '上海',value: data.data[""] },{name: '重庆',value: data.data[""] },
+		{name: '河北',value: data.data[""] },{name: '河南',value: data.data[""] },
+		{name: '云南',value: data.data[""] },{name: '辽宁',value: data.data[""] },
+		{name: '黑龙江',value: data.data[""] },{name: '湖南',value: data.data[""]},
+		{name: '安徽',value: data.data[""] },{name: '山东',value: data.data[""] },
+		{name: '新疆',value: data.data[""] },{name: '江苏',value: data.data[""] },
+		{name: '浙江',value: data.data[""] },{name: '江西',value: data.data[""] },
+		{name: '湖北',value: data.data[""] },{name: '广西',value: data.data[""] },
+		{name: '甘肃',value: data.data[""] },{name: '山西',value: data.data[""] },
+		{name: '内蒙古',value: data.data[""] },{name: '陕西',value: data.data[""]},
+		{name: '吉林',value: data.data[""] },{name: '福建',value: data.data[""] },
+		{name: '贵州',value: data.data[""] },{name: '广东',value: data.data[""] },
+		{name: '青海',value: data.data[""] },{name: '西藏',value: data.data[""] },
+		{name: '四川',value: data.data[""] },{name: '宁夏',value: data.data[""] },
+		{name: '海南',value: data.data[""] },{name: '台湾',value: data.data[""] },
+		{name: '香港',value: data.data[""] },{name: '澳门',value: data.data[""] }
 	];
  
 	var option = {

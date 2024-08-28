@@ -48,7 +48,11 @@ public class InfomationController {
         List<S_student> students = studentMapper.getAllStudents();
         Map<String,Long> tmp=students.stream()
                 .collect(Collectors.groupingBy(S_student::getSex, Collectors.counting()));
-        System.out.println(tmp);
+        int temp=0;
+        for (String key : tmp.keySet()) {
+            if(key!="软件工程专业"&&key!="数学专业"&&key!="计算机专业"&&key!="机械专业"&&key!="土木专业")
+                temp+=1;
+        }
         return ResultData.success(tmp);
     }
 //宿舍每栋人数
