@@ -38,13 +38,13 @@
 
             </div>
             <div class="chart-box">
-                <table class="table3">
+                <table id="dataGrid" class="table3">
                     <thead>
                     <tr>
                         <th>姓名</th>
-                        <th>请假</th>
-                        <th>时间</th>
-                        <th>审批</th>
+                        <th>请假开始时间</th>
+                        <th>请假结束时间</th>
+                        <th>请假审批状态</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,8 +68,8 @@
                 <div class="weather">
                     <img id="weatherImg" src="/imges/weather/晴.png" >
                     <div id="weather">
-                        <p class="active">炎热</p>
-                        <p>35-45℃</p>
+                        <p class="active">晴</p>
+                        <p>33-41℃</p>
                         <p>重庆市北碚区</p>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
 
         <div class="right-bottom">
             <div class="title-box">
-                <p id="switchBtn"><span class="active" data-dataType="income">人口出入时间段统计</span></p>
+                <p id="switchBtn"><span class="active" data-dataType="income">重庆市最高温度变化统计</span></p>
 
             </div>
             <div id="line_time" style="width:90%;height:160px;margin-left:10px;"></div>
@@ -181,24 +181,28 @@
             }
         });
         // 使用 AJAX 从后端获取数据
-        $.ajax({
-            url: 'http://localhost:8080/leave/get', // 替换为实际的 API 地址
-            method: 'GET',
-            success: function (data) {
-                console.log(data);
-                if(data.code==200){
-                    table.clear();
-                    data.list_leave.forEach(function (item){
-                        table.row.add([
-                            item.name,
-                            item.timestart,
-                            item.timeend,
-                            item.remark === 0 ? '审批中' : ((item.remark === 1) ? '已通过' : '未通过')
-                        ]).draw();
-                    });
-                }
-            },
-        });
+        function fetchLeave(){
+            $.ajax({
+                url: 'http://localhost:8080/leave/get', // 替换为实际的 API 地址
+                method: 'GET',
+                success: function (data) {
+                    console.log(data);
+                    if(data.code==200){
+                        table.clear();
+                        data.list_map.forEach(function (item){
+                            table.row.add([
+                                item["name"],
+                                item["timestart"],
+                                item["timeend"],
+                                item["remark"] === 0 ? '审批中' : ((item["remark"] === 1) ? '已通过' : '未通过')
+                            ]).draw();
+                        });
+                    }
+                },
+            });
+        }
+        fetchLeave();
+        setInterval(fetchLeave, 5000);
     });
 </script>
 
