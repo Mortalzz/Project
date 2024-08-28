@@ -10,124 +10,153 @@
     <script type="text/javascript" src="/js/rem.js"></script>
     <link rel="stylesheet" href="/css/style.css">
     <title>重庆大学新生报到管理系统</title>
-    
-    
+
+
 </head>
 
 <body style="visibility: hidden;">
-    <div class="container-flex" tabindex="0" hidefocus="true">
-        <div class="box-left">
-            <div class="left-top">
-                <div class="current-num">
-                    <div>2024新生人数</div>
-                    <p id="student-count"></p>
-                </div>
+<div class="container-flex" tabindex="0" hidefocus="true">
+    <div class="box-left">
+        <div class="left-top">
+            <div class="current-num">
+                <div>2024新生人数</div>
+                <p id="student-count"></p>
             </div>
-            <div class="left-center">
-                <div class="title-box">
-                    <h6>新生男女比例</h6>
-                </div>
-                <div class="chart-box pie-chart" style="">
-                    <div id="pie_fanzui" style="width:100%;"></div>
-                    
-                </div>
+        </div>
+        <div class="left-center">
+            <div class="title-box">
+                <h6>新生男女比例</h6>
             </div>
-            <div class="left-bottom">
-                <div class="title-box">
-                    <h6>请假申请记录</h6>
-                    
-                </div>
-                <table id="dataGrid" class="display" style=" width:100%">
+            <div class="chart-box pie-chart" style="">
+                <div id="pie_fanzui" style="width:100%;"></div>
+
+            </div>
+        </div>
+        <div class="left-bottom" >
+            <div class="title-box">
+                <h6>请假申请记录</h6>
+
+            </div>
+            <div class="chart-box">
+                <table class="table3">
                     <thead>
                     <tr>
                         <th>姓名</th>
-                        <th>请假开始时间</th>
-                        <th>请假结束时间</th>
-                        <th>请假审批结果</th>
+                        <th>请假</th>
+                        <th>时间</th>
+                        <th>审批</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <!-- Rows will be added here by JavaScript -->
+                    <tbody id="tList">
+                    <!--<tr><td colspan="4"><p style="width:9.6rem;">暂无数据</p></td></tr>-->
+
+                    <tr>
+                        <td>张梦</td>
+                        <td>病假</td>
+                        <td>2024-8-01</td>
+                        <td>审批中</td>
+                    </tr>
+                    <tr>
+                        <td>李阳荣</td>
+                        <td>病假</td>
+                        <td>2024-8-02</td>
+                        <td>审批中</td>
+                    </tr>
+                    <tr>
+                        <td>张无双</td>
+                        <td>事假</td>
+                        <td>2024-8-03</td>
+                        <td>已通过</td>
+                    </tr>
+                    <tr>
+                        <td>李阳</td>
+                        <td>事假</td>
+                        <td>2024-8-04</td>
+                        <td>审批中</td>
+                    </tr>
+
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="box-center">
-            <div class="center-top">
-                <h1><img src="/imges/校徽（蓝色）-Print 50mm.png" style="width:50px;margin-right:15px;"/>重庆大学新生报到管理系统</h1>
-            </div>
-            <div class="center-center">
-                <div class="weather-box">
-                    <div class="data">
-                        <p class="time" id="time">00:00:00</p>
-                        <p id="date"></p>
-                    </div>
-                    <div class="weather">
-                        <img id="weatherImg" src="/imges/weather/晴.png" >
-                        <div id="weather">
-                            <p class="active">炎热</p>
-                            <p>35-45℃</p>
-                            <p>重庆市北碚区</p>
-                        </div>
-                    </div>
-                </div>
-                <img src="/imges/line_bg.png" alt="">
-                <div class="select-box" style="height: 0.3rem;">
-                    
-                    <div data-type="2">
-                        <div class="select" tabindex="0" hidefocus="true" >
-                           <p style="color:#FFFF00;font-weight:bold;">NO.1重庆:   6937人</p>
-                           <p style="color:#7FFF00;font-weight:bold;">NO.2四川:   3690人</p>
-                           <p style="color:#7FFFD4;font-weight:bold;">NO.3湖北：  1221人</p>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="center-bottom">
-                <div class="chart-box">
-                    <div id="china_map" style="width:100%;height:95%;"></div>
-                </div>
-                
-            </div>
 
-        </div>
-        <div class="box-right">
-            <div class="right-top">
-                <div class="title-box">
-                    <h6 id="barTitle">新生专业分布</h6>
-                    
-                </div>
-                <p class="unit"></p>
-                <div class="chart-box">
-                    <div id="pie_age" style="width:100%;height:100%;"></div>
-                </div>
-                
-            </div>
-            <div class="right-center">
-            	
-                <div class="title-box">
-                    <h6>新生宿舍分布</h6>
-                </div>
-                <div class="chart-box pie-chart">
-                    
-                    <div id="qufenbu_data"style="width:90%;height:120px;margin-left:10px;"></div>
-                    
-                </div>
-            </div>
-            
-            
-            <div class="right-bottom">
-                <div class="title-box">
-                	<p id="switchBtn"><span class="active" data-dataType="income">人口出入时间段统计</span></p>
-                    
-                </div>
-                <div id="line_time" style="width:90%;height:160px;margin-left:10px;"></div>
-                
             </div>
         </div>
     </div>
-    
+    <div class="box-center">
+        <div class="center-top">
+            <h1><img src="/imges/校徽（蓝色）-Print 50mm.png" style="width:50px;margin-right:15px;"/>重庆大学新生报到管理系统</h1>
+        </div>
+        <div class="center-center">
+            <div class="weather-box">
+                <div class="data">
+                    <p class="time" id="time">00:00:00</p>
+                    <p id="date"></p>
+                </div>
+                <div class="weather">
+                    <img id="weatherImg" src="/imges/weather/晴.png" >
+                    <div id="weather">
+                        <p class="active">炎热</p>
+                        <p>35-45℃</p>
+                        <p>重庆市北碚区</p>
+                    </div>
+                </div>
+            </div>
+            <img src="/imges/line_bg.png" alt="">
+            <div class="select-box" style="height: 0.3rem;">
+
+                <div data-type="2">
+                    <div class="select" tabindex="0" hidefocus="true" >
+                        <p style="color:#FFFF00;font-weight:bold;">NO.1重庆:   6937人</p>
+                        <p style="color:#7FFF00;font-weight:bold;">NO.2四川:   3690人</p>
+                        <p style="color:#7FFFD4;font-weight:bold;">NO.3湖北：  1221人</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="center-bottom">
+            <div class="chart-box">
+                <div id="china_map" style="width:100%;height:95%;"></div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="box-right">
+        <div class="right-top">
+            <div class="title-box">
+                <h6 id="barTitle">新生专业分布</h6>
+
+            </div>
+            <p class="unit"></p>
+            <div class="chart-box">
+                <div id="pie_age" style="width:100%;height:100%;"></div>
+            </div>
+
+        </div>
+        <div class="right-center">
+
+            <div class="title-box">
+                <h6>新生宿舍分布</h6>
+            </div>
+            <div class="chart-box pie-chart">
+
+                <div id="qufenbu_data"style="width:90%;height:120px;margin-left:10px;"></div>
+
+            </div>
+        </div>
+
+
+        <div class="right-bottom">
+            <div class="title-box">
+                <p id="switchBtn"><span class="active" data-dataType="income">人口出入时间段统计</span></p>
+
+            </div>
+            <div id="line_time" style="width:90%;height:160px;margin-left:10px;"></div>
+
+        </div>
+    </div>
+</div>
+
 </body>
 <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/js/layer/layer.min.js"></script>
@@ -144,9 +173,8 @@
         $("body").css('visibility', 'visible');
         var localData = [$('#teacher').val(), $('#start').val() + '/' + $('#end').val(), $('#leader').val()]
         localStorage.setItem("data", localData);
-        
-    })
 
+    })
     function fetchStudentCount() {
         $.ajax({
             url: 'http://localhost:8080/Bigdata/allstu', // 替换成你的实际 API 地址
@@ -159,54 +187,10 @@
             }
         });
     }
-
-    // 初始请求
     fetchStudentCount();
-
-    // 每五秒请求一次
     setInterval(fetchStudentCount, 5000);
 </script>
 
-<script>
-    $(document).ready(function () {
-        var table = $('#dataGrid').DataTable({
-            scrollY: '400px', // 设置表格的最大高度
-            scrollCollapse: true, // 允许表格高度收缩
-            paging: true, // 启用分页
-            language: {
-                "lengthMenu": "显示 _MENU_ 条记录",
-                "zeroRecords": "没有找到记录",
-                "info": "显示第 _START_ 到 _END_ 条记录，总共 _TOTAL_ 条记录",
-                "infoEmpty": "没有记录",
-                "infoFiltered": "(从 _MAX_ 条记录中筛选)",
-                "search": "搜索:",
-                "paginate": {
-                    "next": "下一页",
-                    "previous": "上一页"
-                }
-            }
-        });
 
-        // 使用 AJAX 从后端获取数据
-        $.ajax({
-            url: 'http://localhost:8080/leave/get', // 替换为实际的 API 地址
-            method: 'GET',
-            success: function (data) {
-                console.log(data);
-                if(data.code == 200) {
-                    table.clear();
-                    data.list_leave.forEach(function (item) {
-                        table.row.add([
-                            item.name,
-                            item.timestart,
-                            item.timeend,
-                            item.remark === 0 ? '审批中' : ((item.remark === 1) ? '已通过' : '未通过')
-                        ]).draw();
-                    });
-                }
-            },
-        });
-    });
-</script>
 
 </html>

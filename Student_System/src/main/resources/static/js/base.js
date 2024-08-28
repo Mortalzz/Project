@@ -1,12 +1,11 @@
-function fnW(str) {
-    var num;
-    str >= 10 ? num = str : num = "0" + str;
-    return num;
+// 补零函数
+function fnW(num) {
+    return num < 10 ? '0' + num : num;
 }
 
 //中国地图开始
 //var china_map =echarts.init(document.getElementById("china_map"),'macarons'); 
-var china_map =echarts.init(document.getElementById("china_map"),'infographic'); 
+var china_map =echarts.init(document.getElementById("china_map"),'infographic');
 //var china_map =echarts.init(document.getElementById("china_map"),'shine'); 
 function updateCharDataArea(data){
     var mydata = [
@@ -107,21 +106,27 @@ setInterval(fetchStudentArea,5000);
 
 
 
-//获取当前时间
+// 获取当前时间
 var timer = setInterval(function () {
     var date = new Date();
-    var year = date.getFullYear(); //当前年份
-    var month = date.getMonth(); //当前月份
-    var data = date.getDate(); //天
-    var hours = date.getHours(); //小时
-    var minute = date.getMinutes(); //分
-    var second = date.getSeconds(); //秒
-    var day = date.getDay(); //获取当前星期几 
-    var ampm = hours < 12 ? 'am' : 'pm';
-    $('#time').html(fnW(hours) + ":" + fnW(minute) + ":" + fnW(second));
-    $('#date').html('<span>' + year + '/' + (month + 1) + '/' + data + '</span><span>' + ampm + '</span><span>周' + day + '</span>')
+    var year = date.getFullYear(); // 当前年份
+    var month = date.getMonth(); // 当前月份
+    var data = date.getDate(); // 天
+    var hours = date.getHours(); // 小时
+    var minute = date.getMinutes(); // 分
+    var second = date.getSeconds(); // 秒
+    var day = date.getDay(); // 获取当前星期几
 
-}, 1000)
+    // 星期几的中文映射
+    var weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+    var ampm = hours < 12 ? 'am' : 'pm';
+
+    $('#time').html(fnW(hours) + ":" + fnW(minute) + ":" + fnW(second));
+    $('#date').html('<span>' + year + '/' + (month + 1) + '/' + data + '</span><span>' + ampm + '</span><span>周' + weekDays[day] + '</span>');
+
+}, 1000);
+
+
 
 
 //新生男女比例分析占比，带边框效果的饼图
@@ -194,7 +199,7 @@ setInterval(fetchStudentSex,5000);
 
 //新生入学报道专业分析占比，带边框效果的饼图
 //var pie_age =echarts.init(document.getElementById("pie_age"),'macarons'); 
-var pie_age =echarts.init(document.getElementById("pie_age"),'infographic'); 
+var pie_age =echarts.init(document.getElementById("pie_age"),'infographic');
 //var pie_age =echarts.init(document.getElementById("pie_age"),'shine');
 function updateCharDataMajor(data){
     option = {
@@ -269,47 +274,47 @@ setInterval(fetchStudentMajor,5000);
 
 //===================人口出入时间段统计=======================
 //var line_time =echarts.init(document.getElementById("line_time"),'shine'); 
-var line_time =echarts.init(document.getElementById("line_time"),'macarons'); 
+var line_time =echarts.init(document.getElementById("line_time"),'macarons');
 //var line_time =echarts.init(document.getElementById("line_time"),'infographic'); 
 var option = {
-        // 给echarts图设置背景色
-        //backgroundColor: '#FBFBFB',  // -----------> // 给echarts图设置背景色
-        color: ['#7FFF00'],
-        tooltip: {
-            trigger: 'axis'
-        },
-       
-		grid:{
-                    x:40,
-                    y:30,
-                    x2:5,
-                    y2:20
-                    
-                },
-        calculable: true,
+    // 给echarts图设置背景色
+    //backgroundColor: '#FBFBFB',  // -----------> // 给echarts图设置背景色
+    color: ['#7FFF00'],
+    tooltip: {
+        trigger: 'axis'
+    },
+
+    grid:{
+        x:40,
+        y:30,
+        x2:5,
+        y2:20
+
+    },
+    calculable: true,
 
 
-        xAxis: [{
-             type: 'category',
+    xAxis: [{
+        type: 'category',
         data: ['6:00-9:00', '10:00-12:00', '13:00-15:00', '16:00-20:00', '21:00-24:00'],
-     axisLabel: {
-			color: "#7FFF00" //刻度线标签颜色
-			}
-        }],
-        yAxis: [{
+        axisLabel: {
+            color: "#7FFF00" //刻度线标签颜色
+        }
+    }],
+    yAxis: [{
 
-            type: 'value',
-            axisLabel: {
-			color: "#7FFF00" //刻度线标签颜色
-			}
-        }],
-        series: [{
-            name: '人次',
-            type: 'line',
-            data: [800, 300, 500, 800, 300, 600],
-            
-        }]
-    };
+        type: 'value',
+        axisLabel: {
+            color: "#7FFF00" //刻度线标签颜色
+        }
+    }],
+    series: [{
+        name: '人次',
+        type: 'line',
+        data: [800, 300, 500, 800, 300, 600],
+
+    }]
+};
 
 
 line_time.setOption(option);

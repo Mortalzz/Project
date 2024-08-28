@@ -56,11 +56,12 @@ public class InfomationController {
     @ResponseBody
     public ResultData getSex() {
         List<S_student> students = studentMapper.getAllStudents();
+
         Map<String,Long> tmp=students.stream()
                 .collect(Collectors.groupingBy(S_student::getSex, Collectors.counting()));
         return ResultData.success(tmp);
     }
-//宿舍每栋人数
+    //宿舍每栋人数
     @RequestMapping("/dormit")
     @ResponseBody
     //List<Map<String, Object>>
@@ -85,6 +86,7 @@ public class InfomationController {
     public ResultData getLeave() {
         List<S_leave> leaves = leaveMapper.getAllleaves();
         List<Map<String, Object>> result = new ArrayList<>();
+
         for (S_leave leave : leaves) {
             // 获取学生名字
             String studentName = studentMapper.getNameById(leave.getStudentid());
@@ -99,7 +101,7 @@ public class InfomationController {
         }
         return ResultData.success(result);
     }
-//各专业人数
+    //各专业人数
     @RequestMapping("/major")
     @ResponseBody
     public ResultData getMajor(){
