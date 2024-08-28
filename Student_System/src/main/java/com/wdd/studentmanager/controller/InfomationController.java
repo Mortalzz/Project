@@ -56,10 +56,8 @@ public class InfomationController {
     @ResponseBody
     public ResultData getSex() {
         List<S_student> students = studentMapper.getAllStudents();
-
         Map<String,Long> tmp=students.stream()
                 .collect(Collectors.groupingBy(S_student::getSex, Collectors.counting()));
-        System.out.println(tmp);
         return ResultData.success(tmp);
     }
 //宿舍每栋人数
@@ -76,7 +74,7 @@ public class InfomationController {
         Arrays.stream(provinces).forEach(province -> provinceMap.put(province, 0L));
         for(S_dormit dormit:dormits){
             String temp=dormit.getBuild();
-            provinceMap.put(temp,provinceMap.get(temp)+1);
+            provinceMap.put(temp, (long) dormit.getTakeincounts());
         }
         return ResultData.success(provinceMap);
     }
@@ -87,7 +85,6 @@ public class InfomationController {
     public ResultData getLeave() {
         List<S_leave> leaves = leaveMapper.getAllleaves();
         List<Map<String, Object>> result = new ArrayList<>();
-
         for (S_leave leave : leaves) {
             // 获取学生名字
             String studentName = studentMapper.getNameById(leave.getStudentid());
@@ -96,7 +93,6 @@ public class InfomationController {
             Map<String, Object> leaveData = new HashMap<>();
             leaveData.put("timestart", leave.getTimestart());
             leaveData.put("timeend", leave.getTimeend());
-            leaveData.put("phone", leave.getPhone());
             leaveData.put("name", studentName);
             result.add(leaveData);
         }
@@ -108,10 +104,10 @@ public class InfomationController {
     public ResultData getMajor(){
         List<S_student> students = studentMapper.getAllStudents();
         Map<String,Long> tmp=students.stream()
-                .collect(Collectors.groupingBy(S_student::getSex, Collectors.counting()));
+                .collect(Collectors.groupingBy(S_student::getClazzid, Collectors.counting()));
         long temp=0;
         for (String key : tmp.keySet()) {
-            if(key!="软件工程专业"&&key!="数学专业"&&key!="计算机专业"&&key!="机械专业"&&key!="土木专业")
+            if(!key.equals("软件工程专业")&&!key.equals("数学专业")&&!key.equals("计算机专业")&&!key.equals("机械专业")&&!key.equals("土木专业"))
                 temp+=1;
         }
         tmp.put("其他专业",temp);
