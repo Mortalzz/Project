@@ -250,7 +250,7 @@ function updateCharDataMajor(data){
         legend: {
             orient: 'vertical',
             x: 'left',
-            data:['软件工程专业','数学专业','计算机专业','机械专业','土木专业','其他专业'],
+            data:['软件工程专业','大学数学专业','计算机专业','机械专业','土木专业','其他专业'],
             textStyle: {color: '#fff'}
         },
         series: [
@@ -279,7 +279,7 @@ function updateCharDataMajor(data){
                 },
                 data:[
                     {value:data.data["软件工程专业"], name:'软件工程专业'},
-                    {value:data.data["数学专业"], name:'数学专业'},
+                    {value:data.data["大学数学专业"], name:'数学专业'},
                     {value:data.data["计算机专业"], name:'计算机专业'},
                     {value:data.data["机械专业"], name:'机械专业'},
                     {value:data.data["土木专业"], name:'土木专业'},
