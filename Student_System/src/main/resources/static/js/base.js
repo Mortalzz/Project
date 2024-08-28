@@ -10,83 +10,96 @@ var china_map =echarts.init(document.getElementById("china_map"),'infographic');
 //var china_map =echarts.init(document.getElementById("china_map"),'shine'); 
 
 
-function randomData() {
-		return Math.round(Math.random()*500);
-	}
- 
-	var mydata = [
-		{name: '北京',value: randomData() },{name: '天津',value: randomData() },
-		{name: '上海',value: randomData() },{name: '重庆',value: randomData() },
-		{name: '河北',value: randomData() },{name: '河南',value: randomData() },
-		{name: '云南',value: randomData() },{name: '辽宁',value: randomData() },
-		{name: '黑龙江',value: randomData() },{name: '湖南',value: randomData()},
-		{name: '安徽',value: randomData() },{name: '山东',value: randomData() },
-		{name: '新疆',value: randomData() },{name: '江苏',value: randomData() },
-		{name: '浙江',value: randomData() },{name: '江西',value: randomData() },
-		{name: '湖北',value: randomData() },{name: '广西',value: randomData() },
-		{name: '甘肃',value: randomData() },{name: '山西',value: randomData() },
-		{name: '内蒙古',value: randomData() },{name: '陕西',value: randomData()},
-		{name: '吉林',value: randomData() },{name: '福建',value: randomData() },
-		{name: '贵州',value: randomData() },{name: '广东',value: randomData() },
-		{name: '青海',value: randomData() },{name: '西藏',value: randomData() },
-		{name: '四川',value: randomData() },{name: '宁夏',value: randomData() },
-		{name: '海南',value: randomData() },{name: '台湾',value: randomData() },
-		{name: '香港',value: randomData() },{name: '澳门',value: randomData() }
-	];
- 
-	var option = {
-		//backgroundColor: '#FFFFFF',
-		
-		title: {
-            text: '学生生源分析',
-            textStyle: {
-                color: '#cdddf7', 
-                fontSize: 32, // 增大字体
-                fontWeight: 'bold', // 加粗字体
-                textShadowColor: 'rgba(0, 0, 0, 0.5)', // 添加阴影颜色
-                textShadowBlur: 4, // 设置阴影模糊半径
-                textShadowOffsetX: 2, // 设置阴影的X偏移量
-                textShadowOffsetY: 2  // 设置阴影的Y偏移量
-            },
-            x: 'center', // 标题居中
-            y: 'top', // 设置标题靠上显示
-            padding: [20, 0, 0, 0] // 调整标题的内边距，使其与顶部保持距离
-        },
-        
-        
-		tooltip : {
-			trigger: 'item'
-		},
-		visualMap: {
-			show : false,
-			x: 'left',
-			y: 'bottom',
-			//layoutCenter:['30%','30%'],
-			splitList: [ 
-				{start: 500, end:600},{start: 400, end: 500},
-				{start: 300, end: 400},{start: 200, end: 300},
-				{start: 100, end: 200},{start: 0, end: 100},
-			],
-			color: ['#ff0', '#ffff00', '#0E94EB','#6FBCF0', '#F0F06F', '#00CC00']
-		},
-		series: [{
-			name: '学生生源分析',
-			type: 'map',
-			mapType: 'china', 
-			roam: true,
-			label: {
-				normal: {
-					show: false
-				},
-				emphasis: {
-					show: false
-				}
-			},
-			data:mydata
-		}]
-	};
+ function updateCharDataArea(data){
+     var mydata = [
+         {name: '北京',value: data.data[""] },{name: '天津',value: data.data[""] },
+         {name: '上海',value: randomData() },{name: '重庆',value: randomData() },
+         {name: '河北',value: randomData() },{name: '河南',value: randomData() },
+         {name: '云南',value: randomData() },{name: '辽宁',value: randomData() },
+         {name: '黑龙江',value: randomData() },{name: '湖南',value: randomData()},
+         {name: '安徽',value: randomData() },{name: '山东',value: randomData() },
+         {name: '新疆',value: randomData() },{name: '江苏',value: randomData() },
+         {name: '浙江',value: randomData() },{name: '江西',value: randomData() },
+         {name: '湖北',value: randomData() },{name: '广西',value: randomData() },
+         {name: '甘肃',value: randomData() },{name: '山西',value: randomData() },
+         {name: '内蒙古',value: randomData() },{name: '陕西',value: randomData()},
+         {name: '吉林',value: randomData() },{name: '福建',value: randomData() },
+         {name: '贵州',value: randomData() },{name: '广东',value: randomData() },
+         {name: '青海',value: randomData() },{name: '西藏',value: randomData() },
+         {name: '四川',value: randomData() },{name: '宁夏',value: randomData() },
+         {name: '海南',value: randomData() },{name: '台湾',value: randomData() },
+         {name: '香港',value: randomData() },{name: '澳门',value: randomData() }
+     ];
 
-china_map.setOption(option);
+     var option = {
+         //backgroundColor: '#FFFFFF',
+
+         title: {
+             text: '学生生源分析',
+             textStyle: {
+                 color: '#cdddf7',
+                 fontSize: 32, // 增大字体
+                 fontWeight: 'bold', // 加粗字体
+                 textShadowColor: 'rgba(0, 0, 0, 0.5)', // 添加阴影颜色
+                 textShadowBlur: 4, // 设置阴影模糊半径
+                 textShadowOffsetX: 2, // 设置阴影的X偏移量
+                 textShadowOffsetY: 2  // 设置阴影的Y偏移量
+             },
+             x: 'center', // 标题居中
+             y: 'top', // 设置标题靠上显示
+             padding: [20, 0, 0, 0] // 调整标题的内边距，使其与顶部保持距离
+         },
+
+
+         tooltip : {
+             trigger: 'item'
+         },
+         visualMap: {
+             show : false,
+             x: 'left',
+             y: 'bottom',
+             //layoutCenter:['30%','30%'],
+             splitList: [
+                 {start: 500, end:600},{start: 400, end: 500},
+                 {start: 300, end: 400},{start: 200, end: 300},
+                 {start: 100, end: 200},{start: 0, end: 100},
+             ],
+             color: ['#ff0', '#ffff00', '#0E94EB','#6FBCF0', '#F0F06F', '#00CC00']
+         },
+         series: [{
+             name: '学生生源分析',
+             type: 'map',
+             mapType: 'china',
+             roam: true,
+             label: {
+                 normal: {
+                     show: false
+                 },
+                 emphasis: {
+                     show: false
+                 }
+             },
+             data:mydata
+         }]
+     };
+     china_map.setOption(option);
+ }
+function fetchStudentArea(){
+    $.ajax({
+        url:'http://localhost:8080/',
+        method:'GET',
+        success:function (data){
+            if(data.code==200) {
+                updateCharDataArea(data);
+            }
+        },
+        error:function (xhr,status,error){
+            console.error("取回数据失败",error);
+        }
+    });
+}
+fetchStudentArea();
+setInterval(fetchStudentArea,5000);
 //中国地图结束
 
 
@@ -193,7 +206,7 @@ function updateCharDataMajor(data){
         legend: {
             orient: 'vertical',
             x: 'left',
-            data:['软件工程专业','大学数学专业','计算机专业','机械专业','土木专业','其他专业'],
+            data:['软件工程专业','数学专业','计算机专业','机械专业','土木专业','其他专业'],
             textStyle: {color: '#fff'}
         },
         series: [
@@ -221,12 +234,12 @@ function updateCharDataMajor(data){
                     }
                 },
                 data:[
-                    {value:335, name:'软件工程专业'},
-                    {value:310, name:'数学专业'},
-                    {value:234, name:'计算机专业'},
-                    {value:135, name:'机械专业'},
-                    {value:135, name:'土木专业'},
-                    {value:1548, name:'其他专业'}
+                    {value:data.data[""], name:'软件工程专业'},
+                    {value:data.data[""], name:'数学专业'},
+                    {value:data.data[""], name:'计算机专业'},
+                    {value:data.data[""], name:'机械专业'},
+                    {value:data.data[""], name:'土木专业'},
+                    {value:data.data[""], name:'其他专业'}
                 ]
             }
         ]
@@ -253,7 +266,7 @@ $.ajax({
 //===================人口出入时间段统计=======================
 //var line_time =echarts.init(document.getElementById("line_time"),'shine'); 
 var line_time =echarts.init(document.getElementById("line_time"),'macarons'); 
-//var line_time =echarts.init(document.getElementById("line_time"),'infographic'); 
+//var line_time =echarts.init(document.getElementById("line_time"),'infographic');
 var option = {
         // 给echarts图设置背景色
         //backgroundColor: '#FBFBFB',  // -----------> // 给echarts图设置背景色
@@ -294,60 +307,78 @@ var option = {
         }]
     };
 
-
 line_time.setOption(option);
 
 
-//=========违法犯罪人员地区分布开始=======================
+//=========新生寝室分布分析开始=======================
 //var qufenbu_data =echarts.init(document.getElementById("qufenbu_data"),'shine'); 
 //var qufenbu_data =echarts.init(document.getElementById("qufenbu_data"),'macarons'); 
-var qufenbu_data =echarts.init(document.getElementById("qufenbu_data"),'infographic'); 
-option = {
-    color: ['#FADB71'],
-    tooltip : {
-        trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-    },
-    grid: {
-        x:30,
-        y:10,
-        x2:15,
-        y2:20
-    },
-    xAxis : [
-        {
-            type : 'category',
-            data : ['兰园', '竹园', '梅园', '松园'],
-            axisTick: {
-                alignWithLabel: true
-            },
-            axisLabel: {
-			color: "#FADB71" //刻度线标签颜色
-			}
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value',
-            axisLabel: {
-			color: "#FADB71" //刻度线标签颜色
-			}
-        }
-    ],
-    series : [
-        {
-            name:'地区分布',
-            type:'bar',
-            barWidth: '60%',
-            data:[110, 52, 200, 334, 390, 330, 220]
-        }
-    ]
-};
+var qufenbu_data =echarts.init(document.getElementById("qufenbu_data"),'infographic');
+function updateCharDataBuild(data){
+    option = {
+        color: ['#FADB71'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            x:30,
+            y:10,
+            x2:15,
+            y2:20
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : ['兰园', '竹园', '梅园', '松园'],
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLabel: {
+                    color: "#FADB71" //刻度线标签颜色
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLabel: {
+                    color: "#FADB71" //刻度线标签颜色
+                }
+            }
+        ],
+        series : [
+            {
+                name:'地区分布',
+                type:'bar',
+                barWidth: '60%',
+                data:[data.data["兰园"],data.data["竹园"],data.data["梅园"],data.data["松园"]]
+            }
+        ]
+    };
 
-qufenbu_data.setOption(option);
-//=========违法犯罪人员地区分布结束=======================
+    qufenbu_data.setOption(option);
+}
+
+function fetchStudentBuild(){
+    $.ajax({
+        url:'http://localhost:8080/',
+        method:'GET',
+        success:function (data){
+            if(data.code==200){
+                updateCharDataBuild(data);
+            }
+        },
+        error:function (xhr,status,error){
+            console.log("取回数据失败："+error);
+        }
+    });
+}
+fetchStudentBuild();
+setInterval(fetchStudentBuild,5000);
+//=========新生寝室分布结束=======================
 
 
 //时间选择器
