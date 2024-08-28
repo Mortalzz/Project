@@ -179,14 +179,6 @@ pre {
     display: none;
 }
 
-#dataGrid_wrapper {
-    overflow: auto; /* 使整个表格容器可滚动 */
-}
-
-.dataTables_scrollBody {
-    max-height: 400px; /* 设置最大高度 */
-    overflow-y: auto; /* 使表格内容垂直滚动 */
-}
 .select-ul.company {
     height: 1.2rem;
     overflow-y: auto;
@@ -761,7 +753,10 @@ pre {
 .table2 tr.bg-color {
     background: rgba(14, 148, 234, 0.2);
 }
-
+.dataTables_info,
+.dataTables_paginate {
+    display: none; /* 隐藏分页信息 */
+}
 .table2 tr td {
     border-right: 1px solid #0e94ea;
     height: 0.6rem;
@@ -770,7 +765,7 @@ pre {
     text-align: center;
 }
 
-.table2tr td.data-table {
+.table2 tr td.data-table {
     color: #fff;
 }
 
@@ -1424,6 +1419,7 @@ pre {
 .table3 thead tr th {
     border-right: 1px solid #0e94ea;
 }
+
 
 .pages-div {
     height: 0.63rem;
