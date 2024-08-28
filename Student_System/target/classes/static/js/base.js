@@ -27,7 +27,47 @@ function updateCharDataArea(data){
         {name: '海南',value: data.data["海南"] },{name: '台湾',value: data.data["台湾"] },
         {name: '香港',value: data.data["香港"] },{name: '澳门',value: data.data["澳门"] }
     ];
+    // 排序
+    mydata.sort((a, b) => b.value - a.value);
 
+    // 选择前3个
+    var topThree = mydata.slice(0, 3);
+
+    // 输出前三名及其对应的人数
+    var number1, number2, number3;
+    var province1, province2, province3;
+
+    console.log("人数最多的三个省份及对应的人数：");
+    topThree.forEach((item, index) => {
+        console.log((index + 1) + '：' + item.name + ' - ' + item.value);
+
+        // 将对应的人数和省份名称赋值给变量
+        if (index === 0) {
+            number1 = item.value; // 第一名人数
+            province1 = item.name; // 第一名省份
+        } else if (index === 1) {
+            number2 = item.value; // 第二名人数
+            province2 = item.name; // 第二名省份
+        } else if (index === 2) {
+            number3 = item.value; // 第三名人数
+            province3 = item.name; // 第三名省份
+        }
+    });
+
+    // 将人数存入 localStorage
+    localStorage.setItem('number1', number1);
+    localStorage.setItem('number2', number2);
+    localStorage.setItem('number3', number3);
+    localStorage.setItem('province1', province1);
+    localStorage.setItem('province2', province2);
+    localStorage.setItem('province3', province3);
+
+    // 更新指定区域的内容
+    document.querySelector('div[data-type="2"] .select').innerHTML = `  
+    <p style="color:#FFFF00;font-weight:bold;">NO.1 ${localStorage.getItem('province1')}:   ${localStorage.getItem('number1')}人</p>  
+    <p style="color:#7FFF00;font-weight:bold;">NO.2 ${localStorage.getItem('province2')}:   ${localStorage.getItem('number2')}人</p>  
+    <p style="color:#7FFFD4;font-weight:bold;">NO.3 ${localStorage.getItem('province3')}：  ${localStorage.getItem('number3')}人</p>  
+`;
     var option = {
         //backgroundColor: '#FFFFFF',
 
