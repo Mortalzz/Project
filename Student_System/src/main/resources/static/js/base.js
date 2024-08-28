@@ -8,37 +8,34 @@ function fnW(str) {
 //var china_map =echarts.init(document.getElementById("china_map"),'macarons'); 
 var china_map =echarts.init(document.getElementById("china_map"),'infographic'); 
 //var china_map =echarts.init(document.getElementById("china_map"),'shine'); 
+function updateCharDataArea(data){
+    var mydata = [
+        {name: '北京',value: data.data["北京"] },{name: '天津',value: data.data["天津"] },
+        {name: '上海',value: data.data["上海"] },{name: '重庆',value: data.data["重庆"] },
+        {name: '河北',value: data.data["河北"] },{name: '河南',value: data.data["河南"] },
+        {name: '云南',value: data.data["云南"] },{name: '辽宁',value: data.data["辽宁"] },
+        {name: '黑龙江',value: data.data["黑龙江"] },{name: '湖南',value: data.data["湖南"]},
+        {name: '安徽',value: data.data["安徽"] },{name: '山东',value: data.data["山东"] },
+        {name: '新疆',value: data.data["新疆"] },{name: '江苏',value: data.data["江苏"] },
+        {name: '浙江',value: data.data["浙江"] },{name: '江西',value: data.data["江西"] },
+        {name: '湖北',value: data.data["湖北"] },{name: '广西',value: data.data["广西"] },
+        {name: '甘肃',value: data.data["甘肃"] },{name: '山西',value: data.data["山西"] },
+        {name: '内蒙古',value: data.data["内蒙古"] },{name: '陕西',value: data.data["陕西"]},
+        {name: '吉林',value: data.data["吉林"] },{name: '福建',value: data.data["福建"] },
+        {name: '贵州',value: data.data["贵州"] },{name: '广东',value: data.data["广东"] },
+        {name: '青海',value: data.data["青海"] },{name: '西藏',value: data.data["西藏"] },
+        {name: '四川',value: data.data["四川"] },{name: '宁夏',value: data.data["宁夏"] },
+        {name: '海南',value: data.data["海南"] },{name: '台湾',value: data.data["台湾"] },
+        {name: '香港',value: data.data["香港"] },{name: '澳门',value: data.data["澳门"] }
+    ];
 
+    var option = {
+        //backgroundColor: '#FFFFFF',
 
-
- 
-	var mydata = [
-		{name: '北京',value: data.data[""] },{name: '天津',value: data.data[""] },
-		{name: '上海',value: data.data[""] },{name: '重庆',value: data.data[""] },
-		{name: '河北',value: data.data[""] },{name: '河南',value: data.data[""] },
-		{name: '云南',value: data.data[""] },{name: '辽宁',value: data.data[""] },  
-		{name: '黑龙江',value: data.data[""] },{name: '湖南',value: data.data[""]},
-		{name: '安徽',value: data.data[""] },{name: '山东',value: data.data[""] },
-		{name: '新疆',value: data.data[""] },{name: '江苏',value: data.data[""] },
-		{name: '浙江',value: data.data[""] },{name: '江西',value: data.data[""] },
-		{name: '湖北',value: data.data[""] },{name: '广西',value: data.data[""] },
-		{name: '甘肃',value: data.data[""] },{name: '山西',value: data.data[""] },
-		{name: '内蒙古',value: data.data[""] },{name: '陕西',value: data.data[""]},
-		{name: '吉林',value: data.data[""] },{name: '福建',value: data.data[""] },
-		{name: '贵州',value: data.data[""] },{name: '广东',value: data.data[""] },
-		{name: '青海',value: data.data[""] },{name: '西藏',value: data.data[""] },
-		{name: '四川',value: data.data[""] },{name: '宁夏',value: data.data[""] },
-		{name: '海南',value: data.data[""] },{name: '台湾',value: data.data[""] },
-		{name: '香港',value: data.data[""] },{name: '澳门',value: data.data[""] }
-	];
- 
-	var option = {
-		//backgroundColor: '#FFFFFF',
-		
-		title: {
+        title: {
             text: '学生生源分析',
             textStyle: {
-                color: '#cdddf7', 
+                color: '#cdddf7',
                 fontSize: 32, // 增大字体
                 fontWeight: 'bold', // 加粗字体
                 textShadowColor: 'rgba(0, 0, 0, 0.5)', // 添加阴影颜色
@@ -50,41 +47,58 @@ var china_map =echarts.init(document.getElementById("china_map"),'infographic');
             y: 'top', // 设置标题靠上显示
             padding: [20, 0, 0, 0] // 调整标题的内边距，使其与顶部保持距离
         },
-        
-        
-		tooltip : {
-			trigger: 'item'
-		},
-		visualMap: {
-			show : false,
-			x: 'left',
-			y: 'bottom',
-			//layoutCenter:['30%','30%'],
-			splitList: [ 
-				{start: 500, end:600},{start: 400, end: 500},
-				{start: 300, end: 400},{start: 200, end: 300},
-				{start: 100, end: 200},{start: 0, end: 100},
-			],
-			color: ['#ff0', '#ffff00', '#0E94EB','#6FBCF0', '#F0F06F', '#00CC00']
-		},
-		series: [{
-			name: '学生生源分析',
-			type: 'map',
-			mapType: 'china', 
-			roam: true,
-			label: {
-				normal: {
-					show: false
-				},
-				emphasis: {
-					show: false
-				}
-			},
-			data:mydata
-		}]
-	};
 
-china_map.setOption(option);
+
+        tooltip : {
+            trigger: 'item'
+        },
+        visualMap: {
+            show : false,
+            x: 'left',
+            y: 'bottom',
+            //layoutCenter:['30%','30%'],
+            splitList: [
+                {start: 500, end:600},{start: 400, end: 500},
+                {start: 300, end: 400},{start: 200, end: 300},
+                {start: 100, end: 200},{start: 0, end: 100},
+            ],
+            color: ['#ff0', '#ffff00', '#0E94EB','#6FBCF0', '#F0F06F', '#00CC00']
+        },
+        series: [{
+            name: '学生生源分析',
+            type: 'map',
+            mapType: 'china',
+            roam: true,
+            label: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: false
+                }
+            },
+            data:mydata
+        }]
+    };
+
+    china_map.setOption(option);
+}
+function fetchStudentArea(){
+    $.ajax({
+        url:'http://localhost:8080/Bigdata/sex',
+        method:'GET',
+        success:function (data){
+            if(data.code==200) {
+                updateCharDataArea(data);
+            }
+        },
+        error:function (xhr,status,error){
+            console.error("取回数据失败",error);
+        }
+    });
+}
+fetchStudentArea();
+setInterval(fetchStudentArea,5000);
 //中国地图结束
 
 
@@ -232,18 +246,23 @@ function updateCharDataMajor(data){
     pie_age.setOption(option);
 }
 
-$.ajax({
-    url:"http://localhost:8080/Bigdata/sex",
-    method:"GET",
-    success:function (data){
-        if(data.code==200) {
-            updateCharDataMajor(data);
+function fetchStudentMajor(){
+    $.ajax({
+        url:'http://localhost:8080/Bigdata/sex',
+        method:'GET',
+        success:function (data){
+            if(data.code==200) {
+                updateCharDataMajor(data);
+            }
+        },
+        error:function (xhr,status,error){
+            console.error("取回数据失败",error);
         }
-    },
-    error:function (xhr,status,error){
-        console.error("取回数据失败",error);
-    }
-});
+    });
+}
+fetchStudentMajor();
+setInterval(fetchStudentMajor,5000);
+
 //----------------------新生入学报道专业分析占比end---------------
 
 
@@ -299,52 +318,70 @@ line_time.setOption(option);
 //=========违法犯罪人员地区分布开始=======================
 //var qufenbu_data =echarts.init(document.getElementById("qufenbu_data"),'shine'); 
 //var qufenbu_data =echarts.init(document.getElementById("qufenbu_data"),'macarons'); 
-var qufenbu_data =echarts.init(document.getElementById("qufenbu_data"),'infographic'); 
-option = {
-    color: ['#FADB71'],
-    tooltip : {
-        trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-    },
-    grid: {
-        x:30,
-        y:10,
-        x2:15,
-        y2:20
-    },
-    xAxis : [
-        {
-            type : 'category',
-            data : ['兰园', '竹园', '梅园', '松园'],
-            axisTick: {
-                alignWithLabel: true
-            },
-            axisLabel: {
-			color: "#FADB71" //刻度线标签颜色
-			}
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value',
-            axisLabel: {
-			color: "#FADB71" //刻度线标签颜色
-			}
-        }
-    ],
-    series : [
-        {
-            name:'地区分布',
-            type:'bar',
-            barWidth: '60%',
-            data:[110, 52, 200, 334, 390, 330, 220]
-        }
-    ]
-};
+var qufenbu_data =echarts.init(document.getElementById("qufenbu_data"),'infographic');
+function updateCharDataBuild(data){
+    option = {
+        color: ['#FADB71'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            x:30,
+            y:10,
+            x2:15,
+            y2:20
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : ['兰园', '竹园', '梅园', '松园'],
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLabel: {
+                    color: "#FADB71" //刻度线标签颜色
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLabel: {
+                    color: "#FADB71" //刻度线标签颜色
+                }
+            }
+        ],
+        series : [
+            {
+                name:'地区分布',
+                type:'bar',
+                barWidth: '60%',
+                data:[data.data["兰园"],data.data["竹园"],data.data["梅园"],data.data["松园"]]
+            }
+        ]
+    };
 
-qufenbu_data.setOption(option);
+    qufenbu_data.setOption(option);
+}
+function fetchStudentBuild(){
+    $.ajax({
+        url:'http://localhost:8080/Bigdata/sex',
+        method:'GET',
+        success:function (data){
+            if(data.code==200) {
+                updateCharDataBuild(data);
+            }
+        },
+        error:function (xhr,status,error){
+            console.error("取回数据失败",error);
+        }
+    });
+}
+fetchStudentBuild();
+setInterval(fetchStudentBuild,5000);
 //=========违法犯罪人员地区分布结束=======================
 
 
