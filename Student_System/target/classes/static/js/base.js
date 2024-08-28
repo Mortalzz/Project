@@ -272,7 +272,7 @@ setInterval(fetchStudentMajor,5000);
 
 
 
-//===================人口出入时间段统计=======================
+//===================温度变化时间段统计=======================
 //var line_time =echarts.init(document.getElementById("line_time"),'shine'); 
 var line_time =echarts.init(document.getElementById("line_time"),'macarons');
 //var line_time =echarts.init(document.getElementById("line_time"),'infographic'); 
@@ -296,7 +296,7 @@ var option = {
 
     xAxis: [{
         type: 'category',
-        data: ['6:00-9:00', '10:00-12:00', '13:00-15:00', '16:00-20:00', '21:00-24:00'],
+        data: ['8-29', '8-30', '8-31', '9-01', '9-02'],
         axisLabel: {
             color: "#7FFF00" //刻度线标签颜色
         }
@@ -309,9 +309,9 @@ var option = {
         }
     }],
     series: [{
-        name: '人次',
+        name: '温度',
         type: 'line',
-        data: [800, 300, 500, 800, 300, 600],
+        data: [40, 40, 41,39, 41, 41],
 
     }]
 };
