@@ -12,11 +12,6 @@ public class IndexController {
         return  "login&regist";
     }
 
-    @RequestMapping("/show")
-    public String show(){
-        return "view";
-    }
-
     @RequestMapping("/index")
     public String index(){
         return "/system/index";
@@ -24,9 +19,8 @@ public class IndexController {
 
     @RequestMapping("/view")
     public String view(){
-        return "view";
+        return "Bigdata";
     }
-
     @RequestMapping("/email_collective")
     public String email_collective(){
         return "/email/email_collective";
