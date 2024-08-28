@@ -85,7 +85,7 @@ function updateCharDataArea(data){
 }
 function fetchStudentArea(){
     $.ajax({
-        url:'http://localhost:8080/Bigdata/sex',
+        url:'http://localhost:8080/Bigdata/province',
         method:'GET',
         success:function (data){
             if(data.code==200) {
@@ -233,12 +233,12 @@ function updateCharDataMajor(data){
                     }
                 },
                 data:[
-                    {value:335, name:'软件工程专业'},
-                    {value:310, name:'数学专业'},
-                    {value:234, name:'计算机专业'},
-                    {value:135, name:'机械专业'},
-                    {value:135, name:'土木专业'},
-                    {value:1548, name:'其他专业'}
+                    {value:data.data["软件工程专业"], name:'软件工程专业'},
+                    {value:data.data["数学专业"], name:'数学专业'},
+                    {value:data.data["计算机专业"], name:'计算机专业'},
+                    {value:data.data["机械专业"], name:'机械专业'},
+                    {value:data.data["土木专业"], name:'土木专业'},
+                    {value:data.data["其他专业"], name:'其他专业'}
                 ]
             }
         ]
@@ -248,7 +248,7 @@ function updateCharDataMajor(data){
 
 function fetchStudentMajor(){
     $.ajax({
-        url:'http://localhost:8080/Bigdata/sex',
+        url:'http://localhost:8080/Bigdata/major',
         method:'GET',
         success:function (data){
             if(data.code==200) {
@@ -368,7 +368,7 @@ function updateCharDataBuild(data){
 }
 function fetchStudentBuild(){
     $.ajax({
-        url:'http://localhost:8080/Bigdata/sex',
+        url:'http://localhost:8080/Bigdata/dormit',
         method:'GET',
         success:function (data){
             if(data.code==200) {
