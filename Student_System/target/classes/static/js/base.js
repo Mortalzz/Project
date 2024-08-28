@@ -160,18 +160,23 @@ function updateCharDataSex(data){
     };
     pie_fanzui.setOption(option);
 }
-$.ajax({
-    url:"http://localhost:8080/Bigdata/sex",
-    method:"GET",
-    success:function (data){
-        if(data.code==200) {
-            updateCharDataSex(data);
+function fetchStudentSex(){
+    $.ajax({
+        url:'http://localhost:8080/Bigdata/sex',
+        method:'GET',
+        success:function (data){
+            if(data.code==200) {
+                updateCharDataSex(data);
+            }
+        },
+        error:function (xhr,status,error){
+            console.error("取回数据失败",error);
         }
-    },
-    error:function (xhr,status,error){
-        console.error("取回数据失败",error);
-    }
-});
+    });
+}
+fetchStudentSex();
+setInterval(fetchStudentSex,5000);
+
 
 
 
