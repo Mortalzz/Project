@@ -10,7 +10,9 @@
     <script type="text/javascript" src="/js/rem.js"></script>
     <link rel="stylesheet" href="/css/style.css">
     <title>重庆大学新生报到管理系统</title>
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
 </head>
 
@@ -35,10 +37,9 @@
         <div class="left-bottom" >
             <div class="title-box">
                 <h6>请假申请记录</h6>
-
             </div>
             <div class="chart-box">
-                <table class="table3">
+                <table id="dataGrid" class="table3" >
                     <thead>
                     <tr>
                         <th>姓名</th>
@@ -47,37 +48,9 @@
                         <th>审批</th>
                     </tr>
                     </thead>
-                    <tbody id="tList">
-                    <!--<tr><td colspan="4"><p style="width:9.6rem;">暂无数据</p></td></tr>-->
-
-                    <tr>
-                        <td>张梦</td>
-                        <td>病假</td>
-                        <td>2024-8-01</td>
-                        <td>审批中</td>
-                    </tr>
-                    <tr>
-                        <td>李阳荣</td>
-                        <td>病假</td>
-                        <td>2024-8-02</td>
-                        <td>审批中</td>
-                    </tr>
-                    <tr>
-                        <td>张无双</td>
-                        <td>事假</td>
-                        <td>2024-8-03</td>
-                        <td>已通过</td>
-                    </tr>
-                    <tr>
-                        <td>李阳</td>
-                        <td>事假</td>
-                        <td>2024-8-04</td>
-                        <td>审批中</td>
-                    </tr>
-
+                    <tbody>
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
@@ -158,7 +131,6 @@
 </div>
 
 </body>
-<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/js/layer/layer.min.js"></script>
 <script type="text/javascript" src="/js/layer/laydate/laydate.js"></script>
 <script type="text/javascript" src="/js/echarts.min.js"></script>
@@ -169,12 +141,10 @@
 <script type="text/javascript" src="/js/base.js"></script>
 
 <script type="text/javascript">
-    $('document').ready(function () {
-        $("body").css('visibility', 'visible');
-        var localData = [$('#teacher').val(), $('#start').val() + '/' + $('#end').val(), $('#leader').val()]
-        localStorage.setItem("data", localData);
+    $("body").css('visibility', 'visible');
+    //var localData = [$('#teacher').val(), $('#start').val() + '/' + $('#end').val(), $('#leader').val()]
+    //localStorage.setItem("data", localData);
 
-    })
     function fetchStudentCount() {
         $.ajax({
             url: 'http://localhost:8080/Bigdata/allstu', // 替换成你的实际 API 地址
@@ -190,7 +160,47 @@
     fetchStudentCount();
     setInterval(fetchStudentCount, 5000);
 </script>
-
+<script>
+    $(document).ready(function () {
+        var table=$('#dataGrid').DataTable({
+            language: {
+                "lengthMenu": "显示 _MENU_ 条记录",
+                "zeroRecords": "没有找到记录",
+                "info": "显示第 _START_ 到 _END_ 条记录，总共 _TOTAL_ 条记录",
+                "infoEmpty": "没有记录",
+                "infoFiltered": "(从 _MAX_ 条记录中筛选)",
+                "search": "搜索:",
+                "paginate": {
+                    "next": "下一页",
+                    "previous": "上一页"
+                }
+            }
+        });
+        // 使用 AJAX 从后端获取数据
+        function fetchLeave(){
+            $.ajax({
+                url: 'http://localhost:8080/Bigdata/leave', // 替换为实际的 API 地址
+                method: 'GET',
+                success: function (data) {
+                    console.log(data);
+                    if(data.code==200){
+                        table.clear();
+                        data.list_map.forEach(function (item){
+                            table.row.add([
+                                item["name"],
+                                item["timestart"],
+                                item["timeend"],
+                                item["remark"] === 0 ? '审批中' : ((item["remark"] === 1) ? '已通过' : '未通过')
+                            ]).draw();
+                        });
+                    }
+                },
+            });
+        }
+        fetchLeave();
+        setInterval(fetchLeave, 5000);
+    });
+</script>
 
 
 </html>
