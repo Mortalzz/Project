@@ -16,7 +16,7 @@ var china_map =echarts.init(document.getElementById("china_map"),'infographic');
 		{name: '北京',value: data.data[""] },{name: '天津',value: data.data[""] },
 		{name: '上海',value: data.data[""] },{name: '重庆',value: data.data[""] },
 		{name: '河北',value: data.data[""] },{name: '河南',value: data.data[""] },
-		{name: '云南',value: data.data[""] },{name: '辽宁',value: data.data[""] },
+		{name: '云南',value: data.data[""] },{name: '辽宁',value: data.data[""] },  
 		{name: '黑龙江',value: data.data[""] },{name: '湖南',value: data.data[""]},
 		{name: '安徽',value: data.data[""] },{name: '山东',value: data.data[""] },
 		{name: '新疆',value: data.data[""] },{name: '江苏',value: data.data[""] },

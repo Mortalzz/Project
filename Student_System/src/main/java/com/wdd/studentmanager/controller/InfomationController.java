@@ -12,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -36,23 +33,33 @@ public class InfomationController {
     @ResponseBody
     public ResultData getProvince() {
         List<S_student> students = studentMapper.getAllStudents(); // 假设有一个方法来获取所有学生
-
-        Map<String,Long> tmp=students.stream()
-                .collect(Collectors.groupingBy(S_student::getAddress, Collectors.counting()));
-        return ResultData.success(tmp);
+        String[] provinces = {
+                "北京", "天津", "河北", "山西", "内蒙古",
+                "辽宁", "吉林", "黑龙江", "上海", "江苏",
+                "浙江", "安徽", "福建", "江西", "山东",
+                "河南", "湖北", "湖南", "广东", "广西",
+                "海南", "重庆", "四川", "贵州", "云南",
+                "西藏", "陕西", "甘肃", "青海", "宁夏",
+                "新疆","香港","澳门","台湾"
+        };
+        // 初始化Map，所有值为0
+        Map<String, Long> provinceMap = new HashMap<>();
+        Arrays.stream(provinces).forEach(province -> provinceMap.put(province, 0L));
+        for(S_student province:students){
+            String temp=province.getAddress();
+            provinceMap.put(temp,provinceMap.get(temp)+1);
+        }
+        return ResultData.success(provinceMap);
     }
 
     @RequestMapping("/sex")
     @ResponseBody
     public ResultData getSex() {
         List<S_student> students = studentMapper.getAllStudents();
+
         Map<String,Long> tmp=students.stream()
                 .collect(Collectors.groupingBy(S_student::getSex, Collectors.counting()));
-        int temp=0;
-        for (String key : tmp.keySet()) {
-            if(key!="软件工程专业"&&key!="数学专业"&&key!="计算机专业"&&key!="机械专业"&&key!="土木专业")
-                temp+=1;
-        }
+        System.out.println(tmp);
         return ResultData.success(tmp);
     }
 //宿舍每栋人数
@@ -62,20 +69,16 @@ public class InfomationController {
     public ResultData getDormit() {
         // 获取所有宿舍数据
         List<S_dormit> dormits = dormitoryMapper.getAlldormit();
-
-        // 创建一个新的列表以存储结果
-        List<Map<String, Object>> result = new ArrayList<>();
-
-        // 遍历所有宿舍数据，将需要的字段提取到 Map 中
-        for (S_dormit dormit : dormits) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("build", dormit.getBuild());
-            map.put("takeincounts", dormit.getTakeincounts());
-            result.add(map);
+        String[] provinces = {
+                "梅园","兰园","竹园","松园"
+        };
+        Map<String, Long> provinceMap = new HashMap<>();
+        Arrays.stream(provinces).forEach(province -> provinceMap.put(province, 0L));
+        for(S_dormit dormit:dormits){
+            String temp=dormit.getBuild();
+            provinceMap.put(temp,provinceMap.get(temp)+1);
         }
-
-        // 返回包含所需字段的列表
-        return ResultData.success(result);
+        return ResultData.success(provinceMap);
     }
 //请假记录
     @RequestMapping("/leave")
@@ -103,9 +106,15 @@ public class InfomationController {
     @RequestMapping("/major")
     @ResponseBody
     public ResultData getMajor(){
-        List<S_student> students=studentMapper.getAllStudents();
+        List<S_student> students = studentMapper.getAllStudents();
         Map<String,Long> tmp=students.stream()
-                .collect(Collectors.groupingBy(S_student::getClazzid, Collectors.counting()));
+                .collect(Collectors.groupingBy(S_student::getSex, Collectors.counting()));
+        long temp=0;
+        for (String key : tmp.keySet()) {
+            if(key!="软件工程专业"&&key!="数学专业"&&key!="计算机专业"&&key!="机械专业"&&key!="土木专业")
+                temp+=1;
+        }
+        tmp.put("其他专业",temp);
         return ResultData.success(tmp);
     }
 //学生的数量
