@@ -7,13 +7,11 @@ import com.wdd.studentmanager.domain.S_student;
 import com.wdd.studentmanager.mapper.DormitoryMapper;
 import com.wdd.studentmanager.mapper.LeaveMapper;
 import com.wdd.studentmanager.mapper.StudentMapper;
-import com.wdd.studentmanager.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +20,6 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/Bigdata")
-
 public class InfomationController {
     @Autowired
     StudentMapper studentMapper;
@@ -33,10 +30,7 @@ public class InfomationController {
     @Autowired
     LeaveMapper leaveMapper;
 
-    @RequestMapping("/test")
-    public String test(){
-        return "/bigdata/test";
-    }
+
 
     @RequestMapping("/province")
     @ResponseBody
@@ -52,13 +46,12 @@ public class InfomationController {
     @ResponseBody
     public ResultData getSex() {
         List<S_student> students = studentMapper.getAllStudents();
-
         Map<String,Long> tmp=students.stream()
                 .collect(Collectors.groupingBy(S_student::getSex, Collectors.counting()));
         System.out.println(tmp);
         return ResultData.success(tmp);
     }
-
+//宿舍每栋人数
     @RequestMapping("/dormit")
     @ResponseBody
     //List<Map<String, Object>>
@@ -80,7 +73,7 @@ public class InfomationController {
         // 返回包含所需字段的列表
         return ResultData.success(result);
     }
-
+//请假记录
     @RequestMapping("/leave")
     //List<Map<String, Object>>
     @ResponseBody
@@ -102,7 +95,7 @@ public class InfomationController {
         }
         return ResultData.success(result);
     }
-
+//各专业人数
     @RequestMapping("/major")
     @ResponseBody
     public ResultData getMajor(){
@@ -111,7 +104,7 @@ public class InfomationController {
                 .collect(Collectors.groupingBy(S_student::getClazzid, Collectors.counting()));
         return ResultData.success(tmp);
     }
-
+//学生的数量
     @RequestMapping("/allstu")
     @ResponseBody
     public ResultData getall(){
