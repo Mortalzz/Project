@@ -179,6 +179,14 @@ pre {
     display: none;
 }
 
+#dataGrid_wrapper {
+    overflow: auto; /* 使整个表格容器可滚动 */
+}
+
+.dataTables_scrollBody {
+    max-height: 400px; /* 设置最大高度 */
+    overflow-y: auto; /* 使表格内容垂直滚动 */
+}
 .select-ul.company {
     height: 1.2rem;
     overflow-y: auto;

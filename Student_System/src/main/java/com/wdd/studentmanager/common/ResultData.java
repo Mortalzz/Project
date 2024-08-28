@@ -4,6 +4,7 @@ import com.wdd.studentmanager.domain.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class ResultData {
@@ -15,6 +16,8 @@ public class ResultData {
     private long count;
 
     private Object data;
+
+    private List<Map<String, Object>> list_map;
 
     private List<S_student> list;
 
@@ -34,6 +37,14 @@ public class ResultData {
     public static ResultData success(List<S_student> list){
         ResultData resultData =new ResultData();
         resultData.setList(list);
+        resultData.setCode(200);
+        resultData.setMsg("获取成功");
+        resultData.setSuccess(true);
+        return resultData;
+    }
+    public static ResultData success_Map(List<Map<String, Object>> list){
+        ResultData resultData =new ResultData();
+        resultData.setList_map(list);
         resultData.setCode(200);
         resultData.setMsg("获取成功");
         resultData.setSuccess(true);

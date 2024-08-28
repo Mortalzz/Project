@@ -86,7 +86,6 @@ public class InfomationController {
     public ResultData getLeave() {
         List<S_leave> leaves = leaveMapper.getAllleaves();
         List<Map<String, Object>> result = new ArrayList<>();
-
         for (S_leave leave : leaves) {
             // 获取学生名字
             String studentName = studentMapper.getNameById(leave.getStudentid());
@@ -99,7 +98,8 @@ public class InfomationController {
             leaveData.put("name", studentName);
             result.add(leaveData);
         }
-        return ResultData.success(result);
+        System.out.println(result);
+        return ResultData.success_Map(result);
     }
     //各专业人数
     @RequestMapping("/major")
@@ -122,6 +122,7 @@ public class InfomationController {
     public ResultData getall(){
         List<S_student> students=studentMapper.getAllStudents();
         int sum=students.size();
+        System.out.println(sum);
         return ResultData.success(sum);
     }
 
