@@ -1,7 +1,6 @@
-function fnW(str) {
-    var num;
-    str >= 10 ? num = str : num = "0" + str;
-    return num;
+// 补零函数
+function fnW(num) {
+    return num < 10 ? '0' + num : num;
 }
 
 //中国地图开始
@@ -107,21 +106,27 @@ setInterval(fetchStudentArea,5000);
 
 
 
-//获取当前时间
+// 获取当前时间
 var timer = setInterval(function () {
     var date = new Date();
-    var year = date.getFullYear(); //当前年份
-    var month = date.getMonth(); //当前月份
-    var data = date.getDate(); //天
-    var hours = date.getHours(); //小时
-    var minute = date.getMinutes(); //分
-    var second = date.getSeconds(); //秒
-    var day = date.getDay(); //获取当前星期几 
-    var ampm = hours < 12 ? 'am' : 'pm';
-    $('#time').html(fnW(hours) + ":" + fnW(minute) + ":" + fnW(second));
-    $('#date').html('<span>' + year + '/' + (month + 1) + '/' + data + '</span><span>' + ampm + '</span><span>周' + day + '</span>')
+    var year = date.getFullYear(); // 当前年份
+    var month = date.getMonth(); // 当前月份
+    var data = date.getDate(); // 天
+    var hours = date.getHours(); // 小时
+    var minute = date.getMinutes(); // 分
+    var second = date.getSeconds(); // 秒
+    var day = date.getDay(); // 获取当前星期几
 
-}, 1000)
+    // 星期几的中文映射
+    var weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+    var ampm = hours < 12 ? 'am' : 'pm';
+
+    $('#time').html(fnW(hours) + ":" + fnW(minute) + ":" + fnW(second));
+    $('#date').html('<span>' + year + '/' + (month + 1) + '/' + data + '</span><span>' + ampm + '</span><span>周' + weekDays[day] + '</span>');
+
+}, 1000);
+
+
 
 
 //新生男女比例分析占比，带边框效果的饼图
